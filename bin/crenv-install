@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Summary: Install a Node version using the crystal-build plugin
+# Summary: Install a Crystal version using the crystal-build plugin
 #
 # Usage: crenv install <version>
 #
