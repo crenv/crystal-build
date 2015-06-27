@@ -93,7 +93,7 @@ trap cleanup SIGINT
 
 # Invoke `crystal-build` and record the exit status in $STATUS.
 STATUS=0
-./crystal-build "$DEFINITION" "$PREFIX" || STATUS="$?"
+crystal-build "$DEFINITION" "$PREFIX" || STATUS="$?"
 
 # Display a more helpful message if the definition wasn't found.
 if [ "$STATUS" == "2" ]; then
