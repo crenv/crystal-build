@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+#
+# Summary: Install a Node version using the crystal-build plugin
+#
+# Usage: crenv install <version>
+#
+set -e
+[ -n "$CRENV_DEBUG" ] && set -x
+
+
+if [ -z "$CRENV_ROOT" ]; then
+  CRENV_ROOT="${HOME}/.crenv"
+fi
+
+
+
+unset VERSION_NAME
+
+# The first argument contains the definition to install. If the
+# argument is missing, try to install whatever local app-specific
+# version is specified by rbenv. Show usage instructions if a local
+# version is not specified.
+DEFINITION="$1"
+
+[ -n "$DEFINITION" ] || DEFINITION="$(crenv local 2>/dev/null || true)"
+[ -n "$DEFINITION" ] || exit 1
+
+
+# Define `before_install` and `after_install` functions that allow
+# plugin hooks to register a string of code for execution before or
+# after the installation process.
+declare -a before_hooks after_hooks
+
+before_install() {
+  local hook="$1"
+  before_hooks["${#before_hooks[@]}"]="$hook"
+}
+
+after_install() {
+  local hook="$1"
+  after_hooks["${#after_hooks[@]}"]="$hook"
+}
+
+# Load plugin hooks.
+for script in $(crenv-hooks install); do
+  source "$script"
+done
+
+
+# Set VERSION_NAME from $DEFINITION, if it is not already set. Then
+# compute the installation prefix.
+[ -n "$VERSION_NAME" ] || VERSION_NAME="${DEFINITION##*/}"
+PREFIX="${CRENV_ROOT}/versions/${VERSION_NAME}"
+
+[ -d "${PREFIX}" ] && PREFIX_EXISTS=1
+
+# If the installation prefix exists, prompt for confirmation unless
+# the --force option was specified.
+if [ -d "${PREFIX}/bin" ]; then
+  echo "crenv: $PREFIX already exists" >&2
+  read -p "continue with installation? (y/N) "
+
+  case "$REPLY" in
+  y* | Y* ) ;;
+  * ) exit 1 ;;
+  esac
+fi
+
+# If CRENV_BUILD_ROOT is set, always pass keep options to crystal-build.
+if [ -n "${CRENV_BUILD_ROOT}" ]; then
+  export CRYSTAL_BUILD_BUILD_PATH="${CRENV_BUILD_ROOT}/${VERSION_NAME}"
+fi
+
+# Set CRYSTAL_BUILD_CACHE_PATH to $CRENV_ROOT/cache, if the directory
+# exists and the variable is not already set.
+if [ -z "${CRYSTAL_BUILD_CACHE_PATH}" ] && [ -d "${CRENV_ROOT}/cache" ]; then
+  export CRYSTAL_BUILD_CACHE_PATH="${CRENV_ROOT}/cache"
+fi
+
+# Default CRENV_VERSION to the globally-specified Node version.
+export CRENV_VERSION="$(crenv global 2>/dev/null || true)"
+
+
+# Execute `before_install` hooks.
+for hook in "${before_hooks[@]}"; do eval "$hook"; done
+
+# Plan cleanup on unsuccessful installation.
+cleanup() {
+  [ -z "${PREFIX_EXISTS}" ] && rm -rf "$PREFIX"
+}
+
+trap cleanup SIGINT
+
+# Invoke `crystal-build` and record the exit status in $STATUS.
+STATUS=0
+./crystal-build "$DEFINITION" "$PREFIX" || STATUS="$?"
+
+# Display a more helpful message if the definition wasn't found.
+if [ "$STATUS" == "2" ]; then
+  {
+    echo "If the version you're looking for is not present, first try upgrading"
+    echo "crystal-build. If it's still missing, open a request on the crystal-build"
+    echo "issue tracker: https://github.com/pine613/crystal-build/issues"
+  } >&2
+fi
+
+# Execute `after_install` hooks.
+for hook in "${after_hooks[@]}"; do eval "$hook"; done
+
+# Run `crenv-rehash` after a successful installation.
+if [ "$STATUS" == "0" ]; then
+  crenv rehash
+else
+  cleanup
+fi
+
+exit "$STATUS"
+
+# vim: se et ts=2 sw=2 sts=2 ft=sh :
