@@ -3,6 +3,9 @@
 # Summary: Install a Crystal version using the crystal-build plugin
 #
 # Usage: crenv install <version>
+#        crenv install -l|--list
+#
+#   -l/--list        List all available versions
 #
 set -e
 [ -n "$CRENV_DEBUG" ] && set -x
