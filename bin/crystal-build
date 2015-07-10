@@ -150,10 +150,12 @@ BEGIN {
 
     # if VERSION < 5.13.9
     if ($@) {
+        no warnings 'once';
+
         require FindBin;
         require lib;
 
-        lib->import("$FindBin::Bin/../lib");
+        lib->import($FindBin::Bin . '/../lib');
 
         require JSON::PP;
         JSON::PP->import;
