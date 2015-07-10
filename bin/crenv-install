@@ -12,6 +12,48 @@ if [ -z "$CRENV_ROOT" ]; then
   CRENV_ROOT="${HOME}/.crenv"
 fi
 
+parse_options() {
+  OPTIONS=()
+  ARGUMENTS=()
+  local arg option index
+
+  for arg in "$@"; do
+    if [ "${arg:0:1}" = "-" ]; then
+      if [ "${arg:1:1}" = "-" ]; then
+        OPTIONS[${#OPTIONS[*]}]="${arg:2}"
+      else
+        index=1
+        while option="${arg:$index:1}"; do
+          [ -n "$option" ] || break
+          OPTIONS[${#OPTIONS[*]}]="$option"
+          index=$(($index+1))
+        done
+      fi
+    else
+      ARGUMENTS[${#ARGUMENTS[*]}]="$arg"
+    fi
+  done
+}
+
+definitions() {
+  local query="$1"
+  crystal-build --definitions | grep -F "$query" || true
+}
+
+indent() {
+  sed 's/^/  /'
+}
+
+parse_options "$@"
+for option in "${OPTIONS[@]}"; do
+  case "$option" in
+  "l" | "list" )
+    echo "Available versions:"
+    definitions | indent
+    exit
+    ;;
+  esac
+done
 
 
 unset VERSION_NAME
