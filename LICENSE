@@ -42,6 +42,16 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 -----------------------------------------------------------
 
+| JSON::PP
+| http://search.cpan.org/~makamaka/JSON-PP-2.27300/lib/JSON/PP.pm
+
+Copyright 2005-2013 by Makamaka Hannyaharamitu
+
+This library is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+-----------------------------------------------------------
+
 | crystal-build
 
 (The MIT license)
