@@ -148,7 +148,20 @@ BEGIN {
         JSON::PP->import;
     };
 
-    say 'Can\'t load JSON::PP module. Please check Perl version.' if $@;
+    # if VERSION < 5.13.9
+    if ($@) {
+        no warnings 'once';
+
+        require FindBin;
+        require lib;
+
+        lib->import($FindBin::Bin . '/../lib');
+
+        require JSON::PP;
+        JSON::PP->import;
+
+        say 'Can\'t load JSON::PP module. Please check Perl version.' if $@;
+    }
 }
 
 sub new {
