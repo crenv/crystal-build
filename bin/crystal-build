@@ -68,6 +68,17 @@ sub install {
     say 'Install successful';
 }
 
+sub show_definitions {
+    my ($self) = @_;
+
+    my $releases        = $self->github->fetch_releases;
+    my @tag_names       = map { $_->{tag_name} } @$releases;
+    my @versions        = map { $self->normalize_version($_) } @tag_names;
+    my $sorted_versions = Crenv::Utils::sort_version(\@versions);
+
+    say $_ for @$sorted_versions;
+}
+
 sub find_install_version {
     my ($self, $v) = @_;
 
@@ -200,11 +211,27 @@ sub fetch_release {
     $self->fetch_as_json('releases/tags/' . $version);
 }
 
+sub fetch_releases {
+    my ($self) = @_;
+    $self->fetch_as_json('releases?per_page=100');
+}
+
 # -----------------------------------------------------------------------------
 
 package Crenv::Utils;
 
 use POSIX;
+use Getopt::Long qw/:config posix_default no_ignore_case gnu_compat/;
+
+sub sort_version {
+    my $version = shift;
+
+    return [sort {
+        my ($a1, $a2, $a3) = ($a =~ m/(\d+)\.(\d+)\.(\d+)/);
+        my ($b1, $b2, $b3) = ($b =~ m/(\d+)\.(\d+)\.(\d+)/);
+        $a1 <=> $b1 || $a2 <=> $b2 || $a3 <=> $b3
+    } @$version];
+}
 
 sub system_info {
     my $arch;
@@ -248,6 +275,21 @@ sub extract_tar {
     chdir($cwd);
 }
 
+sub parse_args {
+    my ($version, $prefix) = @_[-2,-1];
+    my $definitions;
+
+    GetOptions(
+        definitions => \$definitions
+    );
+
+    return {
+        version     => $version,
+        prefix      => $prefix,
+        definitions => $definitions,
+    };
+}
+
 # -----------------------------------------------------------------------------
 
 package Crenv::Fetcher;
@@ -264,7 +306,7 @@ sub get {
 
 package Crenv::Fetcher::Curl;
 
-sub new { bless {}; }
+sub new { bless {} }
 
 sub fetch_able {
     my ($self, $url) = @_;
@@ -294,7 +336,7 @@ sub download {
 
 package Crenv::Fetcher::Wget;
 
-sub new { bless {}; }
+sub new { bless {} }
 
 sub fetch_able {
     my ($self, $url) = @_;
@@ -327,14 +369,22 @@ package main;
 use Cwd qw/abs_path/;
 
 sub main {
-    my ($version, $prefix) = @ARGV;
+    my $args = Crenv::Utils::parse_args(@ARGV);
     my $github_repo        = 'manastech/crystal';
 
-    Crenv->new(
-        prefix      => $prefix,
+    my $crenv = Crenv->new(
+        prefix      => $args->{prefix},
         fetcher     => Crenv::Fetcher->get(fetcher_type()),
         github_repo => $github_repo,
-    )->install($version);
+    );
+
+    if ($args->{definitions}) {
+        $crenv->show_definitions;
+    }
+
+    else {
+        $crenv->install($args->{version});
+    }
 }
 
 sub fetcher_type {
