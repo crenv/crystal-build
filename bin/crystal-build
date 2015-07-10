@@ -32,11 +32,17 @@ sub init {
 sub install {
     my ($self, $v) = @_;
 
-    my $version           = $self->find_install_version($v);
     my ($platform, $arch) = Crenv::Utils::system_info();
-    my $cache_dir         = "$self->{cache_dir}/$version";
-    my $target_name       = "crystal-$version-$platform-$arch";
-    my $tarball_path      = "$cache_dir/$target_name.tar.gz";
+
+    if ($arch ne 'x64') {
+        my $p = ucfirst $platform;
+        say "WARNING!! Crystal binary is not supported $arch $p OS at the moment.";
+    }
+
+    my $version      = $self->find_install_version($v);
+    my $cache_dir    = "$self->{cache_dir}/$version";
+    my $target_name  = "crystal-$version-$platform-$arch";
+    my $tarball_path = "$cache_dir/$target_name.tar.gz";
 
     say "resolve: $target_name";
     my $release       = $self->github->fetch_release($version);
