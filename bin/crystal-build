@@ -16,11 +16,13 @@ use Crenv::Fetcher;
 sub main {
     my $args        = Crenv::Utils::parse_args(@ARGV);
     my $github_repo = 'manastech/crystal';
+    my $mirror_url  = 'https://raw.githubusercontent.com/pine613/crystal-build/master/share/crystal-build/releases.json';
 
     my $crenv = Crenv->new(
         prefix      => $args->{prefix},
         fetcher     => Crenv::Fetcher->get(fetcher_type()),
         github_repo => $github_repo,
+        mirror_url  => $mirror_url,
     );
 
     if ($args->{definitions}) {
@@ -28,7 +30,7 @@ sub main {
     }
 
     else {
-        $crenv->install($args->{version});
+        $crenv->install($args->{version}, $args->{mirror});
     }
 }
 
