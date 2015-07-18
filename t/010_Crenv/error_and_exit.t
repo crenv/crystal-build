@@ -6,6 +6,8 @@ BEGIN {
     *CORE::GLOBAL::exit = sub { };
 };
 
+use Capture::Tiny ':all';
+
 use t::Util;
 use Crenv;
 
