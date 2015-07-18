@@ -34,7 +34,7 @@ sub setup_dirs {
     require File::Path;
     import File::Path qw/rmtree mkpath/;
 
-    rmtree('t/tmp/.crenv');
+    rmtree('t/tmp/.crenv', 0);
     mkpath('t/tmp/.crenv');
 }
 
