@@ -23,7 +23,7 @@ sub init {
     my $self = shift;
 
     $self->{versions_dir} = $self->{prefix} . '/versions';
-    $self->{cache_dir} = $self->{prefix} . '/cache';
+    $self->{cache_dir}    = $self->{prefix} . '/cache';
 }
 
 sub install {
