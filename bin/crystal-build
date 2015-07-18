@@ -17,9 +17,11 @@ sub main {
     my $args        = Crenv::Utils::parse_args(@ARGV);
     my $github_repo = 'manastech/crystal';
     my $mirror_url  = 'https://raw.githubusercontent.com/pine613/crystal-build/master/share/crystal-build/releases.json';
+    my $cache_dir   = $ENV{CRYSTAL_BUILD_CACHE_PATH} // '.';
 
     my $crenv = Crenv->new(
         prefix      => $args->{prefix},
+        cache_dir   => abs_path($cache_dir),
         fetcher     => Crenv::Fetcher->get(fetcher_type()),
         github_repo => $github_repo,
         mirror_url  => $mirror_url,
