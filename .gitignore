@@ -1,3 +1,7 @@
 *.swp
+*.swo
 *~
 
+local
+
+t/tmp
