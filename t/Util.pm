@@ -25,7 +25,8 @@ sub create_crenv {
 
     $opt{fetcher}     ||= Crenv::Fetcher::Wget->new;
     $opt{github_repo} ||= 'author/repo';
-    $opt{prefix}      ||= 't/tmp/.crenv';
+    $opt{prefix}      ||= 't/tmp/.crenv/versions/0.7.4';
+    $opt{cache_dir}   ||= 't/tmp/.crenv/cache';
 
     setup_dirs();
     Crenv->new(%opt);
@@ -86,8 +87,8 @@ our @EXPORT = (
     @Test::Deep::EXPORT,
     @Test::Deep::Matcher::EXPORT,
     @Test::Exception::EXPORT,
-    @Module::Spy::EXPORT,
     @Test::Mock::Guard::EXPORT,
+    @Module::Spy::EXPORT,
 );
 
 1;

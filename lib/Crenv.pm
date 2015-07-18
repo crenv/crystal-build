@@ -15,29 +15,14 @@ sub new {
 
     my $self = +{ %opt };
     bless $self => $class;
-
-    $self->init;
-    $self;
-}
-
-sub init {
-    my $self = shift;
-
-    $self->{versions_dir} = $self->{prefix} . '/versions';
-    $self->{cache_dir}    = $self->{prefix} . '/cache';
 }
 
 sub install {
     my ($self, $v, $mirror) = @_;
 
-    my ($platform, $arch) = Crenv::Utils::system_info();
+    my ($platform, $arch) = $self->system_info;
 
-    if ($arch ne 'x64') {
-        my $p = ucfirst $platform;
-        say "WARNING!! Crystal binary is not supported $arch $p OS at the moment.";
-    }
-
-    my $version      = $self->find_install_version($v);
+    my $version      = $self->normalize_version($v);
     my $cache_dir    = "$self->{cache_dir}/$version";
     my $target_name  = "crystal-$version-$platform-$arch";
     my $tarball_path = "$cache_dir/$target_name.tar.gz";
@@ -56,7 +41,7 @@ sub install {
     Crenv::Utils::extract_tar($tarball_path, $cache_dir);
 
     my ($target_dir) = glob "$cache_dir/crystal-*/";
-    rename $target_dir, $self->get_install_dir . "/$version" or die "Error: $!";
+    rename $target_dir, $self->get_install_dir or die "Error: $!";
 
     say 'Install successful';
 }
@@ -72,16 +57,17 @@ sub show_definitions {
     say $_ for @$sorted_versions;
 }
 
-sub find_install_version {
-    my ($self, $v) = @_;
+sub system_info {
+    my $self = shift;
 
-    my $version = $self->normalize_version($v);
+    my ($platform, $arch) = Crenv::Utils::system_info();
 
-    error_and_exit('version not found') unless $version;
-    error_and_exit("$version is already installed")
-        if -e $self->get_install_dir . "/$version";
+    if ($arch ne 'x64') {
+        my $p = ucfirst $platform;
+        say "WARNING!! Crystal binary is not supported $arch $p OS at the moment.";
+    }
 
-    return $version;
+    return ($platform, $arch);
 }
 
 sub resolve {
@@ -141,7 +127,7 @@ sub find_binary_download_urls {
 sub get_install_dir {
     my $self = shift;
 
-    my $dir = $self->{versions_dir};
+    my $dir = $self->{prefix};
     mkpath $dir unless -e $dir;
 
     return $dir;
@@ -166,19 +152,7 @@ sub error_and_exit {
 
 sub clean {
     my ($self, $version) = @_;
-
-    if ($version eq 'all') {
-        opendir my $dh, $self->{cache_dir} or return;
-        while (my $file = readdir $dh) {
-            next if $file =~ m/^\./;
-            my $path = "$self->{cache_dir}/$file";
-            unlink $path if -f $path;
-            rmtree $path if -d $path;
-        }
-    }
-    elsif (-d "$self->{cache_dir}/$version") {
-        rmtree "$self->{cache_dir}/$version";
-    }
+    rmtree "$self->{cache_dir}/$version";
 }
 
 sub github {
