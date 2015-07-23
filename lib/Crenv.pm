@@ -47,14 +47,18 @@ sub install {
 }
 
 sub show_definitions {
-    my ($self) = @_;
+    my $self = shift;
+    say $_ for @{ Crenv::Utils::sort_version([ $self->avaiable_versions ]) };
+}
+
+sub avaiable_versions {
+    my $self = shift;
 
     my $releases        = $self->github->fetch_releases;
     my @tag_names       = map { $_->{tag_name} } @$releases;
     my @versions        = map { $self->normalize_version($_) } @tag_names;
-    my $sorted_versions = Crenv::Utils::sort_version(\@versions);
 
-    say $_ for @$sorted_versions;
+    return @versions;
 }
 
 sub system_info {
