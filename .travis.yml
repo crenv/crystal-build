@@ -10,7 +10,10 @@ perl:
   - "5.10"
 
 script:
-  - prove -r t
+  - HARNESS_PERL_SWITCHES="-MDevel::Cover=+ignore,^local/|^t/" carton exec -- prove -r t
+
+after_success:
+  - carton exec -- cover -report coveralls
 
 notifications:
   slack:

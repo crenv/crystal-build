@@ -16,6 +16,9 @@ on test => sub {
     requires 'Module::Spy', '0.04';
     requires 'Test::TCP', '2.12';
     requires 'Plack', '1.0037';
+
+    requires 'Devel::Cover', '1.20';
+    requires 'Devel::Cover::Report::Coveralls', '0.11';
 };
 
 # vim: se et ts=4 sw=4 sts=4 ft=perl
