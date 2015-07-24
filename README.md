@@ -35,3 +35,6 @@ To see a list of all available Crystal versions, run `crenv install --list`.
 
 ## License
 Please see LICENSE file.
+
+## Author
+Pine Mizune
