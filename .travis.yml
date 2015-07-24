@@ -10,7 +10,7 @@ perl:
   - "5.10"
 
 script:
-  - HARNESS_PERL_SWITCHES="-MDevel::Cover=+ignore,^local/|^t/" prove -r t
+  - HARNESS_PERL_SWITCHES="-MDevel::Cover=+ignore,^local/|^t/|^vendor/" prove -r t
 
 after_success:
   - cover -report coveralls
