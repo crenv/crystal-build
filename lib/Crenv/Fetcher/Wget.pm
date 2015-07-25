@@ -3,7 +3,10 @@ use strict;
 use warnings;
 use utf8;
 
-sub new { bless {} }
+sub new {
+    my $class = shift;
+    bless {} => $class;
+}
 
 sub fetch_able {
     my ($self, $url) = @_;

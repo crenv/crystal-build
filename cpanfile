@@ -19,6 +19,7 @@ on test => sub {
 
     requires 'Devel::Cover', '1.20';
     requires 'Devel::Cover::Report::Coveralls', '0.11';
+    requires 'Test::Perl::Critic', '1.125';
 };
 
 # vim: se et ts=4 sw=4 sts=4 ft=perl
