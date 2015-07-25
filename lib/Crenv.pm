@@ -156,7 +156,9 @@ sub error_and_exit {
 
 sub clean {
     my ($self, $version) = @_;
-    rmtree "$self->{cache_dir}/$version";
+
+    my $dir = "$self->{cache_dir}/$version";
+    rmtree $dir if -d $dir;
 }
 
 sub github {
