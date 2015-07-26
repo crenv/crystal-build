@@ -41,6 +41,7 @@ sub install {
     Crenv::Utils::extract_tar($tarball_path, $cache_dir);
 
     my ($target_dir) = glob "$cache_dir/crystal-*/";
+    rmtree $self->get_install_dir if -d $self->get_install_dir;
     rename $target_dir, $self->get_install_dir or die "Error: $!";
 
     say 'Install successful';
