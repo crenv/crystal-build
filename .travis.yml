@@ -9,8 +9,12 @@ perl:
   - "5.12"
   - "5.10"
 
+before_script:
+  - git clone --depth 1 https://github.com/sstephenson/bats.git
+
 script:
   - prove -r t
+  - PATH="./bats/bin:$PATH" test/run
 
 notifications:
   slack:
