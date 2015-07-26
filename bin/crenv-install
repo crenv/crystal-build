@@ -116,9 +116,10 @@ if [ -n "${CRENV_BUILD_ROOT}" ]; then
   export CRYSTAL_BUILD_BUILD_PATH="${CRENV_BUILD_ROOT}/${VERSION_NAME}"
 fi
 
-# Set CRYSTAL_BUILD_CACHE_PATH to $CRENV_ROOT/cache, if the directory
+# Set CRYSTAL_BUILD_CACHE_PATH to $CRENV_ROOT, if the directory
 # exists and the variable is not already set.
-if [ -z "${CRYSTAL_BUILD_CACHE_PATH}" ] && [ -d "${CRENV_ROOT}/cache" ]; then
+if [ -z "${CRYSTAL_BUILD_CACHE_PATH}" ] && [ -d "${CRENV_ROOT}" ]; then
+  mkdir -p "${CRENV_ROOT}/cache"
   export CRYSTAL_BUILD_CACHE_PATH="${CRENV_ROOT}/cache"
 fi
 
