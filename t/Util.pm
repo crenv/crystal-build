@@ -4,8 +4,12 @@ use strict;
 use warnings;
 use utf8;
 use feature qw/state/;
+
 use FindBin;
-use lib "$FindBin::Bin/../lib";
+use lib (
+    "$FindBin::Bin/../vendor/lib",
+    "$FindBin::Bin/../lib"
+);
 
 use Exporter 'import';
 use Data::Dumper;

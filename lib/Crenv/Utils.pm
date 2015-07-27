@@ -5,6 +5,7 @@ use utf8;
 
 use POSIX;
 use Getopt::Long qw/:config posix_default no_ignore_case gnu_compat/;
+use Archive::Tar; # >= perl 5.9.3
 
 sub sort_version {
     my $version = shift;
@@ -42,18 +43,11 @@ sub extract_tar {
     my ($filepath, $outdir) = @_;
 
     my $cwd = getcwd;
-
     chdir($outdir);
 
-    eval {
-        require Archive::Tar;
-        my $tar = Archive::Tar->new;
-        $tar->read($filepath);
-        $tar->extract;
-    };
-    if ($@) {
-        `tar zfx $filepath`;
-    }
+    my $tar = Archive::Tar->new;
+    $tar->read($filepath);
+    $tar->extract;
 
     chdir($cwd);
 }

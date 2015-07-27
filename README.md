@@ -33,5 +33,18 @@ To see a list of all available Crystal versions, run `crenv install --list`.
 
 - `CRYSTAL_BUILD_CACHE_PATH`, if set, specifies a directory to use for caching downloaded package files.
 
+### Development
+
+Tests are executed using [Carton](https://github.com/perl-carton/carton):
+
+```
+$ carton install
+$ carton exec -- prove -r t # all
+$ carton exec -- prove t/<dir>/<file>.t
+```
+
 ## License
 Please see LICENSE file.
+
+## Author
+Pine Mizune
