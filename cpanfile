@@ -18,7 +18,7 @@ on test => sub {
     requires 'Plack', '1.0037';
 
     requires 'Devel::Cover', '1.20';
-    requires 'Devel::Cover::Report::Coveralls', '0.11';
+    requires 'Devel::Cover::Report::Codecov';
     requires 'Perl::Critic', '1.125';
     requires 'Test::Perl::Critic', '1.03';
 };
