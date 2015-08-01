@@ -83,7 +83,10 @@ sub resolve {
     my @resolvers;
     push @resolvers, [
         'Remote Cache',
-        Crenv::Resolver::Cache::Remote->new(fetcher => $self->{fetcher}),
+        Crenv::Resolver::Cache::Remote->new(
+            fetcher => $self->{fetcher},
+            cache_url => $self->{cache_url},
+        )
     ] if $cache;
     push @resolvers, [
         'GitHub',
