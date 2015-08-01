@@ -19,7 +19,6 @@ use Test::Deep;
 use Test::Deep::Matcher;
 use Test::Exception;
 use Test::Mock::Guard;
-use Module::Spy;
 
 sub create_crenv {
     my (%opt) = @_;
@@ -92,7 +91,6 @@ our @EXPORT = (
     @Test::Deep::Matcher::EXPORT,
     @Test::Exception::EXPORT,
     @Test::Mock::Guard::EXPORT,
-    @Module::Spy::EXPORT,
 );
 
 1;

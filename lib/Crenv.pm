@@ -117,18 +117,6 @@ sub resolve_by_github {
     return $download_urls->{$platform};
 }
 
-sub find_binary_download_urls {
-    my ($self, $assets) = @_;
-
-    my ($linux)  = grep { $_->{name} =~ /linux/  } @$assets;
-    my ($darwin) = grep { $_->{name} =~ /darwin/ } @$assets;
-
-    +{
-        linux  => $linux->{browser_download_url},
-        darwin => $darwin->{browser_download_url},
-    };
-}
-
 sub get_install_dir {
     my $self = shift;
 
