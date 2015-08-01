@@ -30,6 +30,7 @@ sub create_crenv {
     $opt{github_repo} ||= 'author/repo';
     $opt{prefix}      ||= 't/tmp/.crenv/versions/0.7.4';
     $opt{cache_dir}   ||= 't/tmp/.crenv/cache';
+    $opt{cache_url}   ||= 'http://example.com/releases';
 
     setup_dirs();
     Crenv->new(%opt);

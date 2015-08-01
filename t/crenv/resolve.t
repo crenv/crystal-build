@@ -17,6 +17,14 @@ subtest 'enable cache' => sub {
         my $guard_cache = mock_guard(
             'Crenv::Resolver::Cache::Remote',
             {
+                new => sub {
+                    my ($class, %opt) = @_;
+
+                    is $opt{cache_url}, 'http://example.com/releases';
+                    isa_ok $opt{fetcher}, 'Crenv::Fetcher::Wget';
+
+                    return bless {} => $class;
+                },
                 resolve => sub {
                     my ($self, $version, $platform, $arch) = @_;
 
