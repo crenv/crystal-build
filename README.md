@@ -2,6 +2,7 @@ crystal-build
 -------------
 
 [![Build Status](https://travis-ci.org/pine613/crystal-build.svg?branch=master)](https://travis-ci.org/pine613/crystal-build)
+[![codecov.io](http://codecov.io/github/pine613/crystal-build/coverage.svg?branch=master)](http://codecov.io/github/pine613/crystal-build?branch=master)
 
 
 crystal-build is an [crenv](https://github.com/pine613/crenv) plugin that provides an crenv install command.
