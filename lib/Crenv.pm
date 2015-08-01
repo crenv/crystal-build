@@ -9,6 +9,8 @@ use JSON::PP;
 
 use Crenv::Utils;
 use Crenv::GitHub;
+use Crenv::Resolver::GitHub;
+use Crenv::Resolver::Cache::Remote;
 
 sub new {
     my ($class, %opt) = @_;
@@ -28,7 +30,7 @@ sub install {
     my $tarball_path = "$cache_dir/$target_name.tar.gz";
 
     say "resolve: $target_name";
-    my $tarball_url = $self->resolve($mirror, $version, $platform, $arch);
+    my $tarball_url = $self->resolve($version, $platform, $arch, $mirror);
 
     # clean
     $self->clean($version);
@@ -76,45 +78,28 @@ sub system_info {
 }
 
 sub resolve {
-    my $self   = shift;
-    my $mirror = shift;
+    my ($self, $version, $platform, $arch, $cache) = @_;
 
-    if ($mirror) {
-        print 'resolve by mirror: ';
-        my $download_url = $self->resolve_by_mirror(@_);
-        say defined $download_url ? 'found' : 'not found';
-        return $download_url if defined $download_url;
-    }
+    my $resolvers = [];
 
-    {
-        print 'resolve by GitHub: ';
-        my $download_url = $self->resolve_by_github(@_);
+    push $resolvers, [
+        'Remote Cache',
+        Crenv::Resolver::Cache::Remote->new(fetcher => $self->{fetcher}),
+    ] if $cache;
+
+    push $resolvers, [
+        'GitHub',
+        Crenv::Resolver::GitHub->new(github => $self->github)
+    ];
+
+    for my $resolver (@$resolvers) {
+        print 'resolve by ' . $resolver->[0] . ': ';
+        my $download_url = $resolver->[1]->resolve($version, $platform, $arch);
         say defined $download_url ? 'found' : 'not found';
         return $download_url if defined $download_url;
     }
 
     error_and_exit('version not found');
-    return;
-}
-
-sub resolve_by_mirror {
-    my ($self, $version, $platform, $arch) = @_;
-
-    my $response  = $self->{fetcher}->fetch($self->{mirror_url});
-    my $releases  = decode_json($response);
-    my ($release) = grep { $_->{tag_name} eq $version } @$releases;
-
-    return unless defined $release;
-    return $release->{assets}->{"$platform-$arch"}
-}
-
-sub resolve_by_github {
-    my ($self, $version, $platform) = @_;
-
-    my $release       = $self->github->fetch_release($version);
-    my $download_urls = $self->find_binary_download_urls($release->{assets});
-
-    return $download_urls->{$platform};
 }
 
 sub get_install_dir {
