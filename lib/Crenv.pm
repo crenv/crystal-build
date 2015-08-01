@@ -80,19 +80,17 @@ sub system_info {
 sub resolve {
     my ($self, $version, $platform, $arch, $cache) = @_;
 
-    my $resolvers = [];
-
-    push $resolvers, [
+    my @resolvers;
+    push @resolvers, [
         'Remote Cache',
         Crenv::Resolver::Cache::Remote->new(fetcher => $self->{fetcher}),
     ] if $cache;
-
-    push $resolvers, [
+    push @resolvers, [
         'GitHub',
         Crenv::Resolver::GitHub->new(github => $self->github)
     ];
 
-    for my $resolver (@$resolvers) {
+    for my $resolver (@resolvers) {
         print 'resolve by ' . $resolver->[0] . ': ';
         my $download_url = $resolver->[1]->resolve($version, $platform, $arch);
         say defined $download_url ? 'found' : 'not found';
