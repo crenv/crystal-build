@@ -84,7 +84,7 @@ sub resolve {
     push @resolvers, [
         'Remote Cache',
         Crenv::Resolver::Cache::Remote->new(
-            fetcher => $self->{fetcher},
+            fetcher   => $self->{fetcher},
             cache_url => $self->{cache_url},
         )
     ] if $cache;
