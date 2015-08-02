@@ -3,6 +3,7 @@ use warnings;
 use utf8;
 
 use Test::MockObject;
+use Capture::Tiny qw/capture_stdout/;
 
 use t::Util;
 use Crenv;
@@ -38,9 +39,13 @@ subtest 'enable cache' => sub {
 
         my $crenv = create_crenv;
 
-        is
-            $crenv->resolve('0.7.5', 'linux', 'x64', 1),
-            'http://www.example.com';
+        my ($stdout) = capture_stdout {
+            is
+                $crenv->resolve('0.7.5', 'linux', 'x64', 1),
+                'http://www.example.com';
+        };
+
+        like $stdout, qr/resolve by Remote Cache: found/;
 
         is $guard_cache->call_count('Crenv::Resolver::Cache::Remote', 'resolve'), 1;
         is $guard_cache->call_count('Crenv::Resolver::GitHub', 'resolve'), 0;
@@ -67,9 +72,14 @@ subtest 'enable cache' => sub {
 
         my $crenv = create_crenv;
 
-        is
-            $crenv->resolve('0.7.5', 'linux', 'x64', 1),
-            'http://www.example.com';
+        my ($stdout) = capture_stdout {
+            is
+                $crenv->resolve('0.7.5', 'linux', 'x64', 1),
+                'http://www.example.com';
+        };
+
+        like $stdout, qr/resolve by Remote Cache: not found/;
+        like $stdout, qr/resolve by GitHub: found/;
 
         is $guard_cache->call_count('Crenv::Resolver::Cache::Remote', 'resolve'), 1;
         is $guard_cache->call_count('Crenv::Resolver::GitHub', 'resolve'), 1;
@@ -98,9 +108,13 @@ subtest 'enable cache' => sub {
 
         my $crenv = create_crenv;
 
-        is
-            $crenv->resolve('0.7.5', 'linux', 'x64', 0),
-            'http://www.example.com';
+        my ($stdout) = capture_stdout {
+            is
+                $crenv->resolve('0.7.5', 'linux', 'x64', 0),
+                'http://www.example.com';
+        };
+
+        like $stdout, qr/resolve by GitHub: found/;
 
         is $guard_cache->call_count('Crenv::Resolver::Cache::Remote', 'resolve'), 0;
         is $guard_cache->call_count('Crenv::Resolver::GitHub', 'resolve'), 1;
@@ -113,9 +127,13 @@ subtest failed => sub {
         resolve => sub { undef }
     });
 
-
     my $crenv = create_crenv;
-    ok not $crenv->resolve('0.7.5', 'linux', 'x64', 0);
+
+    my ($stdout) = capture_stdout {
+        ok not $crenv->resolve('0.7.5', 'linux', 'x64', 0);
+    };
+
+    like $stdout, qr/resolve by GitHub: not found/;
 
     is $guard_github->call_count('Crenv::Resolver::GitHub', 'resolve'), 1;
     is $guard_crenv->call_count('Crenv', 'error_and_exit'), 1;
