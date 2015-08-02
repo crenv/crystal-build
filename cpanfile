@@ -13,7 +13,7 @@ on test => sub {
     requires 'Test::Exception', '0.40';
 
     requires 'Test::Mock::Guard', '0.10';
-    requires 'Module::Spy', '0.04';
+    requires 'Test::MockObject', '1.20150527';
     requires 'Test::TCP', '2.12';
     requires 'Plack', '1.0037';
 

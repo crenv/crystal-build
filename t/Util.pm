@@ -19,7 +19,6 @@ use Test::Deep;
 use Test::Deep::Matcher;
 use Test::Exception;
 use Test::Mock::Guard;
-use Module::Spy;
 
 sub create_crenv {
     my (%opt) = @_;
@@ -31,6 +30,7 @@ sub create_crenv {
     $opt{github_repo} ||= 'author/repo';
     $opt{prefix}      ||= 't/tmp/.crenv/versions/0.7.4';
     $opt{cache_dir}   ||= 't/tmp/.crenv/cache';
+    $opt{cache_url}   ||= 'http://example.com/releases';
 
     setup_dirs();
     Crenv->new(%opt);
@@ -92,7 +92,6 @@ our @EXPORT = (
     @Test::Deep::Matcher::EXPORT,
     @Test::Exception::EXPORT,
     @Test::Mock::Guard::EXPORT,
-    @Module::Spy::EXPORT,
 );
 
 1;
