@@ -24,10 +24,11 @@ sub main {
 
     my $crenv = Crenv->new(
         prefix      => $args->{prefix},
+        cache       => $args->{cache},
+        cache_url   => $cache_url,
         cache_dir   => abs_path($cache_dir),
         fetcher     => Crenv::Fetcher->get(fetcher_type()),
         github_repo => $github_repo,
-        cache_url   => $cache_url,
     );
 
     if ($args->{definitions}) {
@@ -35,7 +36,7 @@ sub main {
     }
 
     else {
-        $crenv->install($args->{version}, $args->{mirror});
+        $crenv->install($args->{version});
     }
 }
 
