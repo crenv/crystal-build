@@ -20,27 +20,6 @@ sub new {
     return bless $self => $class;
 }
 
-sub resolvers {
-    my $self = shift;
-
-    my @resolvers;
-
-    push @resolvers, [
-        'remote cache',
-        Crenv::Resolver::Cache::Remote->new(
-            fetcher   => $self->{fetcher},
-            cache_url => $self->{cache_url},
-        )
-    ] if $self->cache;
-
-    push @resolvers, [
-        'GitHub',
-        Crenv::Resolver::GitHub->new(github => $self->github)
-    ];
-
-    return \@resolvers;
-}
-
 sub install {
     my ($self, $v) = @_;
 
@@ -74,6 +53,27 @@ sub install {
 sub show_definitions {
     my $self = shift;
     say $_ for @{ Crenv::Utils::sort_version([ $self->avaiable_versions ]) };
+}
+
+sub resolvers {
+    my $self = shift;
+
+    my @resolvers;
+
+    push @resolvers, [
+        'remote cache',
+        Crenv::Resolver::Cache::Remote->new(
+            fetcher   => $self->{fetcher},
+            cache_url => $self->{cache_url},
+        )
+    ] if $self->cache;
+
+    push @resolvers, [
+        'GitHub',
+        Crenv::Resolver::GitHub->new(github => $self->github)
+    ];
+
+    return \@resolvers;
 }
 
 sub avaiable_versions {
