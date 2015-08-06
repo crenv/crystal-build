@@ -7,7 +7,7 @@ use Test::MockObject;
 use t::Util;
 use Crenv;
 
-subtest basic => sub {
+subtest succeeded => sub {
     my $resolver = Test::MockObject->new;
     $resolver->mock(versions => sub {
         return [ '0.6.0', '0.6.1', '0.6.2' ];
@@ -27,6 +27,22 @@ subtest basic => sub {
 
     is $guard->call_count('Crenv', 'resolvers'), 1;
     ok $resolver->called('versions');
+};
+
+subtest failed => sub {
+    my $guard = mock_guard('Crenv', {
+        resolvers      => sub { [] },
+        error_and_exit => sub {
+            my $msg = shift;
+            is $msg, 'avaiable versions not found';
+        },
+    });
+
+    my $crenv = create_crenv;
+
+    $crenv->versions,
+    is $guard->call_count('Crenv', 'resolvers'), 1;
+    is $guard->call_count('Crenv', 'error_and_exit'), 1;
 };
 
 done_testing;
