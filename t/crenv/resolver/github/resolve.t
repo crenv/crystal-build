@@ -18,7 +18,7 @@ subtest basic => sub {
     my $guard = mock_guard(
         'Crenv::Resolver::GitHub', {
             github => sub { $github },
-            find_binary_download_urls => sub {
+            _find_binary_download_urls => sub {
                 my ($class, $assets) = @_;
 
                 cmp_deeply $assets, [ '0.7.5' ];
@@ -37,7 +37,7 @@ subtest basic => sub {
 
     ok $github->called('fetch_release');
     is $guard->call_count('Crenv::Resolver::GitHub', 'github'), 1;
-    is $guard->call_count('Crenv::Resolver::GitHub', 'find_binary_download_urls'), 1;
+    is $guard->call_count('Crenv::Resolver::GitHub', '_find_binary_download_urls'), 1;
 };
 
 done_testing;

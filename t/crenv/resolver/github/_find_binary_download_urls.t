@@ -18,7 +18,7 @@ subtest basic => sub {
         },
     ];
 
-    my $urls = Crenv::Resolver::GitHub->find_binary_download_urls($assets);
+    my $urls = Crenv::Resolver::GitHub->_find_binary_download_urls($assets);
     is $urls->{'darwin-x64'}, 'http://www.example.com/darwin/x64';
     is $urls->{'linux-x64'}, 'http://www.example.com/linux/x64';
 };
