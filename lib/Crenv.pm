@@ -79,9 +79,9 @@ sub resolvers {
 sub avaiable_versions {
     my $self = shift;
 
-    my $releases        = $self->github->fetch_releases;
-    my @tag_names       = map { $_->{tag_name} } @$releases;
-    my @versions        = map { $self->normalize_version($_) } @tag_names;
+    my $releases  = $self->github->fetch_releases;
+    my @tag_names = map { $_->{tag_name} } @$releases;
+    my @versions  = map { $self->normalize_version($_) } @tag_names;
 
     return @versions;
 }
