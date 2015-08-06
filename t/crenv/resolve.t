@@ -12,7 +12,7 @@ use Crenv;
 subtest 'enable cache' => sub {
     subtest 'Remote Cache' => sub {
         my $guard_github = mock_guard('Crenv::Resolver::GitHub', {
-            resolve => sub { undef }
+            resolve => sub { undef },
         });
 
         my $guard_cache = mock_guard(
@@ -37,23 +37,28 @@ subtest 'enable cache' => sub {
                 },
             });
 
+        my $guard_crenv = mock_guard('Crenv', { cache => sub { 1 } });
+
         my $crenv = create_crenv;
 
         my ($stdout) = capture_stdout {
             is
-                $crenv->resolve('0.7.5', 'linux', 'x64', 1),
+                $crenv->resolve('0.7.5', 'linux', 'x64'),
                 'http://www.example.com';
         };
 
-        like $stdout, qr/resolve by Remote Cache: found/;
+        like $stdout, qr/resolve by Remote Cache: found/i;
 
         is $guard_cache->call_count('Crenv::Resolver::Cache::Remote', 'resolve'), 1;
-        is $guard_cache->call_count('Crenv::Resolver::GitHub', 'resolve'), 0;
+        is $guard_github->call_count('Crenv::Resolver::GitHub', 'resolve'), 0;
+        is $guard_crenv->call_count('Crenv', 'cache'), 1;
     };
 
     subtest GitHub => sub {
+        my $guard_crenv = mock_guard('Crenv', { cache => sub { 1 } });
+
         my $guard_cache = mock_guard('Crenv::Resolver::Cache::Remote', {
-            resolve => sub { undef }
+            resolve => sub { undef },
         });
 
         my $guard_github = mock_guard(
@@ -74,19 +79,20 @@ subtest 'enable cache' => sub {
 
         my ($stdout) = capture_stdout {
             is
-                $crenv->resolve('0.7.5', 'linux', 'x64', 1),
+                $crenv->resolve('0.7.5', 'linux', 'x64'),
                 'http://www.example.com';
         };
 
-        like $stdout, qr/resolve by Remote Cache: not found/;
-        like $stdout, qr/resolve by GitHub: found/;
+        like $stdout, qr/resolve by Remote Cache: not found/i;
+        like $stdout, qr/resolve by GitHub: found/i;
 
         is $guard_cache->call_count('Crenv::Resolver::Cache::Remote', 'resolve'), 1;
-        is $guard_cache->call_count('Crenv::Resolver::GitHub', 'resolve'), 1;
+        is $guard_github->call_count('Crenv::Resolver::GitHub', 'resolve'), 1;
+        is $guard_crenv->call_count('Crenv', 'cache'), 1;
     };
 };
 
-subtest 'enable cache' => sub {
+subtest 'disabled cache' => sub {
     subtest GitHub => sub {
         my $guard_cache = mock_guard('Crenv::Resolver::Cache::Remote', {
             resolve => sub { undef }
@@ -106,23 +112,30 @@ subtest 'enable cache' => sub {
                 },
             });
 
+        my $guard_crenv = mock_guard('Crenv', { cache => sub { undef } });
+
         my $crenv = create_crenv;
 
         my ($stdout) = capture_stdout {
             is
-                $crenv->resolve('0.7.5', 'linux', 'x64', 0),
+                $crenv->resolve('0.7.5', 'linux', 'x64'),
                 'http://www.example.com';
         };
 
-        like $stdout, qr/resolve by GitHub: found/;
+        like $stdout, qr/resolve by GitHub: found/i;
 
         is $guard_cache->call_count('Crenv::Resolver::Cache::Remote', 'resolve'), 0;
-        is $guard_cache->call_count('Crenv::Resolver::GitHub', 'resolve'), 1;
+        is $guard_github->call_count('Crenv::Resolver::GitHub', 'resolve'), 1;
+        is $guard_crenv->call_count('Crenv', 'cache'), 1;
     };
 };
 
 subtest failed => sub {
-    my $guard_crenv  = mock_guard('Crenv', { error_and_exit => sub {} });
+    my $guard_crenv  = mock_guard('Crenv', {
+        cache          => sub { undef },
+        error_and_exit => sub {},
+    });
+
     my $guard_github = mock_guard('Crenv::Resolver::GitHub', {
         resolve => sub { undef }
     });
@@ -130,13 +143,14 @@ subtest failed => sub {
     my $crenv = create_crenv;
 
     my ($stdout) = capture_stdout {
-        ok not $crenv->resolve('0.7.5', 'linux', 'x64', 0);
+        ok not $crenv->resolve('0.7.5', 'linux', 'x64');
     };
 
-    like $stdout, qr/resolve by GitHub: not found/;
+    like $stdout, qr/resolve by GitHub: not found/i;
 
     is $guard_github->call_count('Crenv::Resolver::GitHub', 'resolve'), 1;
     is $guard_crenv->call_count('Crenv', 'error_and_exit'), 1;
+    is $guard_crenv->call_count('Crenv', 'cache'), 1;
 };
 
 done_testing;

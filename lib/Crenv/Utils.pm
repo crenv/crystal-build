@@ -48,18 +48,18 @@ sub extract_tar {
 sub parse_args {
     my ($version, $prefix) = @_[-2,-1];
     my $definitions = 0;
-    my $mirror      = 1;
+    my $cache       = 1;
 
     GetOptions(
         definitions => \$definitions,
-        'mirror!'   => \$mirror,
+        'cache!'    => \$cache,
     );
 
     return {
         version     => $version,
         prefix      => $prefix,
         definitions => $definitions,
-        mirror      => $mirror,
+        cache       => $cache,
     };
 }
 

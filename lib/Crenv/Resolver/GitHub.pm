@@ -12,14 +12,23 @@ sub resolve {
     my ($self, $version, $platform, $arch) = @_;
 
     my $release       = $self->github->fetch_release($version);
-    my $download_urls = $self->find_binary_download_urls($release->{assets});
+    my $download_urls = $self->_find_binary_download_urls($release->{assets});
 
     return $download_urls->{"$platform-$arch"};
 }
 
+sub versions {
+    my $self = shift;
+
+    my $releases = $self->github->fetch_releases;
+    my @tags     = map { $_->{tag_name} } @$releases;
+
+    return \@tags;
+}
+
 sub github { shift->{github} }
 
-sub find_binary_download_urls {
+sub _find_binary_download_urls {
     my ($self, $assets) = @_;
 
     my ($linux)  = grep { $_->{name} =~ /linux/  } @$assets;
