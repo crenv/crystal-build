@@ -52,7 +52,7 @@ sub install {
 
 sub show_definitions {
     my $self = shift;
-    say $_ for @{ Crenv::Utils::sort_version([ $self->avaiable_versions ]) };
+    say $_ for @{ Crenv::Utils::sort_version($self->avaiable_versions) };
 }
 
 sub resolvers {
@@ -79,11 +79,8 @@ sub resolvers {
 sub avaiable_versions {
     my $self = shift;
 
-    my $releases  = $self->github->fetch_releases;
-    my @tag_names = map { $_->{tag_name} } @$releases;
-    my @versions  = map { $self->normalize_version($_) } @tag_names;
-
-    return @versions;
+    my @versions = map { $self->normalize_version($_) } @{ $self->versions };
+    return \@versions;
 }
 
 sub system_info {
@@ -110,6 +107,17 @@ sub resolve {
     }
 
     error_and_exit('version not found');
+}
+
+sub versions {
+    my $self = shift;
+
+    for my $resolver (@{ $self->resolvers }) {
+        my $versions = $resolver->[1]->versions;
+        return $versions;
+    }
+
+    error_and_exit('avaiable versions not found');
 }
 
 sub get_install_dir {
