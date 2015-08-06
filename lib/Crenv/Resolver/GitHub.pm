@@ -21,9 +21,9 @@ sub versions {
     my $self = shift;
 
     my $releases = $self->github->fetch_releases;
-    my $tags     = map { $_->{tag_name} } @$releases;
+    my @tags     = map { $_->{tag_name} } @$releases;
 
-    return $tags;
+    return \@tags;
 }
 
 sub github { shift->{github} }
