@@ -13,6 +13,7 @@ use lib (
 
 use Exporter 'import';
 use Data::Dumper;
+use Cwd qw/abs_path/;
 
 use Test::More;
 use Test::Deep;
@@ -30,7 +31,7 @@ sub create_crenv {
     $opt{github_repo} ||= 'author/repo';
     $opt{prefix}      ||= 't/tmp/.crenv/versions/0.7.4';
     $opt{cache}       ||= 1;
-    $opt{cache_dir}   ||= 't/tmp/.crenv/cache';
+    $opt{cache_dir}   ||= abs_path('t/tmp/.crenv/cache');
     $opt{cache_url}   ||= 'http://example.com/releases';
 
     setup_dirs();
