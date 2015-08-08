@@ -36,9 +36,9 @@ sub _find_binary_download_urls {
     my ($darwin)    = grep { $_->{name} =~ /darwin/      } @$assets;
 
     my %download_urls;
-    $download_urls{'linux-x64'}  = $linux_x64->{browser_download_url},
-    $download_urls{'linux-x86'}  = $linux_x86->{browser_download_url},
-    $download_urls{'darwin-x64'} = $darwin->{browser_download_url},
+    $download_urls{'linux-x64'}  = $linux_x64->{browser_download_url} if defined $linux_x64;
+    $download_urls{'linux-x86'}  = $linux_x86->{browser_download_url} if defined $linux_x86;
+    $download_urls{'darwin-x64'} = $darwin->{browser_download_url}    if defined $darwin;
 
     return \%download_urls;
 }
