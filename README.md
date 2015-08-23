@@ -7,8 +7,6 @@ crystal-build
 
 crystal-build is an [crenv](https://github.com/pine613/crenv) plugin that provides an crenv install command.
 
-Almost all of code come from [node-build](https://github.com/riywo/node-build) and [nodebrew](https://github.com/hokaccha/nodebrew). Thanks a lot!
-
 ## Install
 
 ```
@@ -43,6 +41,11 @@ $ carton install
 $ carton exec -- prove -r t # all
 $ carton exec -- prove t/<dir>/<file>.t
 ```
+
+### Acknowledgement
+
+- [riywo](https://github.com/riywo)
+- [hokaccha](https://github.com/hokaccha)
 
 ## License
 Please see LICENSE file.
