@@ -48,6 +48,11 @@ $ carton exec -- prove t/<dir>/<file>.t
 - [hokaccha](https://github.com/hokaccha)
 - [makamaka](https://github.com/makamaka)
 
+### Change log
+
+- 1.1.0 - Support [shards](https://github.com/ysbaddaden/shards) auto-install
+- 1.0.0 - First release
+
 ## License
 (The MIT license)
 
