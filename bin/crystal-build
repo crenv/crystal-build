@@ -19,13 +19,17 @@ use Crenv::Fetcher;
 sub main {
     my $args        = Crenv::Utils::parse_args(@ARGV);
     my $github_repo = 'manastech/crystal';
-    my $cache_url   = 'https://raw.githubusercontent.com/pine613/crystal-build/master/share/crystal-build/releases.json';
     my $cache_dir   = $ENV{CRYSTAL_BUILD_CACHE_PATH} // '.';
+
+    my $share_url  = 'https://raw.githubusercontent.com/pine613/crystal-build/master/share/crystal-build/';
+    my $cache_url  = $share_url.'/releases.json';
+    my $shards_url = $share_url.'/shards.json';
 
     my $crenv = Crenv->new(
         prefix      => $args->{prefix},
         cache       => $args->{cache},
         cache_url   => $cache_url,
+        shards_url  => $shards_url,
         cache_dir   => abs_path($cache_dir),
         fetcher     => Crenv::Fetcher->get(fetcher_type()),
         github_repo => $github_repo,

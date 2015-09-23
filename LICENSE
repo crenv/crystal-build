@@ -52,6 +52,16 @@ under the same terms as Perl itself.
 
 -----------------------------------------------------------
 
+| SemVer
+| http://search.cpan.org/~dwheeler/SemVer-v0.6.0/lib/SemVer.pm
+
+Copyright (c) 2010-2015 David E. Wheeler. Some Rights Reserved.
+
+This module is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+-----------------------------------------------------------
+
 | crystal-build
 
 (The MIT license)

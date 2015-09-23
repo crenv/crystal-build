@@ -3,15 +3,18 @@ use strict;
 use warnings;
 use utf8;
 use feature qw/say/;
-our $VERSION = '1.00';
+our $VERSION = '1.10';
 
 use File::Path qw/rmtree mkpath/;
 use JSON::PP;
+use SemVer;
 
 use Crenv::Utils;
 use Crenv::GitHub;
 use Crenv::Resolver::GitHub;
 use Crenv::Resolver::Cache::Remote;
+use Crenv::Resolver::Shards;
+use Crenv::Installer::Shards;
 
 sub new {
     my ($class, %opt) = @_;
@@ -46,7 +49,27 @@ sub install {
     my ($target_dir) = glob "$cache_dir/crystal-*/";
     rename $target_dir, $self->get_install_dir or die "Error: $!";
 
+    # shards
+    my $sember = SemVer->declare($version);
+    my $v077   = SemVer->new('0.7.7');
+
+    if ($v077 <= $sember) {
+        $self->install_shards($version);
+    }
+
     say 'Install successful';
+}
+
+sub install_shards {
+    my ($self, $crystal_version) = @_;
+
+    my $installer = Crenv::Installer::Shards->new(
+        fetcher    => $self->{fetcher},
+        shards_url => $self->{shards_url},
+        cache_dir  => "$self->{cache_dir}/$crystal_version",
+    );
+
+    $installer->install($crystal_version, $self->{prefix});
 }
 
 sub show_definitions {

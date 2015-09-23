@@ -69,4 +69,11 @@ sub parse_args {
     };
 }
 
+sub error_and_exit {
+    my $msg = shift;
+
+    print "$msg\n";
+    exit 1;
+}
+
 1;

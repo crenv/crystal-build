@@ -5,10 +5,10 @@ use warnings;
 use utf8;
 use feature qw/state/;
 
-use FindBin;
+use File::Basename qw/dirname/;
 use lib (
-    "$FindBin::Bin/../vendor/lib",
-    "$FindBin::Bin/../lib"
+    dirname(__FILE__)."/../vendor/lib",
+    dirname(__FILE__)."/../lib"
 );
 
 use Exporter 'import';
