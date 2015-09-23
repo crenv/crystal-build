@@ -109,12 +109,6 @@ sub system_info {
     my $self = shift;
 
     my ($platform, $arch) = Crenv::Utils::system_info();
-
-    if ($arch ne 'x64') {
-        my $p = ucfirst $platform;
-        say "WARNING!! Crystal binary is not supported $arch $p OS at the moment.";
-    }
-
     return ($platform, $arch);
 }
 
