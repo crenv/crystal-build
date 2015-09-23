@@ -1,4 +1,5 @@
 {
+  "default": "https://github.com/ysbaddaden/shards/archive/master.tar.gz",
   "0.8.0": "https://github.com/ysbaddaden/shards/archive/master.tar.gz",
   "0.7.7": "https://github.com/ysbaddaden/shards/archive/v0.4.0.tar.gz"
 }
