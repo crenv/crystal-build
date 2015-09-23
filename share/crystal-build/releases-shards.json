@@ -1,0 +1,18 @@
+[
+  {
+    "tag_name": "HEAD",
+    "crystal_versions": ["0.8.0", "HEAD"],
+    "assets": {
+      "tarball": "https://github.com/ysbaddaden/shards/archive/master.tar.gz"
+    }
+  },
+  {
+    "tag_name": "0.4.0",
+    "crystal_versions": ["0.7.7"],
+    "assets": {
+      "linux-x64": "https://github.com/ysbaddaden/shards/releases/download/v0.4.0/shards-0.4.0_linux_amd64.tar.gz",
+      "darwin-x64": "https://github.com/ysbaddaden/shards/releases/download/v0.4.0/shards-0.4.0_darwin_x86_64.tar.gz",
+      "tarball": "https://github.com/ysbaddaden/shards/archive/v0.4.0.tar.gz"
+    }
+  }
+]
