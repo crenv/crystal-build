@@ -15,6 +15,8 @@ sub new {
 sub build {
     my ($self, $target_dir, $crystal_dir) = @_;
 
+    $self->_install_libyaml;
+
     my $crystal_bin      = abs_path("$crystal_dir/bin/crystal");
     my $env_crystal_path = abs_path("$crystal_dir/libs").':.';
 
@@ -28,5 +30,18 @@ EOF
 
     return "$target_dir/bin/shards";
 }
+
+sub _install_libyaml {
+    my ($platform, $arch) = Crenv::Utils::system_info();
+
+    if ($platform eq 'darwin') {
+        return unless system('which brew') == 0;
+
+        if (system('brew list libyaml > /dev/null 2>&1') != 0) {
+            system('brew install libyaml');
+        }
+    }
+}
+
 
 1;

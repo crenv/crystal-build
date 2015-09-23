@@ -54,7 +54,7 @@ sub install {
     my $v077   = SemVer->new('0.7.7');
 
     if ($v077 <= $sember) {
-        $self->install_shards($version) unless $platform eq 'darwin';
+        $self->install_shards($version);
     }
 
     say 'Install successful';
