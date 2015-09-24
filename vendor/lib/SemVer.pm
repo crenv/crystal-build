@@ -2,7 +2,7 @@ package SemVer;
 
 use 5.008001;
 use strict;
-use version 0.82;
+use version 0.77;
 use Scalar::Util ();
 
 use overload (
