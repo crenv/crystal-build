@@ -29,7 +29,7 @@ sub fetch_from_github {
 sub download {
     my ($self, $url, $path) = @_;
 
-    system("curl -L $url -o $path") == 0;
+    system("curl -LSs $url -o $path") == 0;
 }
 
 1;
