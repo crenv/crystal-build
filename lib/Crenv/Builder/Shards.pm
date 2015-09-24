@@ -35,7 +35,7 @@ sub _install_libyaml {
     my ($platform, $arch) = Crenv::Utils::system_info();
 
     if ($platform eq 'darwin') {
-        return unless system('which brew') == 0;
+        return unless system('which brew > /dev/null 2>&1') == 0;
 
         if (system('brew list libyaml > /dev/null 2>&1') != 0) {
             system('brew install libyaml');
