@@ -9,7 +9,11 @@ perl:
   - "5.12"
   - "5.10"
 
+before_script:
+  - git clone --depth 1 https://github.com/sstephenson/bats.git
+
 script:
+  - PATH="./bats/bin:$PATH" test/run
   - prove -r xt
   - HARNESS_PERL_SWITCHES="-MDevel::Cover=+ignore,^local/|^t/|^vendor/" prove -r t
 
