@@ -26,7 +26,7 @@ cd "$target_dir" && "$crystal_bin" build --release src/shards.cr -o bin/shards
 EOF
 
     system($command) == 0
-        or Crenv::Utils::error_and_exit("shards build faild: $target_dir");
+        or print "shards build faild: $target_dir\n";
 
     return "$target_dir/bin/shards";
 }

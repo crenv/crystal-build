@@ -70,10 +70,13 @@ sub _copy {
     my $target_dir  = $crystal_dir.'/bin';
     my $target_path = $target_dir.'/shards';
 
-    # unlink $target_path if -f $target_path;
-    # mkpath $target_dir unless -d $target_dir;
+    unless (-f $shards_bin) {
+        print "shards binary not found\n";
+        return;
+    }
+
     system("cp \"$shards_bin\" \"$target_path\"") == 0
-        or Crenv::Utils::error_and_exit('shards binary copy failed: '.$target_path);
+        or print "shards binary copy failed: $target_path\n";
 }
 
 1;
