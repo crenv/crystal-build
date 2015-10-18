@@ -13,9 +13,14 @@ on test => sub {
     requires 'Test::Exception', '0.40';
 
     requires 'Test::Mock::Guard', '0.10';
-    requires 'Module::Spy', '0.04';
+    requires 'Test::MockObject', '1.20150527';
     requires 'Test::TCP', '2.12';
     requires 'Plack', '1.0037';
+
+    requires 'Devel::Cover', '1.20';
+    requires 'Devel::Cover::Report::Codecov';
+    requires 'Perl::Critic', '1.125';
+    requires 'Test::Perl::Critic', '1.03';
 };
 
 # vim: se et ts=4 sw=4 sts=4 ft=perl

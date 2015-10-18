@@ -3,7 +3,10 @@ use strict;
 use warnings;
 use utf8;
 
-sub new { bless {} }
+sub new {
+    my $class = shift;
+    bless {} => $class;
+}
 
 sub fetch_able {
     my ($self, $url) = @_;
@@ -26,7 +29,7 @@ sub fetch_from_github {
 sub download {
     my ($self, $url, $path) = @_;
 
-    system("curl -L $url -o $path") == 0;
+    system("curl -LSs $url -o $path") == 0;
 }
 
 1;

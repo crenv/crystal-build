@@ -3,22 +3,28 @@ use strict;
 use warnings;
 use utf8;
 use feature qw/say/;
+our $VERSION = '1.10';
 
 use File::Path qw/rmtree mkpath/;
 use JSON::PP;
+use SemVer;
 
 use Crenv::Utils;
 use Crenv::GitHub;
+use Crenv::Resolver::GitHub;
+use Crenv::Resolver::Cache::Remote;
+use Crenv::Resolver::Shards;
+use Crenv::Installer::Shards;
 
 sub new {
     my ($class, %opt) = @_;
 
     my $self = +{ %opt };
-    bless $self => $class;
+    return bless $self => $class;
 }
 
 sub install {
-    my ($self, $v, $mirror) = @_;
+    my ($self, $v) = @_;
 
     my ($platform, $arch) = $self->system_info;
 
@@ -28,7 +34,7 @@ sub install {
     my $tarball_path = "$cache_dir/$target_name.tar.gz";
 
     say "resolve: $target_name";
-    my $tarball_url = $self->resolve($mirror, $version, $platform, $arch);
+    my $tarball_url = $self->resolve($version, $platform, $arch);
 
     # clean
     $self->clean($version);
@@ -41,98 +47,100 @@ sub install {
     Crenv::Utils::extract_tar($tarball_path, $cache_dir);
 
     my ($target_dir) = glob "$cache_dir/crystal-*/";
-    rmtree $self->get_install_dir if -d $self->get_install_dir;
     rename $target_dir, $self->get_install_dir or die "Error: $!";
+
+    # shards
+    my $sember = SemVer->declare($version);
+    my $v077   = SemVer->new('0.7.7');
+
+    if ($v077 <= $sember) {
+        $self->install_shards($version);
+    }
 
     say 'Install successful';
 }
 
+sub install_shards {
+    my ($self, $crystal_version) = @_;
+
+    my $installer = Crenv::Installer::Shards->new(
+        fetcher    => $self->{fetcher},
+        shards_url => $self->{shards_url},
+        cache_dir  => "$self->{cache_dir}/$crystal_version",
+    );
+
+    $installer->install($crystal_version, $self->{prefix});
+}
+
 sub show_definitions {
     my $self = shift;
-    say $_ for @{ Crenv::Utils::sort_version([ $self->avaiable_versions ]) };
+    say $_ for @{ Crenv::Utils::sort_version($self->avaiable_versions) };
+}
+
+sub resolvers {
+    my $self = shift;
+
+    my @resolvers;
+
+    push @resolvers, [
+        'remote cache',
+        Crenv::Resolver::Cache::Remote->new(
+            fetcher   => $self->{fetcher},
+            cache_url => $self->{cache_url},
+        )
+    ] if $self->cache;
+
+    push @resolvers, [
+        'GitHub',
+        Crenv::Resolver::GitHub->new(github => $self->github)
+    ];
+
+    return \@resolvers;
 }
 
 sub avaiable_versions {
     my $self = shift;
 
-    my $releases        = $self->github->fetch_releases;
-    my @tag_names       = map { $_->{tag_name} } @$releases;
-    my @versions        = map { $self->normalize_version($_) } @tag_names;
-
-    return @versions;
+    my @versions = map { $self->normalize_version($_) } @{ $self->versions };
+    return \@versions;
 }
 
 sub system_info {
     my $self = shift;
 
     my ($platform, $arch) = Crenv::Utils::system_info();
-
-    if ($arch ne 'x64') {
-        my $p = ucfirst $platform;
-        say "WARNING!! Crystal binary is not supported $arch $p OS at the moment.";
-    }
-
     return ($platform, $arch);
 }
 
 sub resolve {
-    my $self   = shift;
-    my $mirror = shift;
+    my ($self, $version, $platform, $arch) = @_;
 
-    if ($mirror) {
-        print 'resolve by mirror: ';
-        my $download_url = $self->resolve_by_mirror(@_);
-        say defined $download_url ? 'found' : 'not found';
-        return $download_url if defined $download_url;
-    }
-
-    {
-        print 'resolve by GitHub: ';
-        my $download_url = $self->resolve_by_github(@_);
+    for my $resolver (@{ $self->resolvers }) {
+        print 'resolve by ' . $resolver->[0] . ': ';
+        my $download_url = $resolver->[1]->resolve($version, $platform, $arch);
         say defined $download_url ? 'found' : 'not found';
         return $download_url if defined $download_url;
     }
 
     error_and_exit('version not found');
-    return;
 }
 
-sub resolve_by_mirror {
-    my ($self, $version, $platform, $arch) = @_;
+sub versions {
+    my $self = shift;
 
-    my $response  = $self->{fetcher}->fetch($self->{mirror_url});
-    my $releases  = decode_json($response);
-    my ($release) = grep { $_->{tag_name} eq $version } @$releases;
+    for my $resolver (@{ $self->resolvers }) {
+        my $versions = $resolver->[1]->versions;
+        return $versions;
+    }
 
-    return unless defined $release;
-    return $release->{assets}->{"$platform-$arch"}
-}
-
-sub resolve_by_github {
-    my ($self, $version, $platform) = @_;
-
-    my $release       = $self->github->fetch_release($version);
-    my $download_urls = $self->find_binary_download_urls($release->{assets});
-
-    return $download_urls->{$platform};
-}
-
-sub find_binary_download_urls {
-    my ($self, $assets) = @_;
-
-    my ($linux)  = grep { $_->{name} =~ /linux/  } @$assets;
-    my ($darwin) = grep { $_->{name} =~ /darwin/ } @$assets;
-
-    +{
-        linux  => $linux->{browser_download_url},
-        darwin => $darwin->{browser_download_url},
-    };
+    error_and_exit('avaiable versions not found');
 }
 
 sub get_install_dir {
     my $self = shift;
 
     my $dir = $self->{prefix};
+    rmtree $dir if -d $dir;
     mkpath $dir unless -e $dir;
 
     return $dir;
@@ -157,7 +165,9 @@ sub error_and_exit {
 
 sub clean {
     my ($self, $version) = @_;
-    rmtree "$self->{cache_dir}/$version";
+
+    my $dir = "$self->{cache_dir}/$version";
+    rmtree $dir if -d $dir;
 }
 
 sub github {
@@ -168,5 +178,7 @@ sub github {
         github_repo => $self->{github_repo},
     );
 }
+
+sub cache { shift->{cache} }
 
 1;
