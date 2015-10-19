@@ -1,6 +1,6 @@
 {
   "default": "https://github.com/ysbaddaden/shards/archive/master.tar.gz",
-  "0.9.0": "https://github.com/pine613/shards/archive/crystal_0_9_0.tar.gz",
+  "0.9.0": "https://github.com/ysbaddaden/shards/archive/v0.5.2.tar.gz",
   "0.8.0": "https://github.com/ysbaddaden/shards/archive/v0.5.1.tar.gz",
   "0.7.7": "https://github.com/ysbaddaden/shards/archive/v0.4.0.tar.gz"
 }
