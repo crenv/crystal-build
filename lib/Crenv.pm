@@ -3,11 +3,10 @@ use strict;
 use warnings;
 use utf8;
 use feature qw/say/;
-our $VERSION = '1.10';
+our $VERSION = '1.1.1';
 
 use File::Path qw/rmtree mkpath/;
 use JSON::PP;
-use SemVer;
 
 use Crenv::Utils;
 use Crenv::GitHub;
@@ -50,10 +49,7 @@ sub install {
     rename $target_dir, $self->get_install_dir or die "Error: $!";
 
     # shards
-    my $sember = SemVer->declare($version);
-    my $v077   = SemVer->new('0.7.7');
-
-    if ($v077 <= $sember) {
+    if (Crenv::Utils::cmp_version($version, '0.7.7') >= 0) { # >= v0.7.7
         $self->install_shards($version);
     }
 
