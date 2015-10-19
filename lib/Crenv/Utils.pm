@@ -16,6 +16,15 @@ sub sort_version {
     } @$version];
 }
 
+sub cmp_version {
+    my ($lhs, $rhs) = @_;
+
+    my ($a1, $a2, $a3) = ($lhs =~ m/(\d+)\.(\d+)\.(\d+)/);
+    my ($b1, $b2, $b3) = ($rhs =~ m/(\d+)\.(\d+)\.(\d+)/);
+
+    return $a1 <=> $b1 || $a2 <=> $b2 || $a3 <=> $b3
+}
+
 sub system_info {
     my $arch;
     my ($sysname, $machine) = (POSIX::uname)[0, 4];
