@@ -45,7 +45,7 @@ sub install_libyaml_with_brew {
     my ($self, $target_dir) = @_;
 
     unless (system('which brew > /dev/null 2>&1') == 0) {
-        warn 'You should install Homebrew';
+        print STDERR "You should install Homebrew\n";
         return;
     }
 
