@@ -46,7 +46,6 @@ $ carton exec -- prove t/<dir>/<file>.t
 
 - [riywo](https://github.com/riywo)
 - [hokaccha](https://github.com/hokaccha)
-- [makamaka](https://github.com/makamaka)
 
 ### Change log
 
