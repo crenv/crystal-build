@@ -10,17 +10,11 @@ use SemVer::V2::Strict;
 
 sub sort_version {
     my $version = shift;
-
-    return [sort {
-        my ($a1, $a2, $a3) = ($a =~ m/(\d+)\.(\d+)\.(\d+)/);
-        my ($b1, $b2, $b3) = ($b =~ m/(\d+)\.(\d+)\.(\d+)/);
-        $a1 <=> $b1 || $a2 <=> $b2 || $a3 <=> $b3
-    } @$version];
+    return [ sort { cmp_version($a, $b) } @$version ];
 }
 
 sub cmp_version {
     my ($lhs, $rhs) = @_;
-
     return SemVer::V2::Strict->new($lhs) <=> SemVer::V2::Strict->new($rhs);
 }
 
