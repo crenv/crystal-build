@@ -6,6 +6,8 @@ use utf8;
 use POSIX;
 use Getopt::Long qw/:config posix_default no_ignore_case gnu_compat/;
 
+use SemVer::V2::Strict;
+
 sub sort_version {
     my $version = shift;
 
@@ -19,10 +21,7 @@ sub sort_version {
 sub cmp_version {
     my ($lhs, $rhs) = @_;
 
-    my ($a1, $a2, $a3) = ($lhs =~ m/(\d+)\.(\d+)\.(\d+)/);
-    my ($b1, $b2, $b3) = ($rhs =~ m/(\d+)\.(\d+)\.(\d+)/);
-
-    return $a1 <=> $b1 || $a2 <=> $b2 || $a3 <=> $b3
+    return SemVer::V2::Strict->new($lhs) <=> SemVer::V2::Strict->new($rhs);
 }
 
 sub system_info {
