@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use constant PRE_RELEASE_FORMAT    => qr/(?:-(?<pre_release>[a-zA-Z0-9.\-]+))?/;
 use constant BUILD_METADATA_FORMAT => qr/(?:\+(?<build_metadata>[a-zA-Z0-9.\-]+))?/;
@@ -151,6 +151,26 @@ Create new C<SemVer::V2::Strict> instance from version numbers.
 C<SemVer::V2::Strict-E<gt>new('1.0.0-alpha+100')> equals C<SemVer::V2::Strict-E<gt>new(1, 0, 0, 'alpha', '100')>.
 
 =head2 METHODS
+
+=head3 C<major>
+
+Get the major version number.
+
+=head3 C<minor>
+
+Return the minor version number.
+
+=head3 C<patch>
+
+Return the patch version number.
+
+=head3 C<pre_release>
+
+Return the pre_release string.
+
+=head3 C<build_metadata>
+
+Return the build_metadata string.
 
 =head3 C<E<lt>=E<gt>>
 
