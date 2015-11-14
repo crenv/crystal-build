@@ -3,6 +3,8 @@ use strict;
 use warnings;
 use utf8;
 
+use File::Spec;
+
 use Crenv::Utils;
 
 sub new {
@@ -17,14 +19,14 @@ sub download {
     my ($self, $tarball_url) = @_;
 
     my $filename     = $self->_detect_filename($tarball_url);
-    my $tarball_path = $self->cache_dir.'/'.$filename;
+    my $tarball_path = File::Spec->join($self->cache_dir, $filename);
 
     $self->fetcher->download($tarball_url, $tarball_path)
         or Crenv::Utils::error_and_exit("download faild: $tarball_url");
 
     Crenv::Utils::extract_tar($tarball_path, $self->cache_dir);
 
-    my ($target_dir) = glob $self->cache_dir.'/shards-*/';
+    my ($target_dir) = glob File::Spec->join($self->cache_dir, 'shards-*');
     return $target_dir;
 }
 
