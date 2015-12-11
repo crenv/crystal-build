@@ -3,3 +3,4 @@
 --color
 --failures
 --trap
+--verbose
