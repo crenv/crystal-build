@@ -10,12 +10,9 @@ use SemVer::V2::Strict;
 
 sub sort_version {
     my $version = shift;
-    return [ sort { cmp_version($a, $b) } @$version ];
-}
-
-sub cmp_version {
-    my ($lhs, $rhs) = @_;
-    return SemVer::V2::Strict->new($lhs) <=> SemVer::V2::Strict->new($rhs);
+    return [ sort {
+        SemVer::V2::Strict->new($a) <=> SemVer::V2::Strict->new($b)
+    } @$version ];
 }
 
 sub system_info {

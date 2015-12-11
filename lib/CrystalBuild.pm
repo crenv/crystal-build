@@ -7,6 +7,7 @@ our $VERSION = '1.1.2';
 
 use File::Path qw/rmtree mkpath/;
 use JSON::PP;
+use SemVer::V2::Strict;
 
 use CrystalBuild::Utils;
 use CrystalBuild::GitHub;
@@ -49,7 +50,8 @@ sub install {
     rename $target_dir, $self->get_install_dir or die "Error: $!";
 
     # shards
-    if (CrystalBuild::Utils::cmp_version($version, '0.7.7') >= 0) { # >= v0.7.7
+    my $v077 = SemVer::V2::Strict->new('0.7.7');
+    if (SemVer::V2::Strict->new($version) >= $v077) { # >= v0.7.7
         $self->install_shards($version);
     }
 
