@@ -16,4 +16,9 @@ subtest curl => sub {
     isa_ok $self, 'CrystalBuild::Fetcher::Curl';
 };
 
+subtest invalid => sub {
+    my $self = CrystalBuild::Fetcher->create('invalid');
+    is $self, undef;
+};
+
 done_testing;
