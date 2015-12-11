@@ -9,11 +9,11 @@ BEGIN {
 use Capture::Tiny ':all';
 
 use t::Util;
-use Crenv;
+use CrystalBuild;
 
 subtest basic => sub {
     my ($stdout, $stderr) = capture sub {
-        Crenv::error_and_exit('error_message');
+        CrystalBuild::error_and_exit('error_message');
     };
 
     ok $stdout =~ /error_message/;

@@ -5,10 +5,10 @@ use utf8;
 use Test::Mock::Guard;
 
 use t::Util;
-use Crenv;
+use CrystalBuild;
 
 subtest basic => sub {
-    my $guard = mock_guard('Crenv', {
+    my $guard = mock_guard('CrystalBuild', {
        versions => sub {
            return [ '0.5.0', '0.6.0', '0.5.1' ];
        },

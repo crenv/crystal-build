@@ -5,7 +5,7 @@ use utf8;
 use Test::MockObject;
 
 use t::Util;
-use Crenv::Resolver::GitHub;
+use CrystalBuild::Resolver::GitHub;
 
 subtest basic => sub {
     my $github = Test::MockObject->new;
@@ -16,7 +16,7 @@ subtest basic => sub {
     });
 
     my $guard = mock_guard(
-        'Crenv::Resolver::GitHub', {
+        'CrystalBuild::Resolver::GitHub', {
             github => sub { $github },
             _find_binary_download_urls => sub {
                 my ($class, $assets) = @_;
@@ -29,15 +29,15 @@ subtest basic => sub {
             },
         });
 
-    my $resolver = Crenv::Resolver::GitHub->new;
+    my $resolver = CrystalBuild::Resolver::GitHub->new;
 
     is
         $resolver->resolve('0.7.5', 'darwin', 'x64'),
         'http://www.example.com/darwin/x64';
 
     ok $github->called('fetch_release');
-    is $guard->call_count('Crenv::Resolver::GitHub', 'github'), 1;
-    is $guard->call_count('Crenv::Resolver::GitHub', '_find_binary_download_urls'), 1;
+    is $guard->call_count('CrystalBuild::Resolver::GitHub', 'github'), 1;
+    is $guard->call_count('CrystalBuild::Resolver::GitHub', '_find_binary_download_urls'), 1;
 };
 
 done_testing;

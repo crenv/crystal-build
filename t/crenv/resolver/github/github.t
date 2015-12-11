@@ -4,10 +4,10 @@ use utf8;
 
 use t::Util;
 
-use Crenv::Resolver::GitHub;
+use CrystalBuild::Resolver::GitHub;
 
 subtest basic => sub {
-    my $resolver = Crenv::Resolver::GitHub->new;
+    my $resolver = CrystalBuild::Resolver::GitHub->new;
     $resolver->{github} = 'github';
 
     can_ok $resolver, qw/github/;

@@ -4,11 +4,11 @@ use utf8;
 
 use t::Util;
 
-use Crenv::Builder::Shards;
+use CrystalBuild::Builder::Shards;
 
 subtest basic => sub {
-    my $self = Crenv::Builder::Shards->new;
-    isa_ok $self, 'Crenv::Builder::Shards';
+    my $self = CrystalBuild::Builder::Shards->new;
+    isa_ok $self, 'CrystalBuild::Builder::Shards';
 };
 
 done_testing;

@@ -7,7 +7,7 @@ use Test::Mock::Guard qw/mock_guard/;
 use File::Path qw/mkpath rmtree/;
 
 use t::Util;
-use Crenv::Downloader::Shards;
+use CrystalBuild::Downloader::Shards;
 
 subtest basic => sub {
     # mocking
@@ -20,7 +20,7 @@ subtest basic => sub {
         is $tarball_path, 't/tmp/test.tar.gz';
     });
 
-    my $guard_self = mock_guard('Crenv::Downloader::Shards', {
+    my $guard_self = mock_guard('CrystalBuild::Downloader::Shards', {
         _detect_filename => sub {
             my ($self, $url) = @_;
             is $url, 'https://www.example.com/example.tar.gz';
@@ -28,7 +28,7 @@ subtest basic => sub {
         },
     });
 
-    my $guard_utils = mock_guard('Crenv::Utils', {
+    my $guard_utils = mock_guard('CrystalBuild::Utils', {
         error_and_exit => sub { },
         extract_tar    => sub {
             my ($tarball_path, $cache_dir) = @_;
@@ -44,7 +44,7 @@ subtest basic => sub {
     ok !-d 't/tmp/shards-v0.1.0';
 
     # test
-    my $self = Crenv::Downloader::Shards->new(
+    my $self = CrystalBuild::Downloader::Shards->new(
         fetcher   => $fetcher,
         cache_dir => 't/tmp/',
     );
@@ -56,9 +56,9 @@ subtest basic => sub {
     ok -d 't/tmp/shards-v0.1.0';
 
     ok $fetcher->called('download');
-    is $guard_self->call_count('Crenv::Downloader::Shards', '_detect_filename'), 1;
-    is $guard_utils->call_count('Crenv::Utils', 'error_and_exit'), 0;
-    is $guard_utils->call_count('Crenv::Utils', 'extract_tar'), 1;
+    is $guard_self->call_count('CrystalBuild::Downloader::Shards', '_detect_filename'), 1;
+    is $guard_utils->call_count('CrystalBuild::Utils', 'error_and_exit'), 0;
+    is $guard_utils->call_count('CrystalBuild::Utils', 'extract_tar'), 1;
 
     # after
     rmtree 't/tmp/shards-v0.1.0/';

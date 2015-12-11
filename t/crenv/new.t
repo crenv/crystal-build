@@ -4,12 +4,12 @@ use utf8;
 
 use t::Util;
 
-use Crenv;
+use CrystalBuild;
 
 subtest basic => sub {
-    my $crenv = Crenv->new(test_key => 'test_value');
+    my $crenv = CrystalBuild->new(test_key => 'test_value');
 
-    isa_ok $crenv, 'Crenv';
+    isa_ok $crenv, 'CrystalBuild';
     is $crenv->{test_key}, 'test_value';
 };
 

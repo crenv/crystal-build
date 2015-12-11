@@ -3,9 +3,9 @@ use warnings;
 use utf8;
 
 use t::Util;
-use Crenv::Utils;
+use CrystalBuild::Utils;
 
-sub cmp_version { Crenv::Utils::cmp_version(@_) }
+sub cmp_version { CrystalBuild::Utils::cmp_version(@_) }
 
 subtest basic => sub {
     cmp_ok cmp_version('0.8.0',  '0.7.0'),  '>', 0;

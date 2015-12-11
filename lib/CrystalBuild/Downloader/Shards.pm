@@ -1,11 +1,11 @@
-package Crenv::Downloader::Shards;
+package CrystalBuild::Downloader::Shards;
 use strict;
 use warnings;
 use utf8;
 
 use File::Spec;
 
-use Crenv::Utils;
+use CrystalBuild::Utils;
 
 sub new {
     my ($class, %opt) = @_;
@@ -22,9 +22,9 @@ sub download {
     my $tarball_path = File::Spec->join($self->cache_dir, $filename);
 
     $self->fetcher->download($tarball_url, $tarball_path)
-        or Crenv::Utils::error_and_exit("download faild: $tarball_url");
+        or CrystalBuild::Utils::error_and_exit("download faild: $tarball_url");
 
-    Crenv::Utils::extract_tar($tarball_path, $self->cache_dir);
+    CrystalBuild::Utils::extract_tar($tarball_path, $self->cache_dir);
 
     my ($target_dir) = glob File::Spec->join($self->cache_dir, 'shards-*');
     return $target_dir;

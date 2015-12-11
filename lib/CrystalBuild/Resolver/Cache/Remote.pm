@@ -1,4 +1,4 @@
-package Crenv::Resolver::Cache::Remote;
+package CrystalBuild::Resolver::Cache::Remote;
 use strict;
 use warnings;
 use utf8;

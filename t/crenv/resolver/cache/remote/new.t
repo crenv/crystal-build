@@ -4,12 +4,12 @@ use utf8;
 
 use t::Util;
 
-use Crenv::Resolver::Cache::Remote;
+use CrystalBuild::Resolver::Cache::Remote;
 
 subtest basic => sub {
-    my $resolver = Crenv::Resolver::Cache::Remote->new(test_key => 'test_value');
+    my $resolver = CrystalBuild::Resolver::Cache::Remote->new(test_key => 'test_value');
 
-    isa_ok $resolver, 'Crenv::Resolver::Cache::Remote';
+    isa_ok $resolver, 'CrystalBuild::Resolver::Cache::Remote';
     is $resolver->{test_key}, 'test_value';
 };
 

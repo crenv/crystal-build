@@ -1,4 +1,4 @@
-package Crenv::Resolver::GitHub;
+package CrystalBuild::Resolver::GitHub;
 use strict;
 use warnings;
 use utf8;

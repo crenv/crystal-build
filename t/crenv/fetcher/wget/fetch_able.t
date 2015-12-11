@@ -4,17 +4,17 @@ use utf8;
 
 use t::Util;
 
-use Crenv::Fetcher::Wget;
+use CrystalBuild::Fetcher::Wget;
 
 create_server;
 
 subtest normal => sub {
-    my $self = Crenv::Fetcher::Wget->new;
+    my $self = CrystalBuild::Fetcher::Wget->new;
     ok $self->fetch_able(uri_for('test.txt'));
 };
 
 subtest failed => sub {
-    my $self = Crenv::Fetcher::Wget->new;
+    my $self = CrystalBuild::Fetcher::Wget->new;
     ok not $self->fetch_able(uri_for('invalid_path.txt'));
 };
 

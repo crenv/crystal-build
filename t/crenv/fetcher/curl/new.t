@@ -4,11 +4,11 @@ use utf8;
 
 use t::Util;
 
-use Crenv::Fetcher::Curl;
+use CrystalBuild::Fetcher::Curl;
 
 subtest basic => sub {
-    my $self = Crenv::Fetcher::Curl->new;
-    isa_ok $self, 'Crenv::Fetcher::Curl';
+    my $self = CrystalBuild::Fetcher::Curl->new;
+    isa_ok $self, 'CrystalBuild::Fetcher::Curl';
 };
 
 done_testing;

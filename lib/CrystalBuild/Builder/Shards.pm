@@ -1,11 +1,11 @@
-package Crenv::Builder::Shards;
+package CrystalBuild::Builder::Shards;
 use strict;
 use warnings;
 use utf8;
 
 use Cwd qw/abs_path/; # >= perl 5
 
-use Crenv::Utils;
+use CrystalBuild::Utils;
 
 sub new {
     my $class = shift;
@@ -27,7 +27,7 @@ cd "$target_dir" && "$crystal_bin" build --release src/shards.cr -o bin/shards
 EOF
 
     system($command) == 0
-        or Crenv::Utils::error_and_exit("shards build faild: $target_dir");
+        or CrystalBuild::Utils::error_and_exit("shards build faild: $target_dir");
 
     return "$target_dir/bin/shards";
 }
@@ -35,7 +35,7 @@ EOF
 sub install_libyaml {
     my ($self, $target_dir) = @_;
 
-    my ($platform) = Crenv::Utils::system_info();
+    my ($platform) = CrystalBuild::Utils::system_info();
     if ($platform eq 'darwin') {
         $self->install_libyaml_with_brew($target_dir);
     }

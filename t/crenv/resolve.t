@@ -6,23 +6,23 @@ use Test::MockObject;
 use Capture::Tiny qw/capture_stdout/;
 
 use t::Util;
-use Crenv;
+use CrystalBuild;
 
 
 subtest 'enable cache' => sub {
     subtest 'Remote Cache' => sub {
-        my $guard_github = mock_guard('Crenv::Resolver::GitHub', {
+        my $guard_github = mock_guard('CrystalBuild::Resolver::GitHub', {
             resolve => sub { undef },
         });
 
         my $guard_cache = mock_guard(
-            'Crenv::Resolver::Cache::Remote',
+            'CrystalBuild::Resolver::Cache::Remote',
             {
                 new => sub {
                     my ($class, %opt) = @_;
 
                     is $opt{cache_url}, 'http://example.com/releases';
-                    isa_ok $opt{fetcher}, 'Crenv::Fetcher::Wget';
+                    isa_ok $opt{fetcher}, 'CrystalBuild::Fetcher::Wget';
 
                     return bless {} => $class;
                 },
@@ -37,7 +37,7 @@ subtest 'enable cache' => sub {
                 },
             });
 
-        my $guard_crenv = mock_guard('Crenv', { cache => sub { 1 } });
+        my $guard_crenv = mock_guard('CrystalBuild', { cache => sub { 1 } });
 
         my $crenv = create_crenv;
 
@@ -49,20 +49,20 @@ subtest 'enable cache' => sub {
 
         like $stdout, qr/resolve by Remote Cache: found/i;
 
-        is $guard_cache->call_count('Crenv::Resolver::Cache::Remote', 'resolve'), 1;
-        is $guard_github->call_count('Crenv::Resolver::GitHub', 'resolve'), 0;
-        is $guard_crenv->call_count('Crenv', 'cache'), 1;
+        is $guard_cache->call_count('CrystalBuild::Resolver::Cache::Remote', 'resolve'), 1;
+        is $guard_github->call_count('CrystalBuild::Resolver::GitHub', 'resolve'), 0;
+        is $guard_crenv->call_count('CrystalBuild', 'cache'), 1;
     };
 
     subtest GitHub => sub {
-        my $guard_crenv = mock_guard('Crenv', { cache => sub { 1 } });
+        my $guard_crenv = mock_guard('CrystalBuild', { cache => sub { 1 } });
 
-        my $guard_cache = mock_guard('Crenv::Resolver::Cache::Remote', {
+        my $guard_cache = mock_guard('CrystalBuild::Resolver::Cache::Remote', {
             resolve => sub { undef },
         });
 
         my $guard_github = mock_guard(
-            'Crenv::Resolver::GitHub',
+            'CrystalBuild::Resolver::GitHub',
             {
                 resolve => sub {
                     my ($self, $version, $platform, $arch) = @_;
@@ -86,20 +86,20 @@ subtest 'enable cache' => sub {
         like $stdout, qr/resolve by Remote Cache: not found/i;
         like $stdout, qr/resolve by GitHub: found/i;
 
-        is $guard_cache->call_count('Crenv::Resolver::Cache::Remote', 'resolve'), 1;
-        is $guard_github->call_count('Crenv::Resolver::GitHub', 'resolve'), 1;
-        is $guard_crenv->call_count('Crenv', 'cache'), 1;
+        is $guard_cache->call_count('CrystalBuild::Resolver::Cache::Remote', 'resolve'), 1;
+        is $guard_github->call_count('CrystalBuild::Resolver::GitHub', 'resolve'), 1;
+        is $guard_crenv->call_count('CrystalBuild', 'cache'), 1;
     };
 };
 
 subtest 'disabled cache' => sub {
     subtest GitHub => sub {
-        my $guard_cache = mock_guard('Crenv::Resolver::Cache::Remote', {
+        my $guard_cache = mock_guard('CrystalBuild::Resolver::Cache::Remote', {
             resolve => sub { undef }
         });
 
         my $guard_github = mock_guard(
-            'Crenv::Resolver::GitHub',
+            'CrystalBuild::Resolver::GitHub',
             {
                 resolve => sub {
                     my ($self, $version, $platform, $arch) = @_;
@@ -112,7 +112,7 @@ subtest 'disabled cache' => sub {
                 },
             });
 
-        my $guard_crenv = mock_guard('Crenv', { cache => sub { undef } });
+        my $guard_crenv = mock_guard('CrystalBuild', { cache => sub { undef } });
 
         my $crenv = create_crenv;
 
@@ -124,19 +124,19 @@ subtest 'disabled cache' => sub {
 
         like $stdout, qr/resolve by GitHub: found/i;
 
-        is $guard_cache->call_count('Crenv::Resolver::Cache::Remote', 'resolve'), 0;
-        is $guard_github->call_count('Crenv::Resolver::GitHub', 'resolve'), 1;
-        is $guard_crenv->call_count('Crenv', 'cache'), 1;
+        is $guard_cache->call_count('CrystalBuild::Resolver::Cache::Remote', 'resolve'), 0;
+        is $guard_github->call_count('CrystalBuild::Resolver::GitHub', 'resolve'), 1;
+        is $guard_crenv->call_count('CrystalBuild', 'cache'), 1;
     };
 };
 
 subtest failed => sub {
-    my $guard_crenv  = mock_guard('Crenv', {
+    my $guard_crenv  = mock_guard('CrystalBuild', {
         cache          => sub { undef },
         error_and_exit => sub {},
     });
 
-    my $guard_github = mock_guard('Crenv::Resolver::GitHub', {
+    my $guard_github = mock_guard('CrystalBuild::Resolver::GitHub', {
         resolve => sub { undef }
     });
 
@@ -148,9 +148,9 @@ subtest failed => sub {
 
     like $stdout, qr/resolve by GitHub: not found/i;
 
-    is $guard_github->call_count('Crenv::Resolver::GitHub', 'resolve'), 1;
-    is $guard_crenv->call_count('Crenv', 'error_and_exit'), 1;
-    is $guard_crenv->call_count('Crenv', 'cache'), 1;
+    is $guard_github->call_count('CrystalBuild::Resolver::GitHub', 'resolve'), 1;
+    is $guard_crenv->call_count('CrystalBuild', 'error_and_exit'), 1;
+    is $guard_crenv->call_count('CrystalBuild', 'cache'), 1;
 };
 
 done_testing;

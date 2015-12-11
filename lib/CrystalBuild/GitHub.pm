@@ -1,4 +1,4 @@
-package Crenv::GitHub;
+package CrystalBuild::GitHub;
 use strict;
 use warnings;
 use utf8;

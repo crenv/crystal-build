@@ -6,7 +6,7 @@ use t::Util;
 
 subtest basic => sub {
     my $self = create_crenv;
-    isa_ok $self->github, 'Crenv::GitHub';
+    isa_ok $self->github, 'CrystalBuild::GitHub';
     is $self->github->{fetcher}, $self->{fetcher};
     is $self->github->{github_repo}, $self->{github_repo};
 };

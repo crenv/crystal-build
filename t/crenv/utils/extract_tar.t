@@ -7,14 +7,14 @@ use File::Slurp;
 use Archive::Tar;
 
 use t::Util;
-use Crenv::Utils;
+use CrystalBuild::Utils;
 
 subtest basic => sub {
     setup_dirs;
 
     ok not -d 't/tmp/archive';
 
-    Crenv::Utils::extract_tar(
+    CrystalBuild::Utils::extract_tar(
         abs_path('t/data/archive.tar.gz'),
         abs_path('t/tmp/')
     );
@@ -34,7 +34,7 @@ subtest tar_cmd => sub {
 
     ok not -d 't/tmp/archive';
 
-    Crenv::Utils::extract_tar(
+    CrystalBuild::Utils::extract_tar(
         abs_path('t/data/archive.tar.gz'),
         abs_path('t/tmp/')
     );

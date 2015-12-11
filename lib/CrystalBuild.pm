@@ -1,4 +1,4 @@
-package Crenv;
+package CrystalBuild;
 use strict;
 use warnings;
 use utf8;
@@ -8,12 +8,12 @@ our $VERSION = '1.1.2';
 use File::Path qw/rmtree mkpath/;
 use JSON::PP;
 
-use Crenv::Utils;
-use Crenv::GitHub;
-use Crenv::Resolver::GitHub;
-use Crenv::Resolver::Cache::Remote;
-use Crenv::Resolver::Shards;
-use Crenv::Installer::Shards;
+use CrystalBuild::Utils;
+use CrystalBuild::GitHub;
+use CrystalBuild::Resolver::GitHub;
+use CrystalBuild::Resolver::Cache::Remote;
+use CrystalBuild::Resolver::Shards;
+use CrystalBuild::Installer::Shards;
 
 sub new {
     my ($class, %opt) = @_;
@@ -43,13 +43,13 @@ sub install {
     $self->{fetcher}->download($tarball_url, $tarball_path)
         or error_and_exit("download faild: $tarball_url");
 
-    Crenv::Utils::extract_tar($tarball_path, $cache_dir);
+    CrystalBuild::Utils::extract_tar($tarball_path, $cache_dir);
 
     my ($target_dir) = glob "$cache_dir/crystal-*/";
     rename $target_dir, $self->get_install_dir or die "Error: $!";
 
     # shards
-    if (Crenv::Utils::cmp_version($version, '0.7.7') >= 0) { # >= v0.7.7
+    if (CrystalBuild::Utils::cmp_version($version, '0.7.7') >= 0) { # >= v0.7.7
         $self->install_shards($version);
     }
 
@@ -59,7 +59,7 @@ sub install {
 sub install_shards {
     my ($self, $crystal_version) = @_;
 
-    my $installer = Crenv::Installer::Shards->new(
+    my $installer = CrystalBuild::Installer::Shards->new(
         fetcher    => $self->{fetcher},
         shards_url => $self->{shards_url},
         cache_dir  => "$self->{cache_dir}/$crystal_version",
@@ -70,7 +70,7 @@ sub install_shards {
 
 sub show_definitions {
     my $self = shift;
-    say $_ for @{ Crenv::Utils::sort_version($self->avaiable_versions) };
+    say $_ for @{ CrystalBuild::Utils::sort_version($self->avaiable_versions) };
 }
 
 sub resolvers {
@@ -80,7 +80,7 @@ sub resolvers {
 
     push @resolvers, [
         'remote cache',
-        Crenv::Resolver::Cache::Remote->new(
+        CrystalBuild::Resolver::Cache::Remote->new(
             fetcher   => $self->{fetcher},
             cache_url => $self->{cache_url},
         )
@@ -88,7 +88,7 @@ sub resolvers {
 
     push @resolvers, [
         'GitHub',
-        Crenv::Resolver::GitHub->new(github => $self->github)
+        CrystalBuild::Resolver::GitHub->new(github => $self->github)
     ];
 
     return \@resolvers;
@@ -104,7 +104,7 @@ sub avaiable_versions {
 sub system_info {
     my $self = shift;
 
-    my ($platform, $arch) = Crenv::Utils::system_info();
+    my ($platform, $arch) = CrystalBuild::Utils::system_info();
     return ($platform, $arch);
 }
 
@@ -169,7 +169,7 @@ sub clean {
 sub github {
     my $self = shift;
 
-    Crenv::GitHub->new(
+    CrystalBuild::GitHub->new(
         fetcher     => $self->{fetcher},
         github_repo => $self->{github_repo},
     );

@@ -4,7 +4,7 @@ use utf8;
 
 use t::Util;
 
-use Crenv::Utils;
+use CrystalBuild::Utils;
 
     # if  ($machine =~ m/x86_64/) {
     #     $arch = 'x64';
@@ -27,7 +27,7 @@ subtest normal => sub {
             uname => sub { ('Linux', undef, undef, undef, 'x86_64') },
         });
 
-        my @system_info = Crenv::Utils::system_info;
+        my @system_info = CrystalBuild::Utils::system_info;
         is $system_info[0], 'linux';
     };
 
@@ -36,7 +36,7 @@ subtest normal => sub {
             uname => sub { ('Darwin', undef, undef, undef, 'x86_64') },
         });
 
-        my @system_info = Crenv::Utils::system_info;
+        my @system_info = CrystalBuild::Utils::system_info;
         is $system_info[0], 'darwin';
     };
 
@@ -45,7 +45,7 @@ subtest normal => sub {
             uname => sub { ('Linux', undef, undef, undef, 'x86_64') },
         });
 
-        my @system_info = Crenv::Utils::system_info;
+        my @system_info = CrystalBuild::Utils::system_info;
         is $system_info[1], 'x64';
     };
 
@@ -54,7 +54,7 @@ subtest normal => sub {
             uname => sub { ('Linux', undef, undef, undef, 'i686') },
         });
 
-        my @system_info = Crenv::Utils::system_info;
+        my @system_info = CrystalBuild::Utils::system_info;
         is $system_info[1], 'x86';
     };
 };
@@ -64,7 +64,7 @@ subtest anomaly => sub {
         uname => sub { ('Linux', undef, undef, undef, 'unknown') },
     });
 
-    dies_ok { Crenv::Utils::system_info };
+    dies_ok { CrystalBuild::Utils::system_info };
 };
 
 done_testing;

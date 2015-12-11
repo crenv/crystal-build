@@ -1,14 +1,14 @@
-package Crenv::Installer::Shards;
+package CrystalBuild::Installer::Shards;
 use strict;
 use warnings;
 use utf8;
 
 use File::Path qw/mkpath/; # >= perl 5.001
 
-use Crenv::Utils;
-use Crenv::Resolver::Shards;
-use Crenv::Downloader::Shards;
-use Crenv::Builder::Shards;
+use CrystalBuild::Utils;
+use CrystalBuild::Resolver::Shards;
+use CrystalBuild::Downloader::Shards;
+use CrystalBuild::Builder::Shards;
 
 sub new {
     my ($class, %opt) = @_;
@@ -42,7 +42,7 @@ sub install {
 sub _resolve {
     my ($self, $crystal_version) = @_;
 
-    return Crenv::Resolver::Shards->new(
+    return CrystalBuild::Resolver::Shards->new(
         fetcher    => $self->fetcher,
         shards_url => $self->shards_url,
     )->resolve($crystal_version);
@@ -51,7 +51,7 @@ sub _resolve {
 sub _download {
     my ($self, $tarball_url) = @_;
 
-    return Crenv::Downloader::Shards->new(
+    return CrystalBuild::Downloader::Shards->new(
         fetcher    => $self->fetcher,
         cache_dir  => $self->cache_dir,
     )->download($tarball_url);
@@ -60,7 +60,7 @@ sub _download {
 sub _build {
     my ($self, $target_dir, $crystal_dir) = @_;
 
-   my $builder = Crenv::Builder::Shards->new;
+   my $builder = CrystalBuild::Builder::Shards->new;
    return $builder->build($target_dir, $crystal_dir);
 }
 
@@ -73,7 +73,7 @@ sub _copy {
     # unlink $target_path if -f $target_path;
     # mkpath $target_dir unless -d $target_dir;
     system("cp \"$shards_bin\" \"$target_path\"") == 0
-        or Crenv::Utils::error_and_exit('shards binary copy failed: '.$target_path);
+        or CrystalBuild::Utils::error_and_exit('shards binary copy failed: '.$target_path);
 }
 
 1;

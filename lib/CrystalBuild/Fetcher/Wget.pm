@@ -1,4 +1,4 @@
-package Crenv::Fetcher::Wget;
+package CrystalBuild::Fetcher::Wget;
 use strict;
 use warnings;
 use utf8;

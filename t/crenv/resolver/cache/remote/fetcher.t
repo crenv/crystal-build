@@ -4,10 +4,10 @@ use utf8;
 
 use t::Util;
 
-use Crenv::Resolver::Cache::Remote;
+use CrystalBuild::Resolver::Cache::Remote;
 
 subtest basic => sub {
-    my $resolver = Crenv::Resolver::Cache::Remote->new;
+    my $resolver = CrystalBuild::Resolver::Cache::Remote->new;
     $resolver->{fetcher} = 'fetcher';
 
     can_ok $resolver, qw/fetcher/;

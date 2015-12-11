@@ -5,10 +5,10 @@ use utf8;
 use Capture::Tiny qw/capture/;
 
 use t::Util;
-use Crenv;
+use CrystalBuild;
 
 subtest basic => sub {
-    my $guard = mock_guard('Crenv::Utils', {
+    my $guard = mock_guard('CrystalBuild::Utils', {
         system_info => sub { ('linux', 'x64') }
     });
 

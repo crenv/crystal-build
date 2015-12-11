@@ -1,4 +1,4 @@
-package Crenv::Resolver::Shards;
+package CrystalBuild::Resolver::Shards;
 use strict;
 use warnings;
 use utf8;

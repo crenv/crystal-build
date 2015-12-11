@@ -11,7 +11,7 @@ create_server;
 
 subtest basic => sub {
     my $url   = uri_for('crystal-0.7.4-1.tar.gz');
-    my $guard = mock_guard('Crenv', {
+    my $guard = mock_guard('CrystalBuild', {
         system_info => sub {
             return ('linux', 'x64');
         },
@@ -43,8 +43,8 @@ EOF
     ok -d 't/tmp/.crenv/versions/0.7.4/src';
     is `t/tmp/.crenv/versions/0.7.4/bin/crystal`, "crystal\n";
 
-    is $guard->call_count('Crenv', 'system_info'), 1;
-    is $guard->call_count('Crenv', 'resolve'), 1;
+    is $guard->call_count('CrystalBuild', 'system_info'), 1;
+    is $guard->call_count('CrystalBuild', 'resolve'), 1;
 };
 
 done_testing;

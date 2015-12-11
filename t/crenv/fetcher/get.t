@@ -4,16 +4,16 @@ use utf8;
 
 use t::Util;
 
-use Crenv::Fetcher;
+use CrystalBuild::Fetcher;
 
 subtest wget => sub {
-    my $self = Crenv::Fetcher->get('wget');
-    isa_ok $self, 'Crenv::Fetcher::Wget';
+    my $self = CrystalBuild::Fetcher->get('wget');
+    isa_ok $self, 'CrystalBuild::Fetcher::Wget';
 };
 
 subtest curl => sub {
-    my $self = Crenv::Fetcher->get('curl');
-    isa_ok $self, 'Crenv::Fetcher::Curl';
+    my $self = CrystalBuild::Fetcher->get('curl');
+    isa_ok $self, 'CrystalBuild::Fetcher::Curl';
 };
 
 done_testing;

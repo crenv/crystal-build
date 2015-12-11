@@ -4,12 +4,12 @@ use utf8;
 
 use t::Util;
 
-use Crenv::Resolver::GitHub;
+use CrystalBuild::Resolver::GitHub;
 
 subtest basic => sub {
-    my $resolver = Crenv::Resolver::GitHub->new(test_key => 'test_value');
+    my $resolver = CrystalBuild::Resolver::GitHub->new(test_key => 'test_value');
 
-    isa_ok $resolver, 'Crenv::Resolver::GitHub';
+    isa_ok $resolver, 'CrystalBuild::Resolver::GitHub';
     is $resolver->{test_key}, 'test_value';
 };
 

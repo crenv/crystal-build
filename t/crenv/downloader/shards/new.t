@@ -3,15 +3,15 @@ use warnings;
 use utf8;
 
 use t::Util;
-use Crenv::Downloader::Shards;
+use CrystalBuild::Downloader::Shards;
 
 subtest basic => sub {
-    my $self = Crenv::Downloader::Shards->new(
+    my $self = CrystalBuild::Downloader::Shards->new(
         fetcher   => 'fetcher',
         cache_dir => 'cache_dir',
     );
 
-    isa_ok $self, 'Crenv::Downloader::Shards';
+    isa_ok $self, 'CrystalBuild::Downloader::Shards';
 
     is $self->{fetcher}, 'fetcher';
     is $self->{fetcher}, $self->fetcher;

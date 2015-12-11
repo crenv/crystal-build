@@ -4,12 +4,12 @@ use utf8;
 
 use t::Util;
 
-use Crenv::Fetcher::Wget;
+use CrystalBuild::Fetcher::Wget;
 
 create_server;
 
 subtest normal => sub {
-    my $self = Crenv::Fetcher::Wget->new;
+    my $self = CrystalBuild::Fetcher::Wget->new;
     ok $self->fetch(uri_for('test.txt')) =~ /test\s*/
 };
 

@@ -1,4 +1,4 @@
-package Crenv::Fetcher::Curl;
+package CrystalBuild::Fetcher::Curl;
 use strict;
 use warnings;
 use utf8;
