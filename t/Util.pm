@@ -24,10 +24,10 @@ use Test::Mock::Guard;
 sub create_crenv {
     my (%opt) = @_;
 
-    require Crenv;
-    require Crenv::Fetcher::Wget;
+    require CrystalBuild;
+    require CrystalBuild::Fetcher::Wget;
 
-    $opt{fetcher}     ||= Crenv::Fetcher::Wget->new;
+    $opt{fetcher}     ||= CrystalBuild::Fetcher::Wget->new;
     $opt{github_repo} ||= 'author/repo';
     $opt{prefix}      ||= 't/tmp/.crenv/versions/0.7.4';
     $opt{cache}       ||= 1;
@@ -35,7 +35,7 @@ sub create_crenv {
     $opt{cache_url}   ||= 'http://example.com/releases';
 
     setup_dirs();
-    Crenv->new(%opt);
+    CrystalBuild->new(%opt);
 }
 
 sub setup_dirs {

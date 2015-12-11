@@ -6,7 +6,7 @@ use t::Util;
 use Module::Find;
 
 subtest basic => sub {
-    lives_ok { useall 'Crenv' };
+    lives_ok { useall 'CrystalBuild' };
 };
 
 done_testing;
