@@ -32,7 +32,7 @@ sub main {
         cache_url   => $cache_url,
         shards_url  => $shards_url,
         cache_dir   => abs_path($cache_dir),
-        fetcher     => CrystalBuild::Fetcher->get(fetcher_type()),
+        fetcher     => CrystalBuild::Fetcher->create(fetcher_type()),
         github_repo => $github_repo,
     );
 

@@ -6,12 +6,12 @@ use utf8;
 use CrystalBuild::Fetcher::Curl;
 use CrystalBuild::Fetcher::Wget;
 
-sub get {
+sub create {
     my ($class, $type) = @_;
 
-    $type eq 'wget' ? CrystalBuild::Fetcher::Wget->new :
-    $type eq 'curl' ? CrystalBuild::Fetcher::Curl->new :
-    die 'Fetcher type invalid';
+    return CrystalBuild::Fetcher::Wget->new if $type eq 'wget';
+    return CrystalBuild::Fetcher::Curl->new if $type eq 'curl';
+    return undef;
 }
 
 1;

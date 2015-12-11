@@ -15,7 +15,7 @@ subtest basic => sub {
         }
     });
 
-    my $fetcher = CrystalBuild::Fetcher->get('wget');
+    my $fetcher = CrystalBuild::Fetcher->create('wget');
     my $github  = CrystalBuild::GitHub->new(fetcher => $fetcher);
 
     $github->fetch('http://dummy.url/');
