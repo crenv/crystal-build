@@ -59,9 +59,7 @@ sub _download {
 
 sub _build {
     my ($self, $target_dir, $crystal_dir) = @_;
-
-   my $builder = CrystalBuild::Builder::Shards->new;
-   return $builder->build($target_dir, $crystal_dir);
+    return CrystalBuild::Builder::Shards->new->build($target_dir, $crystal_dir);
 }
 
 sub _copy {
