@@ -1,3 +1,6 @@
+requires 'JSON::PP', '2.27300';
+requires 'SemVer::V2::Strict', '0.10';
+
 on test => sub {
     requires 'Data::Dumper', '2.154';
     requires 'File::Slurp', '999.19';
@@ -22,5 +25,3 @@ on test => sub {
     requires 'Perl::Critic', '1.125';
     requires 'Test::Perl::Critic', '1.03';
 };
-
-# vim: se et ts=4 sw=4 sts=4 ft=perl

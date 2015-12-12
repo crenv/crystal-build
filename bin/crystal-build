@@ -4,20 +4,21 @@ use strict;
 use warnings;
 use utf8;
 
-use FindBin;
+use File::Spec;
+use File::Basename qw/dirname/;
 use lib (
-    "$FindBin::Bin/../vendor/lib",
-    "$FindBin::Bin/../lib"
+    File::Spec->catfile(dirname(__FILE__), qw/.. vendor lib/),
+    File::Spec->catfile(dirname(__FILE__), qw/.. lib/),
 );
 
 use Cwd qw/abs_path/;
 
-use Crenv;
-use Crenv::Utils;
-use Crenv::Fetcher;
+use CrystalBuild;
+use CrystalBuild::Utils;
+use CrystalBuild::Fetcher;
 
 sub main {
-    my $args        = Crenv::Utils::parse_args(@ARGV);
+    my $args        = CrystalBuild::Utils::parse_args(@ARGV);
     my $github_repo = 'manastech/crystal';
     my $cache_dir   = $ENV{CRYSTAL_BUILD_CACHE_PATH} // '.';
 
@@ -25,13 +26,13 @@ sub main {
     my $cache_url  = $share_url.'/releases.json';
     my $shards_url = $share_url.'/shards.json';
 
-    my $crenv = Crenv->new(
+    my $crenv = CrystalBuild->new(
         prefix      => $args->{prefix},
         cache       => $args->{cache},
         cache_url   => $cache_url,
         shards_url  => $shards_url,
         cache_dir   => abs_path($cache_dir),
-        fetcher     => Crenv::Fetcher->get(fetcher_type()),
+        fetcher     => CrystalBuild::Fetcher->create(fetcher_type()),
         github_repo => $github_repo,
     );
 

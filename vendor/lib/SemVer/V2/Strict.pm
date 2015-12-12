@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '0.04';
+our $VERSION = '0.10';
 
 use constant PRE_RELEASE_FORMAT    => qr/(?:-(?<pre_release>[a-zA-Z0-9.\-]+))?/;
 use constant BUILD_METADATA_FORMAT => qr/(?:\+(?<build_metadata>[a-zA-Z0-9.\-]+))?/;
@@ -39,7 +39,7 @@ sub new {
 sub _init_by_version_string {
     my ($self, $version) = @_;
 
-    die 'Invalid format' unless $version =~ VERSION_FORMAT;
+    die 'Invalid format' unless $version =~ qr/^@{[VERSION_FORMAT]}$/;
 
     $self->{major}          = $+{major};
     $self->{minor}          = $+{minor} // 0;
@@ -57,6 +57,16 @@ sub _init_by_version_numbers {
     $self->{pre_release}    = $pre_release;
     $self->{build_metadata} = $build_metadata;
 }
+
+sub clean {
+    my ($class, $version) = @_;
+
+    $version =~ s/^\s*(.*?)\s*$/$1/; # trim
+    $version =~ s/^[=v]+//;
+
+    return eval { $class->new($version)->as_string };
+}
+
 
 sub as_string {
     my $self = shift;
@@ -149,6 +159,10 @@ C<SemVer::V2::Strict-E<gt>new('1.0.0')> equals C<SemVer::V2::Strict-E<gt>new(1, 
 
 Create new C<SemVer::V2::Strict> instance from version numbers.
 C<SemVer::V2::Strict-E<gt>new('1.0.0-alpha+100')> equals C<SemVer::V2::Strict-E<gt>new(1, 0, 0, 'alpha', '100')>.
+
+=head3 C<clean($version_string)>
+
+Clean version string. Trim spaces and C<'v'> prefix.
 
 =head2 METHODS
 
