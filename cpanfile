@@ -8,6 +8,8 @@ on test => sub {
     requires 'Capture::Tiny', '0.30';
     requires 'File::Touch', '0.08';
     requires 'File::Path', '2.09';
+    requires 'File::Temp', '0.2304';
+    requires 'File::Slurp', '9999.19';
     requires 'Module::Find', '0.13';
 
     requires 'Test::More', '1.001014';

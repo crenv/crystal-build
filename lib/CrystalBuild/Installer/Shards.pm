@@ -3,7 +3,9 @@ use strict;
 use warnings;
 use utf8;
 
-use File::Path qw/mkpath/; # >= perl 5.001
+use File::Copy qw/copy/;   # >= 5.002
+use File::Path qw/mkpath/; # >= 5.001
+use File::Spec; # >= 5.00405
 
 use CrystalBuild::Utils;
 use CrystalBuild::Resolver::Shards;
@@ -65,13 +67,13 @@ sub _build {
 sub _copy {
     my ($self, $shards_bin, $crystal_dir) = @_;
 
-    my $target_dir  = $crystal_dir.'/bin';
-    my $target_path = $target_dir.'/shards';
+    my $target_dir  = File::Spec->catfile($crystal_dir, 'bin');
+    my $target_path = File::Spec->catfile($target_dir, 'shards');
 
-    # unlink $target_path if -f $target_path;
-    # mkpath $target_dir unless -d $target_dir;
-    system("cp \"$shards_bin\" \"$target_path\"") == 0
+    copy($shards_bin, $target_path)
         or CrystalBuild::Utils::error_and_exit('shards binary copy failed: '.$target_path);
+
+    chmod 0755, $target_path;
 }
 
 1;
