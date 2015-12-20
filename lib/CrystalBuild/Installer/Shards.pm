@@ -28,7 +28,7 @@ sub install {
     my $tarball_url = $self->_resolve($crystal_version);
     print "ok\n";
 
-    print "Downloading shards tarball ... ";
+    print "Downloading shards tarball ...\n";
     my $target_dir = $self->_download($tarball_url);
     print "ok\n";
 

@@ -25,9 +25,9 @@ sub create_crenv {
     my (%opt) = @_;
 
     require CrystalBuild;
-    require CrystalBuild::Fetcher::Wget;
+    require HTTP::Command::Wrapper;
 
-    $opt{fetcher}     ||= CrystalBuild::Fetcher::Wget->new;
+    $opt{fetcher}     ||= HTTP::Command::Wrapper->create('wget');
     $opt{github_repo} ||= 'author/repo';
     $opt{prefix}      ||= 't/tmp/.crenv/versions/0.7.4';
     $opt{cache}       ||= 1;
