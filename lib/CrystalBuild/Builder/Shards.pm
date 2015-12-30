@@ -20,11 +20,11 @@ sub build {
     my $crystal_bin      = abs_path("$crystal_dir/bin/crystal");
     my $env_crystal_path = abs_path("$crystal_dir/libs").':.';
 
-    my $command = <<"EOF";
-CRYSTAL_PATH=$env_crystal_path \
-LD_LIBRARY_PATH=$target_dir:\$LD_LIBRARY_PATH \
-cd "$target_dir" && "$crystal_bin" build --release src/shards.cr -o bin/shards
-EOF
+    my $command = $self->_create_build_command(
+        $env_crystal_path,
+        $target_dir,
+        $crystal_bin
+    );
 
     system($command) == 0
         or CrystalBuild::Utils::error_and_exit("shards build faild: $target_dir");
@@ -68,6 +68,15 @@ sub fetch_libyaml_prefix_with_brew {
     chomp $prefix;
 
     return $prefix;
+}
+
+sub _create_build_command {
+    my ($self, $env_crystal_path, $target_dir, $crystal_bin) = @_;
+    return <<"EOF";
+CRYSTAL_PATH=$env_crystal_path \\
+LD_LIBRARY_PATH=$target_dir:\$LD_LIBRARY_PATH \\
+cd "$target_dir" && "$crystal_bin" build --release src/shards.cr -o bin/shards
+EOF
 }
 
 1;
