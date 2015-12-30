@@ -9,7 +9,7 @@ use CrystalBuild::Utils;
 
 sub new {
     my $class = shift;
-    bless {} => $class;
+    return bless {} => $class;
 }
 
 sub build {
