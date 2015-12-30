@@ -61,7 +61,11 @@ sub _download {
 
 sub _build {
     my ($self, $target_dir, $crystal_dir) = @_;
-    return CrystalBuild::Builder::Shards->new->build($target_dir, $crystal_dir);
+
+    my $bin_path = eval { CrystalBuild::Builder::Shards->new->build($target_dir, $crystal_dir) };
+    CrystalBuild::Utils::error_and_exit($@) if $@;
+
+    return $bin_path;
 }
 
 sub _copy {

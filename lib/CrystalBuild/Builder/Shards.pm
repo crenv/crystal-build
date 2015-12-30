@@ -24,7 +24,7 @@ sub build {
     );
 
     system($command) == 0
-        or CrystalBuild::Utils::error_and_exit("shards build faild: $target_dir");
+        or die "shards build faild: $target_dir";
 
     return "$target_dir/bin/shards";
 }
