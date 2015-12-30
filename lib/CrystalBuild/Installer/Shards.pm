@@ -5,7 +5,7 @@ use utf8;
 
 use File::Copy qw/copy/;   # >= 5.002
 use File::Path qw/mkpath/; # >= 5.001
-use File::Spec; # >= 5.00405
+use File::Spec;            # >= 5.00405
 
 use CrystalBuild::Utils;
 use CrystalBuild::Resolver::Shards;
@@ -24,21 +24,25 @@ sub cache_dir  { shift->{cache_dir}  }
 sub install {
     my ($self, $crystal_version, $crystal_dir) = @_;
 
-    print "Resolving shards download URL ... ";
-    my $tarball_url = $self->_resolve($crystal_version);
-    print "ok\n";
+    eval {
+        print "Resolving shards download URL ... ";
+        my $tarball_url = $self->_resolve($crystal_version);
+        print "ok\n";
 
-    print "Downloading shards tarball ...\n";
-    my $target_dir = $self->_download($tarball_url);
-    print "ok\n";
+        print "Downloading shards tarball ...\n";
+        my $target_dir = $self->_download($tarball_url);
+        print "ok\n";
 
-    print "Building shards ... ";
-    my $shards_bin = $self->_build($target_dir, $crystal_dir);
-    print "ok\n";
+        print "Building shards ... ";
+        my $shards_bin = $self->_build($target_dir, $crystal_dir);
+        print "ok\n";
 
-    print "Copying shards binary ... ";
-    $self->_copy($shards_bin, $crystal_dir);
-    print "ok\n";
+        print "Copying shards binary ... ";
+        $self->_copy($shards_bin, $crystal_dir);
+        print "ok\n";
+    };
+
+    CrystalBuild::Utils::error_and_exit($@) if $@;
 }
 
 sub _resolve {
@@ -61,11 +65,7 @@ sub _download {
 
 sub _build {
     my ($self, $target_dir, $crystal_dir) = @_;
-
-    my $bin_path = eval { CrystalBuild::Builder::Shards->new->build($target_dir, $crystal_dir) };
-    CrystalBuild::Utils::error_and_exit($@) if $@;
-
-    return $bin_path;
+    return CrystalBuild::Builder::Shards->new->build($target_dir, $crystal_dir);
 }
 
 sub _copy {
