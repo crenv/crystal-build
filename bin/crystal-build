@@ -16,7 +16,6 @@ use HTTP::Command::Wrapper;
 
 use CrystalBuild;
 use CrystalBuild::Utils;
-use CrystalBuild::Fetcher;
 
 sub main {
     my $args        = CrystalBuild::Utils::parse_args(@ARGV);
