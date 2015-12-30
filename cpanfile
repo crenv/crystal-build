@@ -18,6 +18,7 @@ on test => sub {
     requires 'Test::Deep::Matcher', '0.01';
     requires 'Test::Exception', '0.40';
 
+    requires 'Test::Mock::Cmd', '0.6';
     requires 'Test::Mock::Guard', '0.10';
     requires 'Test::MockObject', '1.20150527';
     requires 'Test::TCP', '2.12';
