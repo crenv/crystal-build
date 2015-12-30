@@ -17,13 +17,10 @@ sub build {
 
     $self->install_libyaml($target_dir);
 
-    my $crystal_bin      = abs_path("$crystal_dir/bin/crystal");
-    my $env_crystal_path = abs_path("$crystal_dir/libs").':.';
-
     my $command = $self->_create_build_command(
-        $env_crystal_path,
+        abs_path("$crystal_dir/libs").':.',
         $target_dir,
-        $crystal_bin
+        abs_path("$crystal_dir/bin/crystal"),
     );
 
     system($command) == 0
