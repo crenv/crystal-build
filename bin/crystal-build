@@ -12,10 +12,10 @@ use lib (
 );
 
 use Cwd qw/abs_path/;
+use HTTP::Command::Wrapper;
 
 use CrystalBuild;
 use CrystalBuild::Utils;
-use CrystalBuild::Fetcher;
 
 sub main {
     my $args        = CrystalBuild::Utils::parse_args(@ARGV);
@@ -32,7 +32,7 @@ sub main {
         cache_url   => $cache_url,
         shards_url  => $shards_url,
         cache_dir   => abs_path($cache_dir),
-        fetcher     => CrystalBuild::Fetcher->create(fetcher_type()),
+        fetcher     => HTTP::Command::Wrapper->create,
         github_repo => $github_repo,
     );
 
@@ -43,12 +43,6 @@ sub main {
     else {
         $crenv->install($args->{version});
     }
-}
-
-sub fetcher_type {
-    `which curl` ? 'curl' :
-    `which wget` ? 'wget' :
-        die 'Need curl or wget';
 }
 
 main unless caller;

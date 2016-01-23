@@ -43,12 +43,22 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -----------------------------------------------------------
 
 | JSON::PP
-| http://search.cpan.org/~makamaka/JSON-PP-2.27300/lib/JSON/PP.pm
+| https://metacpan.org/pod/JSON::PP
 
 Copyright 2005-2013 by Makamaka Hannyaharamitu
 
 This library is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
+
+-----------------------------------------------------------
+
+| File::Which
+| https://metacpan.org/pod/File::Which
+
+This software is copyright (c) 2002 by Per Einar Ellefsen <pereinar@cpan.org>.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 -----------------------------------------------------------
 

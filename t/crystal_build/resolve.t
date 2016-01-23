@@ -22,7 +22,7 @@ subtest 'enable cache' => sub {
                     my ($class, %opt) = @_;
 
                     is $opt{cache_url}, 'http://example.com/releases';
-                    isa_ok $opt{fetcher}, 'CrystalBuild::Fetcher::Wget';
+                    isa_ok $opt{fetcher}, 'HTTP::Command::Wrapper::Wget';
 
                     return bless {} => $class;
                 },

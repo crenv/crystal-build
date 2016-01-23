@@ -14,7 +14,7 @@ sub new {
 
 sub fetch {
     my ($self, $url) = @_;
-    $self->{fetcher}->fetch_from_github($url);
+    $self->{fetcher}->fetch($url, ['Accept: application/vnd.github.v3+json' ]);
 }
 
 sub base_url {
