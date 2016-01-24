@@ -49,8 +49,8 @@ sub _resolve {
     my ($self, $crystal_version) = @_;
 
     return CrystalBuild::Resolver::Shards->new(
-        fetcher    => $self->fetcher,
-        shards_url => $self->shards_url,
+        fetcher             => $self->fetcher,
+        shards_releases_url => $self->shards_url,
     )->resolve($crystal_version);
 }
 
