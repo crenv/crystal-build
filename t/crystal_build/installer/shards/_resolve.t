@@ -24,8 +24,8 @@ subtest basic => sub {
         new => sub {
             my ($class, %opt) = @_;
 
-            is $opt{fetcher},    $fetcher;
-            is $opt{shards_url}, $shards_url;
+            is $opt{fetcher},             $fetcher;
+            is $opt{shards_releases_url}, $shards_url;
 
             return $resolver;
         },

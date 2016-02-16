@@ -10,8 +10,8 @@ sub new {
     return bless { %opt } => $class;
 }
 
-sub fetcher    { shift->{fetcher}   }
-sub shards_url { shift->{shards_url} }
+sub fetcher             { shift->{fetcher}             }
+sub shards_releases_url { shift->{shards_releases_url} }
 
 sub resolve {
     my ($self, $crystal_version) = @_;
@@ -19,18 +19,18 @@ sub resolve {
     my $shards_releases = $self->_fetch;
     return unless ref($shards_releases) eq 'HASH';
 
-    return $shards_releases->{default}
-        unless defined $shards_releases->{$crystal_version};
+    if (defined $shards_releases->{$crystal_version}) {
+        my $tarball_url = $shards_releases->{$crystal_version};
+        return $tarball_url unless ref $tarball_url;
+    }
 
-    my $tarball_url = $shards_releases->{$crystal_version};
-    return if ref $tarball_url;
-
-    return $tarball_url;
+    return $shards_releases->{default} if defined $shards_releases->{default};
+    return undef;
 }
 
 sub _fetch {
     my $self     = shift;
-    my $response = $self->fetcher->fetch($self->shards_url);
+    my $response = $self->fetcher->fetch($self->shards_releases_url);
     return decode_json($response);
 }
 
