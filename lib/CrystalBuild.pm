@@ -11,7 +11,7 @@ use SemVer::V2::Strict;
 
 use CrystalBuild::Utils;
 use CrystalBuild::GitHub;
-use CrystalBuild::Resolver::GitHub;
+use CrystalBuild::Resolver::Crystal::GitHub;
 use CrystalBuild::Resolver::Cache::Remote;
 use CrystalBuild::Resolver::Shards;
 use CrystalBuild::Installer::Shards;
@@ -90,7 +90,7 @@ sub resolvers {
 
     push @resolvers, [
         'GitHub',
-        CrystalBuild::Resolver::GitHub->new(github => $self->github)
+        CrystalBuild::Resolver::Crystal::GitHub->new(github => $self->github)
     ];
 
     return \@resolvers;

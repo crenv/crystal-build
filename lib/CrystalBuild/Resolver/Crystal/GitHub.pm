@@ -1,4 +1,4 @@
-package CrystalBuild::Resolver::GitHub;
+package CrystalBuild::Resolver::Crystal::GitHub;
 use strict;
 use warnings;
 use utf8;

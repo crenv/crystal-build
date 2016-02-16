@@ -4,10 +4,10 @@ use utf8;
 
 use t::Util;
 
-use CrystalBuild::Resolver::GitHub;
+use CrystalBuild::Resolver::Crystal::GitHub;
 
 subtest basic => sub {
-    my $resolver = CrystalBuild::Resolver::GitHub->new;
+    my $resolver = CrystalBuild::Resolver::Crystal::GitHub->new;
     $resolver->{github} = 'github';
 
     can_ok $resolver, qw/github/;

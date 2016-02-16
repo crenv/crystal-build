@@ -4,7 +4,7 @@ use utf8;
 
 use t::Util;
 
-use CrystalBuild::Resolver::GitHub;
+use CrystalBuild::Resolver::Crystal::GitHub;
 
 subtest 'if < v0.7.5' => sub {
     # 64 bit releases only
@@ -19,7 +19,7 @@ subtest 'if < v0.7.5' => sub {
         },
     ];
 
-    my $urls = CrystalBuild::Resolver::GitHub->_find_binary_download_urls($assets);
+    my $urls = CrystalBuild::Resolver::Crystal::GitHub->_find_binary_download_urls($assets);
     is $urls->{'darwin-x64'}, 'http://www.example.com/darwin/x64';
     is $urls->{'linux-x64'}, 'http://www.example.com/linux/x64';
     ok not defined $urls->{'linux-x86'};
@@ -41,7 +41,7 @@ subtest basic => sub {
         },
     ];
 
-    my $urls = CrystalBuild::Resolver::GitHub->_find_binary_download_urls($assets);
+    my $urls = CrystalBuild::Resolver::Crystal::GitHub->_find_binary_download_urls($assets);
     is $urls->{'darwin-x64'}, 'http://www.example.com/darwin/x64';
     is $urls->{'linux-x64'}, 'http://www.example.com/linux/x64';
     is $urls->{'linux-x86'}, 'http://www.example.com/linux/x86';
