@@ -12,7 +12,7 @@ use SemVer::V2::Strict;
 use CrystalBuild::Utils;
 use CrystalBuild::GitHub;
 use CrystalBuild::Resolver::Crystal::GitHub;
-use CrystalBuild::Resolver::Cache::Remote;
+use CrystalBuild::Resolver::Crystal::RemoteCache;
 use CrystalBuild::Resolver::Shards;
 use CrystalBuild::Installer::Shards;
 
@@ -82,7 +82,7 @@ sub resolvers {
 
     push @resolvers, [
         'remote cache',
-        CrystalBuild::Resolver::Cache::Remote->new(
+        CrystalBuild::Resolver::Crystal::RemoteCache->new(
             fetcher   => $self->{fetcher},
             cache_url => $self->{cache_url},
         )

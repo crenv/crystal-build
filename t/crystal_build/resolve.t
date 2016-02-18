@@ -16,7 +16,7 @@ subtest 'enable cache' => sub {
         });
 
         my $guard_cache = mock_guard(
-            'CrystalBuild::Resolver::Cache::Remote',
+            'CrystalBuild::Resolver::Crystal::RemoteCache',
             {
                 new => sub {
                     my ($class, %opt) = @_;
@@ -49,7 +49,7 @@ subtest 'enable cache' => sub {
 
         like $stdout, qr/resolve by Remote Cache: found/i;
 
-        is $guard_cache->call_count('CrystalBuild::Resolver::Cache::Remote', 'resolve'), 1;
+        is $guard_cache->call_count('CrystalBuild::Resolver::Crystal::RemoteCache', 'resolve'), 1;
         is $guard_github->call_count('CrystalBuild::Resolver::Crystal::GitHub', 'resolve'), 0;
         is $guard_crenv->call_count('CrystalBuild', 'cache'), 1;
     };
@@ -57,7 +57,7 @@ subtest 'enable cache' => sub {
     subtest GitHub => sub {
         my $guard_crenv = mock_guard('CrystalBuild', { cache => sub { 1 } });
 
-        my $guard_cache = mock_guard('CrystalBuild::Resolver::Cache::Remote', {
+        my $guard_cache = mock_guard('CrystalBuild::Resolver::Crystal::RemoteCache', {
             resolve => sub { undef },
         });
 
@@ -86,7 +86,7 @@ subtest 'enable cache' => sub {
         like $stdout, qr/resolve by Remote Cache: not found/i;
         like $stdout, qr/resolve by GitHub: found/i;
 
-        is $guard_cache->call_count('CrystalBuild::Resolver::Cache::Remote', 'resolve'), 1;
+        is $guard_cache->call_count('CrystalBuild::Resolver::Crystal::RemoteCache', 'resolve'), 1;
         is $guard_github->call_count('CrystalBuild::Resolver::Crystal::GitHub', 'resolve'), 1;
         is $guard_crenv->call_count('CrystalBuild', 'cache'), 1;
     };
@@ -94,7 +94,7 @@ subtest 'enable cache' => sub {
 
 subtest 'disabled cache' => sub {
     subtest GitHub => sub {
-        my $guard_cache = mock_guard('CrystalBuild::Resolver::Cache::Remote', {
+        my $guard_cache = mock_guard('CrystalBuild::Resolver::Crystal::RemoteCache', {
             resolve => sub { undef }
         });
 
@@ -124,7 +124,7 @@ subtest 'disabled cache' => sub {
 
         like $stdout, qr/resolve by GitHub: found/i;
 
-        is $guard_cache->call_count('CrystalBuild::Resolver::Cache::Remote', 'resolve'), 0;
+        is $guard_cache->call_count('CrystalBuild::Resolver::Crystal::RemoteCache', 'resolve'), 0;
         is $guard_github->call_count('CrystalBuild::Resolver::Crystal::GitHub', 'resolve'), 1;
         is $guard_crenv->call_count('CrystalBuild', 'cache'), 1;
     };

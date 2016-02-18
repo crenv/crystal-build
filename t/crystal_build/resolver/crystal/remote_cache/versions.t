@@ -5,11 +5,11 @@ use utf8;
 use Test::MockObject;
 
 use t::Util;
-use CrystalBuild::Resolver::Cache::Remote;
+use CrystalBuild::Resolver::Crystal::RemoteCache;
 
 subtest basic => sub {
     my $guard = mock_guard(
-        'CrystalBuild::Resolver::Cache::Remote', {
+        'CrystalBuild::Resolver::Crystal::RemoteCache', {
             _fetch => sub {
                 return [
                     { tag_name => '0.7.0' },
@@ -19,13 +19,13 @@ subtest basic => sub {
             },
         });
 
-    my $resolver = CrystalBuild::Resolver::Cache::Remote->new;
+    my $resolver = CrystalBuild::Resolver::Crystal::RemoteCache->new;
 
     cmp_deeply
         $resolver->versions,
         [ '0.7.0', '0.7.1', '0.7.2' ];
 
-    is $guard->call_count('CrystalBuild::Resolver::Cache::Remote', '_fetch'), 1;
+    is $guard->call_count('CrystalBuild::Resolver::Crystal::RemoteCache', '_fetch'), 1;
 };
 
 done_testing;
