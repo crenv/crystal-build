@@ -12,9 +12,9 @@ sub resolve {
     my ($self, $version, $platform, $arch) = @_;
 
     my $release       = $self->github->fetch_release($version);
-    my $download_urls = $self->_find_binary_download_urls($release->{assets});
+    my %download_urls = $self->_find_binary_download_urls($release->{assets});
 
-    return $download_urls->{"$platform-$arch"};
+    return $download_urls{"$platform-$arch"};
 }
 
 sub versions {
@@ -40,7 +40,7 @@ sub _find_binary_download_urls {
     $download_urls{'linux-x86'}  = $linux_x86->{browser_download_url} if defined $linux_x86;
     $download_urls{'darwin-x64'} = $darwin->{browser_download_url}    if defined $darwin;
 
-    return \%download_urls;
+    return %download_urls;
 }
 
 1;
