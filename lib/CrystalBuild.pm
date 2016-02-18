@@ -13,7 +13,6 @@ use CrystalBuild::Utils;
 use CrystalBuild::GitHub;
 use CrystalBuild::Resolver::Crystal::GitHub;
 use CrystalBuild::Resolver::Crystal::RemoteCache;
-use CrystalBuild::Resolver::Shards;
 use CrystalBuild::Installer::Shards;
 
 sub new {
