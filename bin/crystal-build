@@ -19,7 +19,7 @@ use CrystalBuild::Utils;
 
 sub main {
     my $args        = CrystalBuild::Utils::parse_args(@ARGV);
-    my $github_repo = 'manastech/crystal';
+    my $github_repo = 'crystal-lang/crystal';
     my $cache_dir   = $ENV{CRYSTAL_BUILD_CACHE_PATH} // '.';
 
     my $share_url  = 'https://raw.githubusercontent.com/pine613/crystal-build/master/share/crystal-build/';
