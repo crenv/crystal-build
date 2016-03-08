@@ -30,6 +30,7 @@ sub install {
         print "ok\n";
 
         print "Downloading shards tarball ...\n";
+        print "$tarball_url\n";
         my $target_dir = $self->_download($tarball_url);
         print "ok\n";
 
