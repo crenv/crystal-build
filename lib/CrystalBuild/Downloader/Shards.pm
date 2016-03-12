@@ -22,7 +22,7 @@ sub download {
     my $tarball_path = File::Spec->join($self->cache_dir, $filename);
 
     $self->fetcher->download($tarball_url, $tarball_path)
-        or CrystalBuild::Utils::error_and_exit("download faild: $tarball_url");
+        or die "download faild: $tarball_url";
 
     CrystalBuild::Utils::extract_tar($tarball_path, $self->cache_dir);
 
