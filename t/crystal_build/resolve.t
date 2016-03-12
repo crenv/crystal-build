@@ -47,7 +47,7 @@ subtest 'enable cache' => sub {
                 'http://www.example.com';
         };
 
-        like $stdout, qr/resolve by Remote Cache: found/i;
+        is $stdout, "Resolving Crystal download URL by Remote Cache ... ok\n";
 
         is $guard_cache->call_count('CrystalBuild::Resolver::Crystal::RemoteCache', 'resolve'), 1;
         is $guard_github->call_count('CrystalBuild::Resolver::Crystal::GitHub', 'resolve'), 0;
@@ -83,8 +83,10 @@ subtest 'enable cache' => sub {
                 'http://www.example.com';
         };
 
-        like $stdout, qr/resolve by Remote Cache: not found/i;
-        like $stdout, qr/resolve by GitHub: found/i;
+        is $stdout, <<EOF;
+Resolving Crystal download URL by Remote Cache ... ng
+Resolving Crystal download URL by GitHub ... ok
+EOF
 
         is $guard_cache->call_count('CrystalBuild::Resolver::Crystal::RemoteCache', 'resolve'), 1;
         is $guard_github->call_count('CrystalBuild::Resolver::Crystal::GitHub', 'resolve'), 1;
@@ -122,7 +124,7 @@ subtest 'disabled cache' => sub {
                 'http://www.example.com';
         };
 
-        like $stdout, qr/resolve by GitHub: found/i;
+        is $stdout, "Resolving Crystal download URL by GitHub ... ok\n";
 
         is $guard_cache->call_count('CrystalBuild::Resolver::Crystal::RemoteCache', 'resolve'), 0;
         is $guard_github->call_count('CrystalBuild::Resolver::Crystal::GitHub', 'resolve'), 1;
@@ -146,10 +148,9 @@ subtest failed => sub {
         ok not $crenv->resolve('0.7.5', 'linux', 'x64');
     };
 
-    like $stdout, qr/resolve by GitHub: not found/i;
+    like $stdout, qr/^Resolving Crystal download URL by GitHub \.\.\. ng/;
 
     is $guard_github->call_count('CrystalBuild::Resolver::Crystal::GitHub', 'resolve'), 1;
-    is $guard_crenv->call_count('CrystalBuild', 'error_and_exit'), 1;
     is $guard_crenv->call_count('CrystalBuild', 'cache'), 1;
 };
 

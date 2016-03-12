@@ -8,6 +8,8 @@ sub new {
     return bless { %opt } => $class;
 }
 
+sub name { 'GitHub' }
+
 sub resolve {
     my ($self, $version, $platform, $arch) = @_;
 

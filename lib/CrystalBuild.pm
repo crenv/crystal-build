@@ -11,6 +11,7 @@ use SemVer::V2::Strict;
 
 use CrystalBuild::Utils;
 use CrystalBuild::GitHub;
+use CrystalBuild::Resolver::Crystal;
 use CrystalBuild::Resolver::Crystal::GitHub;
 use CrystalBuild::Resolver::Crystal::RemoteCache;
 use CrystalBuild::Installer::Shards;
@@ -74,25 +75,15 @@ sub show_definitions {
     say $_ for @{ CrystalBuild::Utils::sort_version($self->avaiable_versions) };
 }
 
-sub resolvers {
+sub composite_resolver {
     my $self = shift;
-
-    my @resolvers;
-
-    push @resolvers, [
-        'remote cache',
-        CrystalBuild::Resolver::Crystal::RemoteCache->new(
-            fetcher   => $self->{fetcher},
-            cache_url => $self->{cache_url},
-        )
-    ] if $self->cache;
-
-    push @resolvers, [
-        'GitHub',
-        CrystalBuild::Resolver::Crystal::GitHub->new(github => $self->github)
-    ];
-
-    return \@resolvers;
+    return CrystalBuild::Resolver::Crystal->new(
+        fetcher           => $self->{fetcher},
+        github_repository => $self->{github_repo},
+        remote_cache_url  => $self->{cache_url},
+        use_remote_cache  => $self->cache,
+        use_github        => 1,
+    );
 }
 
 sub avaiable_versions {
@@ -112,25 +103,15 @@ sub system_info {
 sub resolve {
     my ($self, $version, $platform, $arch) = @_;
 
-    for my $resolver (@{ $self->resolvers }) {
-        print 'resolve by ' . $resolver->[0] . ': ';
-        my $download_url = $resolver->[1]->resolve($version, $platform, $arch);
-        say defined $download_url ? 'found' : 'not found';
-        return $download_url if defined $download_url;
-    }
+    my $result = eval { $self->composite_resolver->resolve($version, $platform, $arch) };
 
-    error_and_exit('version not found');
+    say $@ if $@;
+    return $result;
 }
 
 sub versions {
     my $self = shift;
-
-    for my $resolver (@{ $self->resolvers }) {
-        my $versions = $resolver->[1]->versions;
-        return $versions;
-    }
-
-    error_and_exit('avaiable versions not found');
+    return $self->composite_resolver->versions;
 }
 
 sub get_install_dir {

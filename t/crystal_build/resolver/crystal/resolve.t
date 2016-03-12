@@ -10,12 +10,11 @@ use CrystalBuild::Resolver::Crystal;
 
 subtest basic => sub {
     my @mock_resolvers = map { Test::MockObject->new } 0..2;
+    $_->mock(name => sub { 'mock' }) for @mock_resolvers;
+
     $mock_resolvers[0]->mock(resolve => sub { undef });
     $mock_resolvers[1]->mock(resolve => sub {
         my ($self, $version, $platform, $arch) = @_;
-        is $version,  '0.13.0';
-        is $platform, 'darwin';
-        is $arch,     'x64';
         return '__URL1__';
     });
     $mock_resolvers[2]->mock(resolve => sub { '__URL2__' });
@@ -29,6 +28,10 @@ subtest basic => sub {
     ok $mock_resolvers[0]->called('resolve');
     ok $mock_resolvers[1]->called('resolve');
     ok !$mock_resolvers[2]->called('resolve');
+
+    cmp_deeply
+        [ $mock_resolvers[1]->call_args(2) ],
+        [ $mock_resolvers[1], '0.13.0', 'darwin', 'x64' ];
 };
 
 subtest failed => sub {

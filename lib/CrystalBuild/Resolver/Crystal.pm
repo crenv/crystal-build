@@ -26,8 +26,15 @@ sub resolve {
     my ($self, $version, $platform, $arch) = @_;
 
     for my $resolver (@{ $self->{resolvers} }) {
+        print 'Resolving Crystal download URL by '.$resolver->name.' ... ';
         my $download_url = $resolver->resolve($version, $platform, $arch);
-        return $download_url if defined $download_url;
+
+        if (defined $download_url) {
+            say 'ok';
+            return $download_url;
+        }
+
+        say 'ng';
     }
 
     die 'version not found';
