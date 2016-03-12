@@ -4,6 +4,7 @@ use warnings;
 use utf8;
 use feature qw/say state/;
 
+use CrystalBuild::GitHub;
 use CrystalBuild::Resolver::Crystal::GitHub;
 use CrystalBuild::Resolver::Crystal::RemoteCache;
 
