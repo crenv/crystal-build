@@ -2,7 +2,7 @@ package CrystalBuild::Resolver::Crystal;
 use strict;
 use warnings;
 use utf8;
-use feature qw/say state/;
+use feature qw/say/;
 
 use CrystalBuild::GitHub;
 use CrystalBuild::Resolver::Crystal::GitHub;
@@ -17,36 +17,41 @@ sub new {
     $self->{remote_cache_url}  = $opt{remote_cache_url};
     $self->{use_remote_cache}  = $opt{use_remote_cache};
     $self->{use_github}        = $opt{use_github};
-    $self->{resolvers}         = $self->_enable_resolvers;
+    $self->{resolvers}         = $self->_create_enable_resolvers;
 
     return $self;
 }
 
 sub resolve {
     my ($self, $version, $platform, $arch) = @_;
+
+    for my $resolver (@{ $self->{resolvers} }) {
+        my $download_url = $resolver->resolve($version, $platform, $arch);
+        return $download_url if defined $download_url;
+    }
+
+    die 'version not found';
 }
 
 sub versions {
     my $self = shift;
 
-    for my $resolver ($self->{resolvers}) {
-        eval {
-            my $versions = $resolver->versions;
-            return $versions;
-        };
+    for my $resolver (@{ $self->{resolvers} }) {
+        my $versions = eval { $resolver->versions };
+        return $versions unless $@;
 
-        say $@ if $@;
+        say $@;
     }
 
     die 'faild to fetch Crystal versions list';
 }
 
-sub _enable_resolvers {
+sub _create_enable_resolvers {
     my $self = shift;
-    return (
+    return [
         $self->{use_remote_cache} ? $self->_create_remote_cache_resolver : (),
         $self->{use_github}       ? $self->_create_github_resolver       : (),
-    );
+    ];
 }
 
 sub _create_remote_cache_resolver {
