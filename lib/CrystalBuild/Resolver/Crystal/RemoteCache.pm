@@ -1,4 +1,4 @@
-package CrystalBuild::Resolver::Cache::Remote;
+package CrystalBuild::Resolver::Crystal::RemoteCache;
 use strict;
 use warnings;
 use utf8;

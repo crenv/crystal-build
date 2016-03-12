@@ -5,7 +5,7 @@ use utf8;
 use Test::MockObject;
 
 use t::Util;
-use CrystalBuild::Resolver::Cache::Remote;
+use CrystalBuild::Resolver::Crystal::RemoteCache;
 
 subtest basic => sub {
     my $fetcher = Test::MockObject->new;
@@ -27,21 +27,21 @@ EOF
     });
 
     my $guard = mock_guard(
-        'CrystalBuild::Resolver::Cache::Remote',
+        'CrystalBuild::Resolver::Crystal::RemoteCache',
         {
             fetcher   => sub { $fetcher },
             cache_url => sub { 'http://www.example.com' },
         });
 
-    my $resolver = CrystalBuild::Resolver::Cache::Remote->new;
+    my $resolver = CrystalBuild::Resolver::Crystal::RemoteCache->new;
 
     is
         $resolver->resolve('0.7.5', 'darwin', 'x64'),
         'https://crystal.org/darwin-x64-0.7.5.tar.gz';
 
     ok $fetcher->called('fetch');
-    is $guard->call_count('CrystalBuild::Resolver::Cache::Remote', 'fetcher'), 1;
-    is $guard->call_count('CrystalBuild::Resolver::Cache::Remote', 'cache_url'), 1;
+    is $guard->call_count('CrystalBuild::Resolver::Crystal::RemoteCache', 'fetcher'), 1;
+    is $guard->call_count('CrystalBuild::Resolver::Crystal::RemoteCache', 'cache_url'), 1;
 };
 
 done_testing;

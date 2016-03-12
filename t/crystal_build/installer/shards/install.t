@@ -43,6 +43,7 @@ subtest basic => sub {
     my $expected = <<EOF;
 Resolving shards download URL ... ok
 Downloading shards tarball ...
+__TABALL_URL__
 ok
 Building shards ... ok
 Copying shards binary ... ok

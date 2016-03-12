@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use utf8;
 use feature qw/say/;
-our $VERSION = '1.1.5';
+our $VERSION = '1.1.6';
 
 use File::Path qw/rmtree mkpath/;
 use JSON::PP;
@@ -11,9 +11,8 @@ use SemVer::V2::Strict;
 
 use CrystalBuild::Utils;
 use CrystalBuild::GitHub;
-use CrystalBuild::Resolver::GitHub;
-use CrystalBuild::Resolver::Cache::Remote;
-use CrystalBuild::Resolver::Shards;
+use CrystalBuild::Resolver::Crystal::GitHub;
+use CrystalBuild::Resolver::Crystal::RemoteCache;
 use CrystalBuild::Installer::Shards;
 
 sub new {
@@ -82,7 +81,7 @@ sub resolvers {
 
     push @resolvers, [
         'remote cache',
-        CrystalBuild::Resolver::Cache::Remote->new(
+        CrystalBuild::Resolver::Crystal::RemoteCache->new(
             fetcher   => $self->{fetcher},
             cache_url => $self->{cache_url},
         )
@@ -90,7 +89,7 @@ sub resolvers {
 
     push @resolvers, [
         'GitHub',
-        CrystalBuild::Resolver::GitHub->new(github => $self->github)
+        CrystalBuild::Resolver::Crystal::GitHub->new(github => $self->github)
     ];
 
     return \@resolvers;

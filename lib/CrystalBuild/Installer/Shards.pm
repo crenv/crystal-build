@@ -30,6 +30,7 @@ sub install {
         print "ok\n";
 
         print "Downloading shards tarball ...\n";
+        print "$tarball_url\n";
         my $target_dir = $self->_download($tarball_url);
         print "ok\n";
 
@@ -75,7 +76,7 @@ sub _copy {
     my $target_path = File::Spec->catfile($target_dir, 'shards');
 
     copy($shards_bin, $target_path)
-        or CrystalBuild::Utils::error_and_exit('shards binary copy failed: '.$target_path);
+        or die 'shards binary copy failed: '.$target_path;
 
     chmod 0755, $target_path;
 }

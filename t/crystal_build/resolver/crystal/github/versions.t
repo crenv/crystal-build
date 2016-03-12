@@ -5,7 +5,7 @@ use utf8;
 use Test::MockObject;
 
 use t::Util;
-use CrystalBuild::Resolver::GitHub;
+use CrystalBuild::Resolver::Crystal::GitHub;
 
 subtest basic => sub {
     my $github = Test::MockObject->new;
@@ -19,18 +19,18 @@ subtest basic => sub {
     });
 
     my $guard = mock_guard(
-        'CrystalBuild::Resolver::GitHub', {
+        'CrystalBuild::Resolver::Crystal::GitHub', {
             github => sub { $github },
         });
 
-    my $resolver = CrystalBuild::Resolver::GitHub->new;
+    my $resolver = CrystalBuild::Resolver::Crystal::GitHub->new;
 
     cmp_deeply
         $resolver->versions,
         [ '0.7.0', '0.7.1', '0.7.2' ];
 
     ok $github->called('fetch_releases');
-    is $guard->call_count('CrystalBuild::Resolver::GitHub', 'github'), 1;
+    is $guard->call_count('CrystalBuild::Resolver::Crystal::GitHub', 'github'), 1;
 };
 
 done_testing;
