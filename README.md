@@ -54,4 +54,4 @@ $ carton exec -- prove t/<dir>/<file>.t
 
 ## License
 MIT License<br />
-Copyright (c) 2015 Pine Mizune
+Copyright (c) 2015-2016 Pine Mizune
