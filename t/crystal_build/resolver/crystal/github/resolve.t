@@ -23,9 +23,9 @@ subtest basic => sub {
 
                 cmp_deeply $assets, [ '0.7.5' ];
 
-                return (
+                return {
                     'darwin-x64' => 'http://www.example.com/darwin/x64',
-                );
+                };
             },
         });
 

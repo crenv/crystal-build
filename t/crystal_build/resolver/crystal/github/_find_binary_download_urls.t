@@ -19,10 +19,10 @@ subtest 'if < v0.7.5' => sub {
         },
     ];
 
-    my %urls = CrystalBuild::Resolver::Crystal::GitHub->_find_binary_download_urls($assets);
-    is $urls{'darwin-x64'}, 'http://www.example.com/darwin/x64';
-    is $urls{'linux-x64'}, 'http://www.example.com/linux/x64';
-    ok not defined $urls{'linux-x86'};
+    my $urls = CrystalBuild::Resolver::Crystal::GitHub->_find_binary_download_urls($assets);
+    is $urls->{'darwin-x64'}, 'http://www.example.com/darwin/x64';
+    is $urls->{'linux-x64'}, 'http://www.example.com/linux/x64';
+    ok not defined $urls->{'linux-x86'};
 };
 
 subtest basic => sub {
@@ -41,10 +41,10 @@ subtest basic => sub {
         },
     ];
 
-    my %urls = CrystalBuild::Resolver::Crystal::GitHub->_find_binary_download_urls($assets);
-    is $urls{'darwin-x64'}, 'http://www.example.com/darwin/x64';
-    is $urls{'linux-x64'}, 'http://www.example.com/linux/x64';
-    is $urls{'linux-x86'}, 'http://www.example.com/linux/x86';
+    my $urls = CrystalBuild::Resolver::Crystal::GitHub->_find_binary_download_urls($assets);
+    is $urls->{'darwin-x64'}, 'http://www.example.com/darwin/x64';
+    is $urls->{'linux-x64'}, 'http://www.example.com/linux/x64';
+    is $urls->{'linux-x86'}, 'http://www.example.com/linux/x86';
 };
 
 done_testing;
