@@ -111,7 +111,9 @@ sub resolve {
 
 sub versions {
     my $self = shift;
-    return $self->composite_resolver->versions;
+    my $versions = eval { $self->composite_resolver->versions };
+    error_and_exit('avaiable versions not found') if $@;
+    return $versions;
 }
 
 sub get_install_dir {

@@ -45,9 +45,9 @@ sub versions {
 
     for my $resolver (@{ $self->{resolvers} }) {
         my $versions = eval { $resolver->versions };
-        return $versions unless $@;
+        return $versions if !$@ && @$versions > 0;
 
-        say $@;
+        say $@ if $@;
     }
 
     die 'faild to fetch Crystal versions list';

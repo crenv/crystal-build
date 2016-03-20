@@ -22,8 +22,20 @@ subtest basic => sub {
 };
 
 subtest failed => sub {
-    my $resolver = bless { resolvers => [] } => 'CrystalBuild::Resolver::Crystal';
-    dies_ok { $resolver->versions };
+    subtest '# no versions' => sub {
+        my $resolver = Test::MockObject->new;
+        $resolver->mock(versions => { [] });
+
+        my $composite_resolver =
+            bless { resolvers => [ $resolver ] } => 'CrystalBuild::Resolver::Crystal';
+
+        dies_ok { $resolver->versions };
+    };
+
+    subtest '# no resolvers' => sub {
+        my $resolver = bless { resolvers => [] } => 'CrystalBuild::Resolver::Crystal';
+        dies_ok { $resolver->versions };
+    };
 };
 
 done_testing;

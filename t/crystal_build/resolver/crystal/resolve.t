@@ -35,8 +35,10 @@ subtest basic => sub {
 };
 
 subtest failed => sub {
-    my $resolver = bless { resolvers => [] } => 'CrystalBuild::Resolver::Crystal';
-    dies_ok { $resolver->resolve('0.13.0', 'darwin', 'x86') };
+    subtest '# no resolvers' => sub {
+        my $resolver = bless { resolvers => [] } => 'CrystalBuild::Resolver::Crystal';
+        dies_ok { $resolver->resolve('0.13.0', 'darwin', 'x86') };
+    };
 };
 
 done_testing;

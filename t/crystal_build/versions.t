@@ -14,9 +14,7 @@ subtest succeeded => sub {
     });
 
     my $guard = mock_guard('CrystalBuild', {
-       resolvers => sub {
-           return [ [ 'test', $resolver ] ];
-       },
+        composite_resolver => sub { $resolver },
     });
 
     my $crenv = create_crenv;
@@ -25,14 +23,17 @@ subtest succeeded => sub {
         $crenv->versions,
         [ '0.6.0', '0.6.1', '0.6.2' ];
 
-    is $guard->call_count('CrystalBuild', 'resolvers'), 1;
+    is $guard->call_count('CrystalBuild', 'composite_resolver'), 1;
     ok $resolver->called('versions');
 };
 
 subtest failed => sub {
+    my $resolver = Test::MockObject->new;
+    $resolver->mock(versions => sub { die 'error' });
+
     my $guard = mock_guard('CrystalBuild', {
-        resolvers      => sub { [] },
-        error_and_exit => sub {
+        composite_resolver => sub { $resolver },
+        error_and_exit     => sub {
             my $msg = shift;
             is $msg, 'avaiable versions not found';
         },
@@ -41,7 +42,7 @@ subtest failed => sub {
     my $crenv = create_crenv;
 
     $crenv->versions,
-    is $guard->call_count('CrystalBuild', 'resolvers'), 1;
+    is $guard->call_count('CrystalBuild', 'composite_resolver'), 1;
     is $guard->call_count('CrystalBuild', 'error_and_exit'), 1;
 };
 
