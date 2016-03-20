@@ -62,9 +62,9 @@ sub install_shards {
     my ($self, $crystal_version) = @_;
 
     my $installer = CrystalBuild::Installer::Shards->new(
-        fetcher    => $self->{fetcher},
-        shards_url => $self->{shards_url},
-        cache_dir  => "$self->{cache_dir}/$crystal_version",
+        fetcher          => $self->{fetcher},
+        remote_cache_url => $self->{shards_url},
+        cache_dir        => "$self->{cache_dir}/$crystal_version",
     );
 
     $installer->install($crystal_version, $self->{prefix});

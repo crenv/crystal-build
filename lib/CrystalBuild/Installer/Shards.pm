@@ -17,9 +17,9 @@ sub new {
     bless { %opt } => $class;
 }
 
-sub fetcher    { shift->{fetcher}    }
-sub shards_url { shift->{shards_url} }
-sub cache_dir  { shift->{cache_dir}  }
+sub fetcher          { shift->{fetcher} }
+sub remote_cache_url { shift->{remote_cache_url} }
+sub cache_dir        { shift->{cache_dir} }
 
 sub install {
     my ($self, $crystal_version, $crystal_dir) = @_;
@@ -48,16 +48,14 @@ sub install {
 
 sub _resolve {
     my ($self, $crystal_version) = @_;
-
     return CrystalBuild::Resolver::Shards->new(
         fetcher             => $self->fetcher,
-        shards_releases_url => $self->shards_url,
+        shards_releases_url => $self->remote_cache_url,
     )->resolve($crystal_version);
 }
 
 sub _download {
     my ($self, $tarball_url) = @_;
-
     return CrystalBuild::Downloader::Shards->new(
         fetcher    => $self->fetcher,
         cache_dir  => $self->cache_dir,
