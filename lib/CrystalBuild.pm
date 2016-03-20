@@ -2,7 +2,7 @@ package CrystalBuild;
 use strict;
 use warnings;
 use utf8;
-use feature qw/say/;
+use feature qw/say state/;
 our $VERSION = '1.1.6';
 
 use File::Path qw/rmtree mkpath/;
@@ -14,6 +14,7 @@ use CrystalBuild::GitHub;
 use CrystalBuild::Resolver::Crystal;
 use CrystalBuild::Resolver::Crystal::GitHub;
 use CrystalBuild::Resolver::Crystal::RemoteCache;
+use CrystalBuild::Installer::Crystal;
 use CrystalBuild::Installer::Shards;
 
 sub new {
@@ -25,6 +26,7 @@ sub new {
 
 sub install {
     my ($self, $v) = @_;
+
 
     my ($platform, $arch) = $self->system_info;
 
@@ -70,6 +72,19 @@ sub install_shards {
     $installer->install($crystal_version, $self->{prefix});
 }
 
+sub crystal_installer {
+    my $self = shift;
+    state $installer = CrystalBuild::Installer::Crystal->new(
+        fetcher           => $self->{fetcher},
+        github_repository => $self->{github_repo},
+        remote_cache_url  => $self->{cache_url},
+        use_remote_cache  => $self->cache,
+        use_github        => 1,
+    );
+
+    return $installer;
+}
+
 sub show_definitions {
     my $self = shift;
     say $_ for @{ CrystalBuild::Utils::sort_version($self->avaiable_versions) };
@@ -111,9 +126,7 @@ sub resolve {
 
 sub versions {
     my $self = shift;
-    my $versions = eval { $self->composite_resolver->versions };
-    error_and_exit('avaiable versions not found') if $@;
-    return $versions;
+    return $self->crystal_installer->versions;
 }
 
 sub get_install_dir {
