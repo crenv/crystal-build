@@ -4,7 +4,9 @@ use warnings;
 use utf8;
 use feature qw/say/;
 
+use CrystalBuild::Utils;
 use CrystalBuild::GitHub;
+use CrystalBuild::Resolver::Utils;
 use CrystalBuild::Resolver::Crystal::GitHub;
 use CrystalBuild::Resolver::Crystal::RemoteCache;
 
@@ -38,6 +40,12 @@ sub resolve {
     }
 
     die 'version not found';
+}
+
+sub resolve_by_version {
+    my ($self, $version) = @_;
+    my ($platform, $arch) = CrystalBuild::Utils::system_info();
+    return $self->resolve($version, $platform, $arch);
 }
 
 sub versions {
