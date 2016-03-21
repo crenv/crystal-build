@@ -4,7 +4,7 @@ use warnings;
 use utf8;
 use feature qw/say/;
 
-use File::Path qw/rmtree/; # => 5.001
+use File::Path qw/mkpath rmtree/; # => 5.001
 
 use CrystalBuild::Utils;
 use CrystalBuild::Downloader::Crystal;
@@ -74,6 +74,7 @@ sub _download {
 
 sub _move {
     my ($self, $extracted_dir, $install_dir) = @_;
+    mkpath $install_dir unless -e $install_dir;
     rmtree $install_dir if -e $install_dir;
     rename $extracted_dir, $install_dir
         or die "faild to move the Crystal directory $!";
