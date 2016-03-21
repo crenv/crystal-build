@@ -29,7 +29,7 @@ sub install {
         my $tarball_url = $self->_resolve($crystal_version);
 
         say "Downloading Crystal binary tarball ...";
-        say "$tarball_url";
+        say $tarball_url;
         my $extracted_dir = $self->_download($tarball_url, $crystal_version);
         say "ok";
 
