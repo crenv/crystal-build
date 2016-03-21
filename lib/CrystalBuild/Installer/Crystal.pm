@@ -47,7 +47,7 @@ sub versions {
 
     CrystalBuild::Utils::error_and_exit('avaiable versions not found') if $@;
 
-    my @normalized_versions = grep { CrystalBuild::Resolver::Utils->normalize_version($_) } @$versions;
+    my @normalized_versions = map { CrystalBuild::Resolver::Utils->normalize_version($_) } @$versions;
     my $sorted_versions     = CrystalBuild::Resolver::Utils->sort_version(\@normalized_versions);
 
     return $sorted_versions;
