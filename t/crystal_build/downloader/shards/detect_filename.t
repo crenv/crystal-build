@@ -6,7 +6,7 @@ use t::Util;
 use CrystalBuild::Downloader::Shards;
 
 subtest basic => sub {
-    my $self = CrystalBuild::Downloader::Shards->new;
+    my $self = bless {} => 'CrystalBuild::Downloader::Shards';
 
     is
         $self->_detect_filename('https://github.com/ysbaddaden/shards/archive/v0.5.3.tar.gz'),
