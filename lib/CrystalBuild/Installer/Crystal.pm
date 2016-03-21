@@ -30,7 +30,7 @@ sub install {
 
         say "Downloading Crystal binary tarball ...";
         say "$tarball_url";
-        my $extracted_dir = $self->_download($crystal_version, $tarball_url);
+        my $extracted_dir = $self->_download($tarball_url, $crystal_version);
         say "ok";
 
         print "Moving the Crystal directory ...";
@@ -65,7 +65,7 @@ sub _resolve {
 }
 
 sub _download {
-    my ($self, $crystal_version, $tarball_url) = @_;
+    my ($self, $tarball_url, $crystal_version) = @_;
     my $cache_dir = "$self->{cache_dir}/$crystal_version";
     return CrystalBuild::Downloader::Crystal->new(
         fetcher => $self->{fetcher},
