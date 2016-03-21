@@ -5,16 +5,24 @@ use utf8;
 use t::Util;
 use CrystalBuild::Downloader::Shards;
 
-subtest basic => sub {
+use constant VALID_URL =>
+    'https://github.com/ysbaddaden/shards/archive/v0.5.3.tar.gz';
+
+subtest succeeded => sub {
+    my $self = bless {} => 'CrystalBuild::Downloader::Shards';
+    is $self->_detect_filename(VALID_URL), 'shards-v0.5.3.tar.gz';
+};
+
+subtest failed => sub {
     my $self = bless {} => 'CrystalBuild::Downloader::Shards';
 
-    is
-        $self->_detect_filename('https://github.com/ysbaddaden/shards/archive/v0.5.3.tar.gz'),
-        'shards-v0.5.3.tar.gz';
+    subtest '# undef' => sub {
+        dies_ok { $self->_detect_filename };
+    };
 
-    is
-        $self->_detect_filename('https://github.com/ysbaddaden/shards/archive/'),
-        'shards.tar.gz';
+    subtest '# invalid URL' => sub {
+        dies_ok { $self->_detect_filename('http://www.example.com/') };
+    };
 };
 
 done_testing;

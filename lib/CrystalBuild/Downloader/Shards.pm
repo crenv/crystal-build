@@ -9,8 +9,8 @@ use File::Spec;
 sub _detect_filename {
     my ($self, $url) = @_;
 
-    return "shards-$1" if $url =~ /\/([\w\.-]+)$/;
-    return 'shards.tar.gz';
+    return "shards-$1" if $url && $url =~ /\/([\w\.-]+)$/;
+    die 'Invalid download URL';
 }
 
 sub _detect_extracted_dirs {
