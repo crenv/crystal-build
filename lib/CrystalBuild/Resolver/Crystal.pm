@@ -39,7 +39,7 @@ sub resolve {
         say 'ng';
     }
 
-    die 'version not found';
+    die "Error: Version not found\n";
 }
 
 sub resolve_by_version {
