@@ -10,8 +10,6 @@ sub new {
     return bless { %opt } => $class;
 }
 
-sub name { 'Remote Cache' }
-
 sub resolve {
     my ($self, $version, $platform, $arch) = @_;
 

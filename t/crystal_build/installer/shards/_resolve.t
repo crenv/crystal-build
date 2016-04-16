@@ -10,9 +10,9 @@ use CrystalBuild::Installer::Shards;
 use CrystalBuild::Resolver::Shards;
 
 subtest basic => sub {
-    my $fetcher          = Test::MockObject->new;
-    my $remote_cache_url = Test::MockObject->new;
-    my $resolver         = Test::MockObject->new;
+    my $fetcher    = Test::MockObject->new;
+    my $shards_url = Test::MockObject->new;
+    my $resolver   = Test::MockObject->new;
 
     $resolver->mock(resolve => sub {
         my ($self, $crystal_version) = @_;
@@ -25,15 +25,15 @@ subtest basic => sub {
             my ($class, %opt) = @_;
 
             is $opt{fetcher},             $fetcher;
-            is $opt{shards_releases_url}, $remote_cache_url;
+            is $opt{shards_releases_url}, $shards_url;
 
             return $resolver;
         },
     });
 
     my $installer  = CrystalBuild::Installer::Shards->new(
-        fetcher          => $fetcher,
-        remote_cache_url => $remote_cache_url,
+        fetcher    => $fetcher,
+        shards_url => $shards_url,
     );
     $installer->_resolve('0.9.1');
 
