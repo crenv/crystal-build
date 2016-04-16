@@ -23,7 +23,6 @@ subtest basic => sub {
         },
         _download => sub {
             is $_[1], '__TABALL_URL__';
-            is $_[2], '__CRYSTAL_VERSION__';
             return '__EXTRACTED_DIR__';
         },
         _build    => sub {
@@ -42,12 +41,12 @@ subtest basic => sub {
     };
 
     my $expected = <<EOF;
-Resolving Shards download URL ... ok
-Downloading Shards tarball ...
+Resolving shards download URL ... ok
+Downloading shards tarball ...
 __TABALL_URL__
 ok
-Building Shards ... ok
-Copying Shards binary ... ok
+Building shards ... ok
+Copying shards binary ... ok
 EOF
 
     is $actual, $expected;

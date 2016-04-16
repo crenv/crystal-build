@@ -29,7 +29,7 @@ sub create_crenv {
 
     $opt{fetcher}     ||= HTTP::Command::Wrapper->create('wget');
     $opt{github_repo} ||= 'author/repo';
-    $opt{prefix}      ||= 't/tmp/.crenv/versions/0.7.7';
+    $opt{prefix}      ||= 't/tmp/.crenv/versions/0.7.4';
     $opt{cache}       ||= 1;
     $opt{cache_dir}   ||= abs_path('t/tmp/.crenv/cache');
     $opt{cache_url}   ||= 'http://example.com/releases';
