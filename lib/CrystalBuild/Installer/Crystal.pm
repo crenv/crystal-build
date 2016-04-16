@@ -77,7 +77,7 @@ sub _move {
     mkpath $install_dir unless -e $install_dir;
     rmtree $install_dir if -e $install_dir;
     rename $extracted_dir, $install_dir
-        or die "faild to move the Crystal directory $!";
+        or die "faild to move the Crystal directory $!\n";
 }
 
 sub _create_resolver {

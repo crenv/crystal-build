@@ -58,7 +58,7 @@ sub versions {
         say $@ if $@;
     }
 
-    die 'faild to fetch Crystal versions list';
+    die "faild to fetch Crystal versions list\n";
 }
 
 sub _create_enable_resolvers {

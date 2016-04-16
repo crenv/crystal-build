@@ -33,7 +33,7 @@ sub download {
     return $target_dir;
 }
 
-sub _detect_filename       { die 'abstract method' }
-sub _detect_extracted_dirs { die 'abstract method' }
+sub _detect_filename       { die "abstract method\n" }
+sub _detect_extracted_dirs { die "abstract method\n" }
 
 1;
