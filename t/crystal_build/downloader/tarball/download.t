@@ -44,12 +44,9 @@ subtest basic => sub {
     ok !-d 't/tmp/shards-v0.1.0';
 
     # test
-    my $self = CrystalBuild::Downloader::Shards->new(
-        fetcher   => $fetcher,
-        cache_dir => 't/tmp/',
-    );
+    my $self = CrystalBuild::Downloader::Shards->new(fetcher => $fetcher);
 
-    my $target_dir = $self->download('https://www.example.com/example.tar.gz');
+    my $target_dir = $self->download('https://www.example.com/example.tar.gz', 't/tmp/');
 
     # assert
     is $target_dir, 't/tmp/shards-v0.1.0';
@@ -57,7 +54,6 @@ subtest basic => sub {
 
     ok $fetcher->called('download');
     is $guard_self->call_count('CrystalBuild::Downloader::Shards', '_detect_filename'), 1;
-    is $guard_utils->call_count('CrystalBuild::Utils', 'error_and_exit'), 0;
     is $guard_utils->call_count('CrystalBuild::Utils', 'extract_tar'), 1;
 
     # after

@@ -3,48 +3,47 @@ use warnings;
 use utf8;
 
 use Capture::Tiny qw/capture_stdout/;
+use Test::MockObject;
 
 use t::Util;
 
-
-create_server;
-
 subtest basic => sub {
-    my $url   = uri_for('crystal-0.7.4-1.tar.gz');
-    my $guard = mock_guard('CrystalBuild', {
-        system_info => sub {
-            return ('linux', 'x64');
-        },
-        resolve => sub {
-            my ($self, $version, $platform, $arch) = @_;
-            is $version, '0.7.4';
-            is $platform, 'linux';
-            is $arch, 'x64';
+    my $crystal_installer = Test::MockObject->new;
+    $crystal_installer->mock(install => sub {
+        my ($self, $crystal_version, $install_dir) = @_;
+        is $crystal_version, '0.7.7';
+        is $install_dir,     't/tmp/.crenv/versions/0.7.7';
+    });
+    $crystal_installer->mock(needs_shards => sub { 1 });
 
-            return $url;
-        },
+    my $shards_installer = Test::MockObject->new;
+    $shards_installer->mock(install => sub {
+        my ($self, $crystal_version, $crystal_dir) = @_;
+        is $crystal_version, '0.7.7';
+        is $crystal_dir,     't/tmp/.crenv/versions/0.7.7';
+    });
+
+    my $guard = mock_guard('CrystalBuild', {
+        crystal_installer => sub { $crystal_installer },
+        shards_installer  => sub { $shards_installer  },
     });
 
     my $crenv = create_crenv;
 
     my ($stdout) = capture_stdout {
-        $crenv->install('0.7.4');
+        $crenv->install('0.7.7');
     };
 
     my $expected = <<"EOF";
-resolve: crystal-0.7.4-linux-x64
-fetch: $url
 Install successful
 EOF
 
     is $stdout, $expected;
 
-    ok -d 't/tmp/.crenv/versions/0.7.4/bin';
-    ok -d 't/tmp/.crenv/versions/0.7.4/src';
-    is `t/tmp/.crenv/versions/0.7.4/bin/crystal`, "crystal\n";
-
-    is $guard->call_count('CrystalBuild', 'system_info'), 1;
-    is $guard->call_count('CrystalBuild', 'resolve'), 1;
+    ok $crystal_installer->called('install');
+    ok $crystal_installer->called('needs_shards');
+    ok $shards_installer->called('install');
+    ok !$shards_installer->called('needs_shards');
 };
 
 done_testing;
