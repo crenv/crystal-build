@@ -1,3 +1,4 @@
+requires 'parent', '0.234';
 requires 'JSON::PP', '2.27300';
 requires 'SemVer::V2::Strict', '0.10';
 requires 'HTTP::Command::Wrapper', '0.04';
@@ -28,4 +29,8 @@ on test => sub {
     requires 'Devel::Cover::Report::Codecov';
     requires 'Perl::Critic', '1.125';
     requires 'Test::Perl::Critic', '1.03';
+};
+
+on develop => sub {
+    requires 'Data::Printer', '0.38';
 };

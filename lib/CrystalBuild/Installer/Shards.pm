@@ -17,28 +17,28 @@ sub new {
     bless { %opt } => $class;
 }
 
-sub fetcher    { shift->{fetcher}    }
-sub shards_url { shift->{shards_url} }
-sub cache_dir  { shift->{cache_dir}  }
+sub fetcher          { shift->{fetcher} }
+sub remote_cache_url { shift->{remote_cache_url} }
+sub cache_dir        { shift->{cache_dir} }
 
 sub install {
     my ($self, $crystal_version, $crystal_dir) = @_;
 
     eval {
-        print "Resolving shards download URL ... ";
+        print "Resolving Shards download URL ... ";
         my $tarball_url = $self->_resolve($crystal_version);
         print "ok\n";
 
-        print "Downloading shards tarball ...\n";
+        print "Downloading Shards tarball ...\n";
         print "$tarball_url\n";
-        my $target_dir = $self->_download($tarball_url);
+        my $target_dir = $self->_download($tarball_url, $crystal_version);
         print "ok\n";
 
-        print "Building shards ... ";
+        print "Building Shards ... ";
         my $shards_bin = $self->_build($target_dir, $crystal_dir);
         print "ok\n";
 
-        print "Copying shards binary ... ";
+        print "Copying Shards binary ... ";
         $self->_copy($shards_bin, $crystal_dir);
         print "ok\n";
     };
@@ -48,20 +48,18 @@ sub install {
 
 sub _resolve {
     my ($self, $crystal_version) = @_;
-
     return CrystalBuild::Resolver::Shards->new(
         fetcher             => $self->fetcher,
-        shards_releases_url => $self->shards_url,
+        shards_releases_url => $self->remote_cache_url,
     )->resolve($crystal_version);
 }
 
 sub _download {
-    my ($self, $tarball_url) = @_;
-
+    my ($self, $tarball_url, $crystal_version) = @_;
+    my $cache_dir = $self->cache_dir.'/'.$crystal_version;
     return CrystalBuild::Downloader::Shards->new(
-        fetcher    => $self->fetcher,
-        cache_dir  => $self->cache_dir,
-    )->download($tarball_url);
+        fetcher => $self->fetcher,
+    )->download($tarball_url, $cache_dir);
 }
 
 sub _build {

@@ -6,8 +6,8 @@ use Test::MockObject;
 use Test::Mock::Guard qw/mock_guard/;
 
 use t::Util;
-use CrystalBuild::Installer::Shards;
-use CrystalBuild::Downloader::Shards;
+use CrystalBuild::Installer::Crystal;
+use CrystalBuild::Downloader::Crystal;
 
 subtest basic => sub {
     my $fetcher    = Test::MockObject->new;
@@ -20,21 +20,21 @@ subtest basic => sub {
         is $cache_dir,   '__CACHE_DIR__/__CRYSTAL_VERSION__';
     });
 
-    my $guard = mock_guard('CrystalBuild::Downloader::Shards', {
+    my $guard = mock_guard('CrystalBuild::Downloader::Crystal', {
         new => sub {
             my ($class, %opt) = @_;
-            is $opt{fetcher},   $fetcher;
+            is $opt{fetcher}, '__FETCHER__';
             return $downloader;
         },
     });
 
-    my $installer  = CrystalBuild::Installer::Shards->new(
-        fetcher   => $fetcher,
+    my $installer  = CrystalBuild::Installer::Crystal->new(
+        fetcher   => '__FETCHER__',
         cache_dir => '__CACHE_DIR__',
     );
     $installer->_download('http://dummy.url', '__CRYSTAL_VERSION__');
 
-    is $guard->call_count('CrystalBuild::Downloader::Shards', 'new'), 1;
+    is $guard->call_count('CrystalBuild::Downloader::Crystal', 'new'), 1;
     ok $downloader->called('download');
 };
 
