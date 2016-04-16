@@ -1,3 +1,4 @@
+requires 'parent', '0.234';
 requires 'JSON::PP', '2.27300';
 requires 'SemVer::V2::Strict', '0.10';
 requires 'HTTP::Command::Wrapper', '0.04';
