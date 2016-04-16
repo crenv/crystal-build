@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use utf8;
 use feature qw/say state/;
-our $VERSION = '1.1.6';
+our $VERSION = '1.1.7';
 
 use File::Path qw/rmtree mkpath/;
 use JSON::PP;
