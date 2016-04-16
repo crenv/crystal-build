@@ -30,3 +30,7 @@ on test => sub {
     requires 'Perl::Critic', '1.125';
     requires 'Test::Perl::Critic', '1.03';
 };
+
+on develop => sub {
+    requires 'Data::Printer', '0.38';
+};

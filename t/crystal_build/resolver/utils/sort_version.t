@@ -3,12 +3,11 @@ use warnings;
 use utf8;
 
 use t::Util;
-
-use CrystalBuild::Utils;
+use CrystalBuild::Resolver::Utils;
 
 subtest basic => sub {
     my $versions        = [ '0.1.0', '0.5.0', '0.4.5', '0.5.10', '0.1.1', '0.5.1' ];
-    my $sorted_versions = CrystalBuild::Utils::sort_version($versions);
+    my $sorted_versions = CrystalBuild::Resolver::Utils->sort_version($versions);
 
     cmp_deeply(
         $sorted_versions,

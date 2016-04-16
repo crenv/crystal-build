@@ -8,13 +8,6 @@ use Getopt::Long qw/:config posix_default no_ignore_case gnu_compat/;
 
 use SemVer::V2::Strict;
 
-sub sort_version {
-    my $version = shift;
-    return [ sort {
-        SemVer::V2::Strict->new($a) <=> SemVer::V2::Strict->new($b)
-    } @$version ];
-}
-
 sub system_info {
     my $arch;
     my ($sysname, $machine) = (POSIX::uname)[0, 4];
