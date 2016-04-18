@@ -4,7 +4,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.15.0/crystal-0.15.0-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.15.0/crystal-0.15.0-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.15.0/crystal-0.15.0-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.15.0/crystal-0.15.0-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.15.0.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.15.0.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.15.0.mavericks.bottle.tar.gz"
     }
   },
   {
@@ -12,7 +15,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.14.2/crystal-0.14.2-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.14.2/crystal-0.14.2-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.14.2/crystal-0.14.2-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.14.2/crystal-0.14.2-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.14.2.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.14.2.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.14.2.mavericks.bottle.tar.gz"
     }
   },
   {
@@ -20,7 +26,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.14.1/crystal-0.14.1-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.14.1/crystal-0.14.1-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.14.1/crystal-0.14.1-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.14.1/crystal-0.14.1-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.14.1.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.14.1.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.14.1.mavericks.bottle.tar.gz"
     }
   },
   {
@@ -36,7 +45,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.13.0/crystal-0.13.0-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.13.0/crystal-0.13.0-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.13.0/crystal-0.13.0-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.13.0/crystal-0.13.0-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.13.0.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.13.0.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.13.0.mavericks.bottle.tar.gz"
     }
   },
   {
@@ -44,7 +56,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.12.0/crystal-0.12.0-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.12.0/crystal-0.12.0-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.12.0/crystal-0.12.0-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.12.0/crystal-0.12.0-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.12.0.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.12.0.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.12.0.mavericks.bottle.tar.gz"
     }
   },
   {
@@ -52,7 +67,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.11.1/crystal-0.11.1-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.11.1/crystal-0.11.1-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.11.1/crystal-0.11.1-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.11.1/crystal-0.11.1-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.11.1.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.11.1.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.11.1.mavericks.bottle.tar.gz"
     }
   },
   {
@@ -60,7 +78,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.11.0/crystal-0.11.0-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.11.0/crystal-0.11.0-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.11.0/crystal-0.11.0-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.11.0/crystal-0.11.0-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.11.0.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.11.0.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.11.0.mavericks.bottle.tar.gz"
     }
   },
   {
@@ -68,7 +89,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.10.2/crystal-0.10.2-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.10.2/crystal-0.10.2-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.10.2/crystal-0.10.2-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.10.2/crystal-0.10.2-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.10.2.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.10.2.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.10.2.mavericks.bottle.tar.gz"
     }
   },
   {
@@ -76,7 +100,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.10.1/crystal-0.10.1-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.10.1/crystal-0.10.1-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.10.1/crystal-0.10.1-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.10.1/crystal-0.10.1-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.10.1.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.10.1.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.10.1.mavericks.bottle.tar.gz"
     }
   },
   {
@@ -84,7 +111,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.10.0/crystal-0.10.0-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.10.0/crystal-0.10.0-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.10.0/crystal-0.10.0-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.10.0/crystal-0.10.0-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.10.0.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.10.0.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.10.0.mavericks.bottle.tar.gz"
     }
   },
   {
@@ -92,7 +122,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.9.1/crystal-0.9.1-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.9.1/crystal-0.9.1-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.9.1/crystal-0.9.1-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.9.1/crystal-0.9.1-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.9.1.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.9.1.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.9.1.mavericks.bottle.tar.gz"
     }
   },
   {
@@ -100,7 +133,10 @@
     "assets": {
       "linux-x86": "https://github.com/crystal-lang/crystal/releases/download/0.9.0/crystal-0.9.0-1-linux-i686.tar.gz",
       "linux-x64": "https://github.com/crystal-lang/crystal/releases/download/0.9.0/crystal-0.9.0-1-linux-x86_64.tar.gz",
-      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.9.0/crystal-0.9.0-1-darwin-x86_64.tar.gz"
+      "darwin-x64": "https://github.com/crystal-lang/crystal/releases/download/0.9.0/crystal-0.9.0-1-darwin-x86_64.tar.gz",
+      "darwin-x64-el_capitan": "https://homebrew.bintray.com/bottles/crystal-lang-0.9.0.el_capitan.bottle.tar.gz",
+      "darwin-x64-yosemite": "https://homebrew.bintray.com/bottles/crystal-lang-0.9.0.yosemite.bottle.tar.gz",
+      "darwin-x64-mavericks": "https://homebrew.bintray.com/bottles/crystal-lang-0.9.0.mavericks.bottle.tar.gz"
     }
   },
   {
