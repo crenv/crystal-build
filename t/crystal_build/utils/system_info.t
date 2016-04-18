@@ -6,21 +6,6 @@ use t::Util;
 
 use CrystalBuild::Utils;
 
-    # if  ($machine =~ m/x86_64/) {
-    #     $arch = 'x64';
-    # } elsif ($machine =~ m/i\d86/) {
-    #     $arch = 'x86';
-    # } elsif ($machine =~ m/armv6l/) {
-    #     $arch = 'arm-pi';
-    # } elsif ($sysname =~ m/sunos/i) {
-    #     # SunOS $machine => 'i86pc'. but use 64bit kernel.
-    #     # Solaris 11 not support 32bit kernel.
-    #     # both 32bit and 64bit node-binary even work on 64bit kernel
-    #     $arch = 'x64';
-    # } else {
-    #     die "Error: $sysname $machine is not supported."
-    # }
-
 subtest normal => sub {
     subtest '# Linux' => sub {
         my $guard = mock_guard('POSIX', {
