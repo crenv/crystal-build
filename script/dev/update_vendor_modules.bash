@@ -23,6 +23,10 @@ mkdir -p $VENDOR_LIB/JSON
 cp -rf $LOCAL_LIB/JSON/PP    $VENDOR_LIB/JSON/PP
 cp -rf $LOCAL_LIB/JSON/PP.pm $VENDOR_LIB/JSON/PP.pm
 
+# Mac::OSVersion::Lite
+mkdir -p $VENDOR_LIB/Mac/OSVersion
+cp -rf $LOCAL_LIB/Mac/OSVersion/Lite.pm $VENDOR_LIB/Mac/OSVersion/Lite.pm
+
 # SemVer::V2::Strict
 mkdir -p $VENDOR_LIB/SemVer/V2
 cp -rf $LOCAL_LIB/SemVer/V2/Strict.pm $VENDOR_LIB/SemVer/V2/Strict.pm

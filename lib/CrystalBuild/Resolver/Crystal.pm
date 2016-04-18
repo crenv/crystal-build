@@ -25,11 +25,11 @@ sub new {
 }
 
 sub resolve {
-    my ($self, $version, $platform, $arch) = @_;
+    my ($self, $version, @system_info) = @_;
 
     for my $resolver (@{ $self->{resolvers} }) {
         print 'Resolving Crystal download URL by '.$resolver->name.' ... ';
-        my $download_url = $resolver->resolve($version, $platform, $arch);
+        my $download_url = $resolver->resolve($version, @system_info);
 
         if (defined $download_url) {
             say 'ok';
@@ -44,8 +44,8 @@ sub resolve {
 
 sub resolve_by_version {
     my ($self, $version) = @_;
-    my ($platform, $arch) = CrystalBuild::Utils::system_info();
-    return $self->resolve($version, $platform, $arch);
+    my @system_info = CrystalBuild::Utils::system_info();
+    return $self->resolve($version, @system_info);
 }
 
 sub versions {

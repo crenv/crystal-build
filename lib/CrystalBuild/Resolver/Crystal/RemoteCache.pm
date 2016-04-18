@@ -13,11 +13,17 @@ sub new {
 sub name { 'Remote Cache' }
 
 sub resolve {
-    my ($self, $version, $platform, $arch) = @_;
+    my ($self, $version, $platform, $arch, $os_version) = @_;
 
     my ($release) = grep { $_->{tag_name} eq $version } @{ $self->_fetch };
     return unless defined $release;
-    return $release->{assets}->{"$platform-$arch"}
+
+    if (defined $os_version) {
+        my $key = "$platform-$arch-$os_version";
+        return $release->{assets}->{$key} if defined $release->{assets}->{$key};
+    }
+
+    return $release->{assets}->{"$platform-$arch"};
 }
 
 sub versions {
