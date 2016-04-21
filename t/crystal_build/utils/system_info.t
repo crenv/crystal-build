@@ -29,7 +29,7 @@ subtest normal => sub {
 
         my @system_info = CrystalBuild::Utils::system_info;
         is $system_info[0], 'darwin';
-        is $system_info[2], '10.11';
+        is $system_info[2], 'el_capitan';
 
         is $guard_posix->call_count('POSIX', 'uname'), 1;
         is $guard_osx->call_count('Mac::OSVersion::Lite', 'new'), 1;

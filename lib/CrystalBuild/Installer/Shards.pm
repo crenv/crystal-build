@@ -44,7 +44,7 @@ sub install {
         print "ok\n";
 
         print "Copying Shards binary ... ";
-        $self->_copy($shards_bin, $crystal_dir);
+        $self->_copy($shards_bin, $shards_install_path);
         print "ok\n";
     };
 

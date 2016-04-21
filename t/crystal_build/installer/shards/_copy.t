@@ -35,7 +35,7 @@ subtest basic => sub {
 
     # ----- test -----
     my $installer = CrystalBuild::Installer::Shards->new;
-    $installer->_copy($shards_bin, $crystal_dir);
+    $installer->_copy($shards_bin, $copied_shards_bin);
 
 
     # ----- assertion -----
