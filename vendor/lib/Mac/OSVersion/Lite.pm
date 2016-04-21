@@ -3,9 +3,9 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
-use constant VERSION_FORMAT    => qr/(?<major>[0-9]+)(?:\.(?<minor>[0-9]+))?/;
+use constant VERSION_FORMAT    => qr/(?<major>[0-9]+)(?:\.(?<minor>[0-9]+))?(?:\.(?<point>[0-9]+))?/;
 use constant MAC_VERSION_NAMES => {
     el_capitan    => "10.11",
     yosemite      => "10.10",
@@ -54,7 +54,7 @@ sub _init_by_version_string {
         $string = MAC_VERSION_NAMES->{$string};
     }
 
-    die "Invalid format\n" unless $string =~ qr/^@{[VERSION_FORMAT]}$/;
+    die "Invalid format: $string\n" unless $string =~ qr/^@{[VERSION_FORMAT]}$/;
 
     $self->{major} = $+{major};
     $self->{minor} = $+{minor} // 0;
@@ -92,7 +92,7 @@ __END__
 
 =head1 NAME
 
-Mac::OSVersion::Lite - It's the lightweight version obect for Mac OS X
+Mac::OSVersion::Lite - It's the lightweight version object for Mac OS X
 
 =head1 SYNOPSIS
 
