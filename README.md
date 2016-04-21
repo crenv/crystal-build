@@ -53,5 +53,4 @@ $ carton exec -- prove t/<dir>/<file>.t
 - 1.0.0 - First release
 
 ## License
-MIT License<br />
-Copyright (c) 2015-2016 Pine Mizune
+MIT License
