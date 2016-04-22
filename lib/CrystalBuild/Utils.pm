@@ -7,9 +7,11 @@ use POSIX;
 use Getopt::Long qw/:config posix_default no_ignore_case gnu_compat/;
 
 use SemVer::V2::Strict;
+use Mac::OSVersion::Lite;
 
 sub system_info {
     my $arch;
+    my $version;
     my ($sysname, $machine) = (POSIX::uname)[0, 4];
 
     if  ($machine =~ m/x86_64/) {
@@ -20,7 +22,11 @@ sub system_info {
         die "Error: $sysname $machine is not supported."
     }
 
-    return (lc $sysname, $arch);
+    if ($sysname =~ m/\ADarwin/i) {
+        eval { $version = Mac::OSVersion::Lite->new->name };
+    }
+
+    return (lc $sysname, $arch, $version);
 }
 
 sub extract_tar {

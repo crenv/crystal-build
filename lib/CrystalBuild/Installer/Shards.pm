@@ -23,8 +23,13 @@ sub cache_dir        { shift->{cache_dir} }
 
 sub install {
     my ($self, $crystal_version, $crystal_dir) = @_;
+    my $shards_install_path = $self->_shards_install_path($crystal_dir);
 
     eval {
+        print "Checking if Shards already exists ... ";
+        return print "ok\n" if -f $shards_install_path;
+        print "ng\n";
+
         print "Resolving Shards download URL ... ";
         my $tarball_url = $self->_resolve($crystal_version);
         print "ok\n";
@@ -39,7 +44,7 @@ sub install {
         print "ok\n";
 
         print "Copying Shards binary ... ";
-        $self->_copy($shards_bin, $crystal_dir);
+        $self->_copy($shards_bin, $shards_install_path);
         print "ok\n";
     };
 
@@ -68,15 +73,17 @@ sub _build {
 }
 
 sub _copy {
-    my ($self, $shards_bin, $crystal_dir) = @_;
+    my ($self, $shards_bin, $shards_install_path) = @_;
 
-    my $target_dir  = File::Spec->catfile($crystal_dir, 'bin');
-    my $target_path = File::Spec->catfile($target_dir, 'shards');
+    copy($shards_bin, $shards_install_path)
+        or die 'shards binary copy failed: '.$shards_install_path;
 
-    copy($shards_bin, $target_path)
-        or die 'shards binary copy failed: '.$target_path;
+    chmod 0755, $shards_install_path;
+}
 
-    chmod 0755, $target_path;
+sub _shards_install_path {
+    my ($self, $crystal_dir) = @_;
+    return File::Spec->catfile($crystal_dir, 'bin', 'shards');
 }
 
 1;
