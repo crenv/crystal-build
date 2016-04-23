@@ -21,7 +21,7 @@ crystal-build currently supports only download a compiled tarball.
 To install a Crystal version for use with crenv, run `crenv install` with the exact name of the version you want to install. For example,
 
 ```
-crenv install 0.7.4
+crenv install 0.15.0
 ```
 
 Crystal versions will be installed into a directory of the same name under `~/.crenv/versions`.
