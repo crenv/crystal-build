@@ -5,12 +5,12 @@ crystal-build
 [![codecov.io](http://codecov.io/github/pine/crystal-build/coverage.svg?branch=master)](http://codecov.io/github/pine/crystal-build?branch=master)
 
 
-crystal-build is an [crenv](https://github.com/pine613/crenv) plugin that provides an crenv install command.
+crystal-build is an [crenv](https://github.com/pine/crenv) plugin that provides an crenv install command.
 
 ## Install
 
 ```
-$ git clone https://github.com/pine613/crystal-build.git ~/.crenv/plugins/crystal-build
+$ git clone https://github.com/pine/crystal-build.git ~/.crenv/plugins/crystal-build
 ```
 
 crystal-build currently supports only download a compiled tarball.
