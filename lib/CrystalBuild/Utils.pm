@@ -14,7 +14,9 @@ sub system_info {
     my $version;
     my ($sysname, $machine) = (POSIX::uname)[0, 4];
 
-    if  ($machine =~ m/x86_64/) {
+    # Linux/Darwin --- x86_64
+    # FreeBSD      --- amd64
+    if  ($machine =~ m/x86_64|amd64/) {
         $arch = 'x64';
     } elsif ($machine =~ m/i\d86/) {
         $arch = 'x86';
