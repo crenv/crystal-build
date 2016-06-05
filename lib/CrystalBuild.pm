@@ -1,8 +1,6 @@
 package CrystalBuild;
-use strict;
-use warnings;
-use utf8;
-use feature qw/say state/;
+use CrystalBuild::Sense;
+
 our $VERSION = '1.2.0';
 
 use File::Path qw/rmtree mkpath/;
