@@ -4,6 +4,7 @@ use warnings;
 use utf8;
 
 use POSIX;
+use File::Copy;
 use Getopt::Long qw/:config posix_default no_ignore_case gnu_compat/;
 
 use SemVer::V2::Strict;
@@ -74,6 +75,13 @@ sub error_and_exit {
 
     print "$msg\n";
     exit 1;
+}
+
+sub copy_force {
+    my ($src_path, $dest_path) = @_;
+
+    unlink $dest_path if -f $dest_path;
+    copy $src_path, $dest_path;
 }
 
 1;
