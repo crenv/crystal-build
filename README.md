@@ -2,6 +2,7 @@ crystal-build
 -------------
 
 [![Build Status](https://travis-ci.org/pine/crystal-build.svg?branch=master)](https://travis-ci.org/pine/crystal-build)
+[![Build Status](https://www.bitrise.io/app/c772b4960037bae6.svg?token=cW8dSMlLIZn_a7takD622Q&branch=master)](https://www.bitrise.io/app/c772b4960037bae6)
 [![codecov.io](http://codecov.io/github/pine/crystal-build/coverage.svg?branch=master)](http://codecov.io/github/pine/crystal-build?branch=master)
 
 
