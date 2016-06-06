@@ -1,7 +1,5 @@
 package CrystalBuild::Builder::Shards;
-use strict;
-use warnings;
-use utf8;
+use CrystalBuild::Sense;
 
 use Cwd qw/abs_path/; # >= perl 5
 
