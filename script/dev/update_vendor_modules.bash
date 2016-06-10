@@ -34,3 +34,7 @@ cp -rf $LOCAL_LIB/SemVer/V2/Strict.pm $VENDOR_LIB/SemVer/V2/Strict.pm
 # Which
 mkdir -p $VENDOR_LIB/File
 cp -rf $LOCAL_LIB/File/Which.pm $VENDOR_LIB/File/Which.pm
+
+# Text::Camel
+mkdir -p $VENDOR_LIB/Text
+cp -rf $LOCAL_LIB/Text/Caml.pm $VENDOR_LIB/Text/Caml.pm
