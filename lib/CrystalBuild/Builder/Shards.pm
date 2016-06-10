@@ -50,12 +50,13 @@ if [ "{{platform}}" = "darwin" ]; then
     if which brew > /dev/null 2>&1; then
         prefix=`brew --prefix libyaml 2>/dev/null`
 
-        if [ "$prefix" = "" ]; then
+        if [ ! -f "$prefix/lib/libyaml.a" ]; then
+            echo ""
             brew install libyaml || true
             prefix=`brew --prefix libyaml 2>/dev/null`
         fi
 
-        if [ "$prefix" != "" ]; then
+        if [ -f "$prefix/lib/libyaml.a" ]; then
             cp -f "$prefix/lib/libyaml.a" "{{target_dir}}/libyaml.a"
         fi
     fi
