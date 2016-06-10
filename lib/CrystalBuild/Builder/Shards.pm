@@ -6,7 +6,6 @@ use File::Temp qw/tempfile/;
 use Text::Caml;
 
 use CrystalBuild::Utils;
-use CrystalBuild::Builder::Shards::LibYAML;
 
 sub new {
     my $class = shift;
