@@ -31,7 +31,7 @@ sub build {
     close $fh;
 
     chmod 0755, $filename;
-    system($filename)
+    system($filename) == 0
         or die "shards build faild: $target_dir";
 
     return "$target_dir/bin/shards";
