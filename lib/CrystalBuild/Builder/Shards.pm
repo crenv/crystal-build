@@ -28,7 +28,7 @@ sub _create_build_script {
     my ($platform) = CrystalBuild::Utils::system_info();
     my $template   = do { local $/; <DATA> };
     my $params     = {
-        crystal_dir => $crystal_dir,
+        crystal_dir => abs_path($crystal_dir),
         target_dir  => $target_dir,
         platform    => $platform,
     };
