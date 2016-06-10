@@ -15,25 +15,36 @@ sub new {
 sub build {
     my ($self, $target_dir, $crystal_dir) = @_;
 
+    my $script = $self->_create_build_script($target_dir, $crystal_dir);
+    $self->_run_script($script)
+        or die "shards build faild: $target_dir";
+
+    return "$target_dir/bin/shards";
+}
+
+sub _create_build_script {
+    my ($self, $target_dir, $crystal_dir) = @_;
+
     my ($platform) = CrystalBuild::Utils::system_info();
     my $template   = do { local $/; <DATA> };
-
-    my $params = {
+    my $params     = {
         crystal_dir => $crystal_dir,
         target_dir  => $target_dir,
         platform    => $platform,
     };
-    my $script = Text::Caml->new->render($template, $params);
+
+    return Text::Caml->new->render($template, $params);
+}
+
+sub _run_script {
+    my ($self, $script) = @_;
 
     my ($fh, $filename) = tempfile();
     print $fh $script;
     close $fh;
 
     chmod 0755, $filename;
-    system($filename) == 0
-        or die "shards build faild: $target_dir";
-
-    return "$target_dir/bin/shards";
+    return system($filename) == 0;
 }
 
 1;
