@@ -44,8 +44,8 @@ __DATA__
 set -e
 
 export CRYSTAL_PATH={{crystal_dir}}/libs:{{crystal_dir}}/src:.
-export LIBRARY_PATH={{target_dir}}:$LIBRARY_PATH
-export LD_LIBRARY_PATH={{target_dir}}:$LD_LIBRARY_PATH
+export LIBRARY_PATH={{target_dir}}:/usr/local/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH={{target_dir}}:/usr/local/lib:$LD_LIBRARY_PATH
 
 if [ "{{platform}}" = "darwin" ]; then
     if which brew > /dev/null 2>&1; then
