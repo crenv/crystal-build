@@ -39,7 +39,7 @@ sub build {
 
 1;
 __DATA__
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
