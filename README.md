@@ -49,6 +49,7 @@ $ carton exec -- prove t/<dir>/<file>.t
 
 ### Change log
 
+- 1.3.0 - Support FreeBSD
 - 1.2.0 - Support installing Crystal from Homebrew bottles
 - 1.1.0 - Support [shards](https://github.com/ysbaddaden/shards) auto-install
 - 1.0.0 - First release
