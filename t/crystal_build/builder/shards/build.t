@@ -9,40 +9,27 @@ use Test::Mock::Guard qw/mock_guard/;
 use t::Util;
 use CrystalBuild::Builder::Shards;
 
-subtest basic => sub {
-    my $target_dir  = '__TARGET_DIR__';
-    my $crystal_dir = '__CRYSTAL_DIR__';
+use constant TARGET_DIR  => '__TARGET_DIR__';
+use constant CRYSTAL_DIR => '__CRYSTAL_DIR__';
 
+subtest basic => sub {
     my $builder = CrystalBuild::Builder::Shards->new;
 
     my $guard = mock_guard('CrystalBuild::Builder::Shards', {
-        abs_path              => sub { shift },
-        install_libyaml       => sub { is $_[1], $target_dir },
-        _create_build_command => sub {
-            my ($self, $env_crystal_path, $target_dir, $crystal_bin) = @_;
-
-            is $env_crystal_path, '__CRYSTAL_DIR__/libs:.';
-            is $target_dir,       '__TARGET_DIR__';
-            is $crystal_bin,      '__CRYSTAL_DIR__/bin/crystal';
-
-            return '__COMMAND__';
+        abs_path              => sub { $_[0] },
+        tempfile              => '/tmp/tempfile',
+        _create_build_script  => sub {
+            is $_[1], TARGET_DIR;
+            is $_[2], CRYSTAL_DIR;
+            return '#!/usr/bin/env bash';
         },
+        _run_script           => 1,
     });
 
-    my $dummy_system_called;
-    $dummy_system = sub {
-        is shift, '__COMMAND__';
-        $dummy_system_called = 1;
-        return 0;
-    };
+    is $builder->build(TARGET_DIR, CRYSTAL_DIR), TARGET_DIR.'/bin/shards';
 
-    is $builder->build($target_dir, $crystal_dir), '__TARGET_DIR__/bin/shards';
-
-    is $guard->call_count('CrystalBuild::Builder::Shards', 'abs_path'), 2;
-    is $guard->call_count('CrystalBuild::Builder::Shards', 'install_libyaml'), 1;
-    is $guard->call_count('CrystalBuild::Builder::Shards', '_create_build_command'), 1;
-
-    ok $dummy_system_called;
+    is $guard->call_count('CrystalBuild::Builder::Shards', '_create_build_script'), 1;
+    is $guard->call_count('CrystalBuild::Builder::Shards', '_run_script'), 1;
 };
 
 done_testing;

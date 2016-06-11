@@ -4,6 +4,7 @@ use warnings;
 use utf8;
 
 use POSIX;
+use File::Copy;
 use Getopt::Long qw/:config posix_default no_ignore_case gnu_compat/;
 
 use SemVer::V2::Strict;
@@ -14,7 +15,9 @@ sub system_info {
     my $version;
     my ($sysname, $machine) = (POSIX::uname)[0, 4];
 
-    if  ($machine =~ m/x86_64/) {
+    # Linux/Darwin --- x86_64
+    # FreeBSD      --- amd64
+    if  ($machine =~ m/x86_64|amd64/) {
         $arch = 'x64';
     } elsif ($machine =~ m/i\d86/) {
         $arch = 'x86';
@@ -72,6 +75,13 @@ sub error_and_exit {
 
     print "$msg\n";
     exit 1;
+}
+
+sub copy_force {
+    my ($src_path, $dest_path) = @_;
+
+    unlink $dest_path if -f $dest_path;
+    copy $src_path, $dest_path;
 }
 
 1;
