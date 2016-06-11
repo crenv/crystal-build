@@ -36,12 +36,23 @@ subtest normal => sub {
     };
 
     subtest '# x64' => sub {
-        my $guard = mock_guard('POSIX', {
-            uname => sub { ('Linux', undef, undef, undef, 'x86_64') },
-        });
+        subtest '# Linux or Darwin' => sub {
+            my $guard = mock_guard('POSIX', {
+                uname => sub { ('Linux', undef, undef, undef, 'x86_64') },
+            });
 
-        my @system_info = CrystalBuild::Utils::system_info;
-        is $system_info[1], 'x64';
+            my @system_info = CrystalBuild::Utils::system_info;
+            is $system_info[1], 'x64';
+        };
+
+        subtest '# FreeBSD' => sub {
+            my $guard = mock_guard('POSIX', {
+                uname => sub { ('Linux', undef, undef, undef, 'amd64') },
+            });
+
+            my @system_info = CrystalBuild::Utils::system_info;
+            is $system_info[1], 'x64';
+        };
     };
 
     subtest '# x86' => sub {

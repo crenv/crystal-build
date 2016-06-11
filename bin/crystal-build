@@ -22,7 +22,7 @@ sub main {
     my $github_repo = 'crystal-lang/crystal';
     my $cache_dir   = $ENV{CRYSTAL_BUILD_CACHE_PATH} // '.';
 
-    my $share_url  = 'https://raw.githubusercontent.com/pine613/crystal-build/master/share/crystal-build/';
+    my $share_url  = 'https://raw.githubusercontent.com/pine/crystal-build/master/share/crystal-build/';
     my $cache_url  = $share_url.'/releases.json';
     my $shards_url = $share_url.'/shards.json';
 
