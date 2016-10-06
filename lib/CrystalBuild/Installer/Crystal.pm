@@ -1,8 +1,5 @@
 package CrystalBuild::Installer::Crystal;
-use strict;
-use warnings;
-use utf8;
-use feature qw/say/;
+use CrystalBuild::Sense;
 
 use File::Path qw/mkpath rmtree/; # => 5.001
 
