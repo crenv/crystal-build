@@ -35,12 +35,12 @@ sub install {
         $self->_move($extracted_dir, $install_dir);
         print "ok\n";
 
-        if ($self->is_installed_from_homebrew($tarball_url)) {
-            print 'Checking depended Homebrew formulas ... ';
+        if ($self->_is_installed_from_homebrew($tarball_url)) {
+            print 'Checking if depended Homebrew formulas installed ... ';
 
             my $brew = CrystalBuild::Homebrew->new;
 
-            die "Error: Homebrew not installed\n" unless $brew->alive;
+            die "Error: Homebrew not found\n" unless $brew->alive;
 
             $brew->install('bdw-gc');
             $brew->install('libevent');
@@ -68,11 +68,6 @@ sub needs_shards {
     my ($self, $version) = @_;
     my $v077 = SemVer::V2::Strict->new('0.7.7');
     return SemVer::V2::Strict->new($version) >= $v077; # >= v0.7.7
-}
-
-sub is_installed_from_homebrew {
-    my ($self, $tarball_url) = @_;
-    return index($tarball_url, 'homebrew') > -1;
 }
 
 sub _resolve {
@@ -105,6 +100,11 @@ sub _create_resolver {
         use_remote_cache  => $opt{use_remote_cache},
         use_github        => $opt{use_github},
     );
+}
+
+sub _is_installed_from_homebrew {
+    my ($self, $tarball_url) = @_;
+    return index($tarball_url, 'homebrew') > -1;
 }
 
 1;
