@@ -13,6 +13,10 @@ mkdir -p $VENDOR_LIB
 # parent
 cp -rf $LOCAL_LIB/parent.pm $VENDOR_LIB/parent.pm
 
+# Class::Accessor::Lite
+mkdir -p $VENDOR_LIB/Class/Accessor
+cp -rf $LOCAL_LIB/Class/Accessor/Lite.pm $VENDOR_LIB/Class/Accessor/Lite.pm
+
 # File::Which
 mkdir -p $VENDOR_LIB/File
 cp -rf $LOCAL_LIB/File/Which.pm $VENDOR_LIB/File/Which.pm
