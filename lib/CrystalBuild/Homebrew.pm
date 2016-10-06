@@ -1,9 +1,16 @@
 package CrystalBuild::Homebrew;
 use CrystalBuild::Sense;
 
+use File::Which;
+
 use Class::Accessor::Lite (
     new => 1,
 );
+
+sub alive {
+    my $self = shift;
+    return !! which('brew');
+}
 
 sub exists {
     my ($self, $formula) = @_;
