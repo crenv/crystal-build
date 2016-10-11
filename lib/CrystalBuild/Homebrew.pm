@@ -14,9 +14,10 @@ sub alive {
 
 sub exists {
     my ($self, $formula) = @_;
-    my $list     = `brew list`;
-    my @formulas = grep { $_ } split(/\s+/, $list);
+    my $list = `brew list`;
+    return 0 if $? != 0;
 
+    my @formulas = grep { $_ } split(/\s+/, $list);
     return !! grep { $_ eq $formula } @formulas;
 }
 
