@@ -9,7 +9,6 @@ requires 'Text::Caml', '0.14';
 
 on test => sub {
     requires 'Data::Dumper', '2.154';
-    requires 'File::Slurp', '999.19';
 
     requires 'Capture::Tiny', '0.30';
     requires 'File::Touch', '0.08';
