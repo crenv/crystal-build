@@ -1,12 +1,10 @@
 package CrystalBuild::Installer::Crystal;
-use strict;
-use warnings;
-use utf8;
-use feature qw/say/;
+use CrystalBuild::Sense;
 
 use File::Path qw/mkpath rmtree/; # => 5.001
 
 use CrystalBuild::Utils;
+use CrystalBuild::Homebrew;
 use CrystalBuild::Downloader::Crystal;
 use CrystalBuild::Resolver::Utils;
 use CrystalBuild::Resolver::Crystal;
@@ -36,6 +34,19 @@ sub install {
         print "Moving the Crystal directory ...";
         $self->_move($extracted_dir, $install_dir);
         print "ok\n";
+
+        if ($self->_is_installed_from_homebrew($tarball_url)) {
+            print 'Checking if depended Homebrew formulas installed ... ';
+
+            my $brew = CrystalBuild::Homebrew->new;
+
+            die "Error: Homebrew not found\n" unless $brew->alive;
+
+            $brew->install('bdw-gc');
+            $brew->install('libevent');
+
+            say 'ok';
+        }
     };
 
     CrystalBuild::Utils::error_and_exit($@) if $@;
@@ -89,6 +100,11 @@ sub _create_resolver {
         use_remote_cache  => $opt{use_remote_cache},
         use_github        => $opt{use_github},
     );
+}
+
+sub _is_installed_from_homebrew {
+    my ($self, $tarball_url) = @_;
+    return index($tarball_url, 'homebrew') > -1;
 }
 
 1;

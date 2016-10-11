@@ -1,13 +1,15 @@
 requires 'parent', '0.234';
-requires 'JSON::PP', '2.27300';
-requires 'SemVer::V2::Strict', '0.10';
+
+requires 'Class::Accessor::Lite', '0.08';
 requires 'HTTP::Command::Wrapper', '0.04';
+requires 'JSON::PP', '2.27300';
 requires 'Mac::OSVersion::Lite', '0.02';
+requires 'SemVer::V2::Strict', '0.10';
 requires 'Text::Caml', '0.14';
 
 on test => sub {
     requires 'Data::Dumper', '2.154';
-    requires 'File::Slurp', '999.19';
+    requires 'Data::Section::Simple', '0.07';
 
     requires 'Capture::Tiny', '0.30';
     requires 'File::Touch', '0.08';
