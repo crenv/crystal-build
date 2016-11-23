@@ -15,23 +15,34 @@ sub new {
 sub build {
     my ($self, $target_dir, $crystal_dir) = @_;
 
-    my $script = $self->_create_build_script($target_dir, $crystal_dir);
-    $self->_run_script($script)
-        or die "shards build faild: $target_dir";
+    my $shards_bin = "$target_dir/bin/shards";
 
-    return "$target_dir/bin/shards";
+    {
+        my $script = $self->_create_build_script($target_dir, $crystal_dir);
+        return $shards_bin if $self->_run_script($script);
+    }
+
+    print "\n";
+    print 'Retry building Shards ... ';
+
+    {
+        my $script = $self->_create_build_script($target_dir, $crystal_dir, 1);
+        return $shards_bin if $self->_run_script($script);
+    }
+
+    die "shards build faild: $target_dir";
 }
 
 sub _create_build_script {
-    my ($self, $target_dir, $crystal_dir) = @_;
+    my ($self, $target_dir, $crystal_dir, $no_pie_fg) = @_;
 
     my ($platform) = CrystalBuild::Utils::system_info();
-    my $template   = do { local $/; <DATA> };
+    my $template   = $self->_get_data_section;
     my $params     = {
         crystal_dir => abs_path($crystal_dir),
         target_dir  => $target_dir,
         platform    => $platform,
-        link_flags  => '',
+        link_flags  => $no_pie_fg ? '-no-pie' : '',
     };
 
     return Text::Caml->new->render($template, $params);
@@ -46,6 +57,15 @@ sub _run_script {
 
     chmod 0755, $filename;
     return system($filename) == 0;
+}
+
+sub _get_data_section {
+    my $pos  = tell DATA;
+    my $data = do { local $/; <DATA> };
+
+    seek DATA, $pos, 0;
+
+    return $data;
 }
 
 1;
