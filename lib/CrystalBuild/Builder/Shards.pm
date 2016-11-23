@@ -31,6 +31,7 @@ sub _create_build_script {
         crystal_dir => abs_path($crystal_dir),
         target_dir  => $target_dir,
         platform    => $platform,
+        link_flags  => '',
     };
 
     return Text::Caml->new->render($template, $params);
@@ -74,4 +75,4 @@ if [ "{{platform}}" = "darwin" ]; then
 fi
 
 cd "{{target_dir}}"
-"{{crystal_dir}}/bin/crystal" build --release src/shards.cr -o bin/shards
+"{{crystal_dir}}/bin/crystal" build --release src/shards.cr -o bin/shards --link-flags "{{link_flags}}"
