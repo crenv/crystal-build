@@ -1,7 +1,7 @@
 package CrystalBuild;
 use CrystalBuild::Sense;
 
-our $VERSION = '1.3.1';
+our $VERSION = '1.3.2';
 
 use File::Path qw/rmtree mkpath/;
 use JSON::PP;
