@@ -53,7 +53,7 @@ __DATA__
 
 set -e
 
-export CRYSTAL_PATH={{crystal_dir}}/libs:{{crystal_dir}}/src:.
+export CRYSTAL_PATH={{crystal_dir}}/libs:{{crystal_dir}}/src:{{crystal_dir}}/lib:.
 export LIBRARY_PATH={{target_dir}}:/usr/local/lib:$LIBRARY_PATH
 export LD_LIBRARY_PATH={{target_dir}}:/usr/local/lib:$LD_LIBRARY_PATH
 
