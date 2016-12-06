@@ -44,6 +44,7 @@ sub install {
 
             $brew->install('bdw-gc');
             $brew->install('libevent');
+            $brew->install('libyaml');
 
             say 'ok';
         }
