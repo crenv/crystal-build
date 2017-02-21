@@ -35,7 +35,7 @@ sub versions {
 
 sub _fetch {
     my $self     = shift;
-    my $response = $self->fetcher->fetch($self->cache_url);
+    my $response = $self->fetcher->fetch($self->cache_url . '?' . time);
     return decode_json($response);
 }
 
