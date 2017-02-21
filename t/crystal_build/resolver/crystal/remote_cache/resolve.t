@@ -2,17 +2,22 @@ use strict;
 use warnings;
 use utf8;
 
+use Scope::Guard qw/guard/;
 use Test::MockObject;
+use Test::MockTime qw/set_fixed_time restore_time/;
 
 use t::Util;
 use CrystalBuild::Resolver::Crystal::RemoteCache;
 
 subtest basic => sub {
+    my $time_guard = guard { restore_time() };
+    set_fixed_time(time);
+
     my $fetcher = Test::MockObject->new;
     $fetcher->mock(fetch => sub {
        my ($self, $url) = @_;
 
-       is $url, 'http://www.example.com';
+       is $url, 'http://www.example.com?'.time;
 
        return <<EOF;
 [

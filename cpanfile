@@ -17,6 +17,7 @@ on test => sub {
     requires 'File::Temp', '0.2304';
     requires 'File::Slurp', '9999.19';
     requires 'Module::Find', '0.13';
+    requires 'Scope::Guard', '0.21';
 
     requires 'Test::More', '1.001014';
     requires 'Test::Deep', '0.117';
@@ -26,6 +27,7 @@ on test => sub {
     requires 'Test::Mock::Cmd', '0.6';
     requires 'Test::Mock::Guard', '0.10';
     requires 'Test::MockObject', '1.20150527';
+    requires 'Test::MockTime', '0.15';
     requires 'Test::TCP', '2.12';
     requires 'Plack', '1.0037';
 
