@@ -95,4 +95,9 @@ if [ "{{platform}}" = "darwin" ]; then
 fi
 
 cd "{{target_dir}}"
-"{{crystal_dir}}/bin/crystal" build --release src/shards.cr -o bin/shards --link-flags "{{link_flags}}"
+
+if [ -z "{{link_flags}}" ]; then
+    "{{crystal_dir}}/bin/crystal" build --release src/shards.cr -o bin/shards
+else
+    "{{crystal_dir}}/bin/crystal" build --release src/shards.cr -o bin/shards --link-flags "{{link_flags}}"
+fi
