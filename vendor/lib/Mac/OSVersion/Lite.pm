@@ -3,10 +3,11 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = "0.04";
+our $VERSION = "0.07";
 
 use constant VERSION_FORMAT    => qr/(?<major>[0-9]+)(?:\.(?<minor>[0-9]+))?(?:\.(?<point>[0-9]+))?/;
 use constant MAC_VERSION_NAMES => {
+    high_sierra   => "10.13",
     sierra        => "10.12",
     el_capitan    => "10.11",
     yosemite      => "10.10",
@@ -65,7 +66,7 @@ sub _init_by_version_numbers {
     my ($self, $major, $minor) = @_;
 
     $self->{major} = $major // 0;
-	$self->{minor} = $minor // 0;
+    $self->{minor} = $minor // 0;
 }
 
 sub name {
@@ -161,7 +162,7 @@ Convert a C<SemVer::V2::Strict> instance to string.
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Pine Mizune
+Copyright (c) 2017 Pine Mizune
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
