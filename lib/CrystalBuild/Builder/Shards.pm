@@ -8,9 +8,11 @@ use Text::Caml;
 use CrystalBuild::Utils;
 
 sub new {
-    my $class = shift;
-    return bless {} => $class;
+    my ($class, %opt) = @_;
+    bless { %opt } => $class;
 }
+
+sub without_release  { shift->{without_release} }
 
 sub build {
     my ($self, $target_dir, $crystal_dir) = @_;
@@ -43,6 +45,7 @@ sub _create_build_script {
         target_dir  => $target_dir,
         platform    => $platform,
         link_flags  => $no_pie_fg ? '-no-pie' : '',
+        without_release_flags => $self->without_release ? '' : '--release --no-debug',
     };
 
     return Text::Caml->new->render($template, $params);
@@ -97,7 +100,7 @@ fi
 cd "{{target_dir}}"
 
 if [ -z "{{link_flags}}" ]; then
-    "{{crystal_dir}}/bin/crystal" build --release src/shards.cr -o bin/shards
+    "{{crystal_dir}}/bin/crystal" build src/shards.cr -o bin/shards {{without_release_flags}}
 else
-    "{{crystal_dir}}/bin/crystal" build --release src/shards.cr -o bin/shards --link-flags "{{link_flags}}"
+    "{{crystal_dir}}/bin/crystal" build src/shards.cr -o bin/shards --link-flags "{{link_flags}}" {{without_release_flags}}
 fi

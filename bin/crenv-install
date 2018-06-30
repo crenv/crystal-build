@@ -3,9 +3,10 @@
 # Summary: Install a Crystal version using the crystal-build plugin
 #
 # Usage: crenv install <version>
-#        crenv install -l|--list
+#        crenv install -l|--list|--without-release
 #
 #   -l/--list        List all available versions
+#   --without-release  Do not build the compiler in release mode
 #
 set -e
 [ -n "$CRENV_DEBUG" ] && set -x
@@ -48,12 +49,17 @@ indent() {
 }
 
 parse_options "$@"
+WITHOUT_RELEASE=0
 for option in "${OPTIONS[@]}"; do
+  echo $option;
   case "$option" in
   "l" | "list" )
     echo "Available versions:"
     definitions | indent
     exit
+    ;;
+  "without-release" )
+    WITHOUT_RELEASE=1
     ;;
   esac
 done
@@ -139,7 +145,7 @@ trap cleanup SIGINT
 
 # Invoke `crystal-build` and record the exit status in $STATUS.
 STATUS=0
-crystal-build "$DEFINITION" "$PREFIX" || STATUS="$?"
+crystal-build "$DEFINITION" "$PREFIX" "$WITHOUT_RELEASE" || STATUS="$?"
 
 # Display a more helpful message if the definition wasn't found.
 if [ "$STATUS" == "2" ]; then

@@ -34,6 +34,7 @@ sub main {
         cache_dir   => abs_path($cache_dir),
         fetcher     => HTTP::Command::Wrapper->create,
         github_repo => $github_repo,
+        without_release => $args->{without_release},
     );
 
     if ($args->{definitions}) {
