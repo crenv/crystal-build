@@ -41,10 +41,10 @@ sub _create_build_script {
     my ($platform) = CrystalBuild::Utils::system_info();
     my $template   = $self->_get_data_section;
     my $params     = {
-        crystal_dir => abs_path($crystal_dir),
-        target_dir  => $target_dir,
-        platform    => $platform,
-        link_flags  => $no_pie_fg ? '-no-pie' : '',
+        crystal_dir           => abs_path($crystal_dir),
+        target_dir            => $target_dir,
+        platform              => $platform,
+        link_flags            => $no_pie_fg ? '-no-pie' : '',
         without_release_flags => $self->without_release ? '' : '--release --no-debug',
     };
 
