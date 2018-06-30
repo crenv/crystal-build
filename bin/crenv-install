@@ -51,7 +51,6 @@ indent() {
 parse_options "$@"
 WITHOUT_RELEASE=0
 for option in "${OPTIONS[@]}"; do
-  echo $option;
   case "$option" in
   "l" | "list" )
     echo "Available versions:"
