@@ -53,7 +53,7 @@ sub extract_tar {
 }
 
 sub parse_args {
-    my ($version, $prefix) = @_[-2,-1];
+    my ($version, $prefix, $without_release) = @_[-3,-2,-1];
     my $definitions = 0;
     my $cache       = 1;
 
@@ -63,10 +63,11 @@ sub parse_args {
     );
 
     return {
-        version     => $version,
-        prefix      => $prefix,
-        definitions => $definitions,
-        cache       => $cache,
+        version         => $version,
+        prefix          => $prefix,
+        definitions     => $definitions,
+        cache           => $cache,
+        without_release => $without_release,
     };
 }
 

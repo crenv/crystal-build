@@ -20,6 +20,7 @@ sub new {
 sub fetcher          { shift->{fetcher} }
 sub remote_cache_url { shift->{remote_cache_url} }
 sub cache_dir        { shift->{cache_dir} }
+sub without_release  { shift->{without_release} }
 
 sub install {
     my ($self, $crystal_version, $crystal_dir) = @_;
@@ -69,7 +70,9 @@ sub _download {
 
 sub _build {
     my ($self, $target_dir, $crystal_dir) = @_;
-    return CrystalBuild::Builder::Shards->new->build($target_dir, $crystal_dir);
+    return CrystalBuild::Builder::Shards->new(
+        without_release => $self->without_release,
+    )->build($target_dir, $crystal_dir);
 }
 
 sub _copy {

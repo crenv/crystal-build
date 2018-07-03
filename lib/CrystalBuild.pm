@@ -51,6 +51,7 @@ sub shards_installer {
         fetcher          => $self->{fetcher},
         remote_cache_url => $self->{shards_url},
         cache_dir        => $self->{cache_dir},
+        without_release  => $self->{without_release},
     );
     return $installer;
 }
