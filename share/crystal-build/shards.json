@@ -1,5 +1,7 @@
 {
   "default": "https://github.com/crystal-lang/shards/archive/master.tar.gz",
+  "0.31.1": "https://github.com/crystal-lang/shards/archive/v0.9.0.tar.gz",
+  "0.31.0": "https://github.com/crystal-lang/shards/archive/v0.9.0.tar.gz",
   "0.30.1": "https://github.com/crystal-lang/shards/archive/v0.9.0.tar.gz",
   "0.30.0": "https://github.com/crystal-lang/shards/archive/v0.9.0.tar.gz",
   "0.29.0": "https://github.com/crystal-lang/shards/archive/v0.9.0.tar.gz",
