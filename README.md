@@ -8,6 +8,10 @@ crystal-build
 
 crystal-build is an [crenv](https://github.com/pine/crenv) plugin that provides an crenv install command.
 
+## Note: Potentially being replaced/phased out
+
+Work is underway on [a rewrite of crystal-build in Crystal](https://github.com/crenv/crystal-build-cr). It is working on a rudimentary level, and depending on your needs, may be a suitable replacement for this version of crystal-build, if you are having issues with it. The rewrite is largely motivated by the previous maintainer no longer being able to maintain and find contributors for the Perl codebase. For now, pull requests are still being accepted for this repository.
+
 ## Install
 
 ```
