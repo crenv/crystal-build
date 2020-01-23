@@ -16,8 +16,8 @@ sub _detect_filename {
 sub _detect_extracted_dirs {
     my ($self, $cache_dir) = @_;
     my $matches = [
-        glob(File::Spec->join($cache_dir, 'crystal-lang/*')), # for Homebrew bottles
-        glob(File::Spec->join($cache_dir, 'crystal-*')),      # for GitHub releases
+        glob(File::Spec->join($cache_dir, 'crystal')),   # for Homebrew bottles
+        glob(File::Spec->join($cache_dir, 'crystal-*')), # for GitHub releases
     ];
     return grep { -d $_ } @$matches;
 }

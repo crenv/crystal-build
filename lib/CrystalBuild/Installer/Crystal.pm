@@ -32,6 +32,12 @@ sub install {
         say "ok";
 
         print "Moving the Crystal directory ...";
+
+        # Homebrew's tarballs are structured differently
+        if ($tarball_url =~ /homebrew/) {
+            $extracted_dir = $extracted_dir . "/" . $crystal_version;
+        }
+
         $self->_move($extracted_dir, $install_dir);
         print "ok\n";
 
