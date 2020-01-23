@@ -40,12 +40,28 @@ sub _create_build_script {
 
     my ($platform) = CrystalBuild::Utils::system_info();
     my $template   = $self->_get_data_section;
+
+    # Determine crystal version from the new crystal path, split the folder to
+    # determine the version
+    my $crystal_version = (split "/", $crystal_dir)[-1];
+    my @vers = split(/\./, $crystal_version);
+    my ($major, $minor, $patch) = @vers[0..2];
+
+    # Crystal versions before 0.20.5 did not have the --no-debug flag, so we
+    # must exclude it then
+    my $release_flags = '';
+    if (($major == "0") && ($minor <= "20") && (($patch < "5") || ($minor < "20"))) {
+        my $release_flags = "--release";
+    } else {
+        my $release_flags = "--release --no-debug";
+    }
+
     my $params     = {
         crystal_dir           => abs_path($crystal_dir),
         target_dir            => $target_dir,
         platform              => $platform,
         link_flags            => $no_pie_fg ? '-no-pie' : '',
-        without_release_flags => $self->without_release ? '' : '--release --no-debug',
+        without_release_flags => $self->without_release ? '' : $release_flags,
     };
 
     return Text::Caml->new->render($template, $params);
